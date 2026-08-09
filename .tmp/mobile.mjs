@@ -1,0 +1,13 @@
+import { chromium } from "playwright";
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+const errors = [];
+page.on("pageerror", (e) => errors.push(String(e)));
+await page.goto("http://localhost:3002", { waitUntil: "networkidle" });
+await page.waitForTimeout(500);
+await page.screenshot({ path: ".tmp/mobile-hero.png" });
+await page.locator("#configurator").scrollIntoViewIfNeeded();
+await page.waitForTimeout(400);
+await page.screenshot({ path: ".tmp/mobile-config.png" });
+console.log("ERRORS:", JSON.stringify(errors));
+await browser.close();

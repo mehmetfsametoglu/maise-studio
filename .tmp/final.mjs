@@ -1,0 +1,12 @@
+import { chromium } from "playwright";
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+const errors = [];
+page.on("pageerror", (e) => errors.push(String(e)));
+page.on("console", (m) => { if (m.type() === "error") errors.push(m.text()); });
+await page.goto("http://localhost:3002", { waitUntil: "networkidle" });
+await page.waitForTimeout(600);
+await page.mouse.move(5,5);
+await page.screenshot({ path: ".tmp/final-hero.png" });
+console.log("ERRORS:", JSON.stringify(errors));
+await browser.close();
