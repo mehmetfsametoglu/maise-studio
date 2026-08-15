@@ -1,52 +1,52 @@
 import type { Metadata } from "next";
-import { Manrope, Playfair_Display } from "next/font/google";
-import { LanguageProvider } from "@/lib/i18n";
-import { ToastProvider } from "@/lib/toast-context";
-import { SmoothScrollProvider } from "@/components/smooth-scroll-provider";
-import { CustomCursor } from "@/components/custom-cursor";
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
-import { WhatsAppButton } from "@/components/whatsapp-button";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import { SmoothScrollProvider } from "@/components/smooth-scroll-provider";
+import { Nav } from "@/components/nav";
+import { Footer } from "@/components/footer";
+import { LanguageProvider } from "@/lib/i18n";
+import { ThemeProvider, THEME_INIT_SCRIPT } from "@/lib/theme";
 
-const manrope = Manrope({
-  variable: "--font-sans",
-  display: "swap",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const playfair = Playfair_Display({
-  variable: "--font-serif",
+  variable: "--font-playfair",
+  subsets: ["latin"],
   style: ["normal", "italic"],
   display: "swap",
-  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Maisé Studio — Sites web sur mesure, Paris",
+  title: "Maisé Studio — Digital craftsmanship for ambitious brands",
   description:
-    "Configurez votre futur site en direct : métier, niveau, langues — design et prix s'adaptent instantanément. Maisé Studio, Paris.",
+    "Maisé Studio designs and builds premium, bespoke websites — from café menus to luxury hospitality. Paris.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="fr">
-      <body
-        className={`${manrope.variable} ${playfair.variable} ${manrope.className} antialiased`}
-      >
-        <LanguageProvider>
-          <ToastProvider>
+    <html
+      lang="fr"
+      data-scroll-behavior="smooth"
+      className={`${inter.variable} ${playfair.variable} h-full antialiased`}
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
+      <body className="flex min-h-full flex-col bg-background text-foreground">
+        <ThemeProvider>
+          <LanguageProvider>
             <SmoothScrollProvider>
-              <CustomCursor />
-              <Navbar />
-              <WhatsAppButton />
-              <main className="relative z-10">{children}</main>
+              <Nav />
+              <main className="flex-1">{children}</main>
               <Footer />
             </SmoothScrollProvider>
-          </ToastProvider>
-        </LanguageProvider>
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

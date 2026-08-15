@@ -11,7 +11,7 @@ export function SmoothScrollProvider({
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    const lenis = new Lenis({ lerp: 0.09, duration: 1.1 });
+    const lenis = new Lenis({ lerp: 0.1, duration: 1.1 });
     lenisRef.current = lenis;
 
     function raf(time: number) {

@@ -1,68 +1,263 @@
 @import "tailwindcss";
 
+/*
+ * Maisé Studio V2 — final design system.
+ * Base world (ivory) is the dominant canvas and is the one that actually
+ * flips between light and dark theme. The accent worlds (navy, burgundy,
+ * emerald) are deliberate dark moments — rich and moody in both themes,
+ * just slightly deeper again in dark mode — not pastel variants of
+ * themselves. .world-noir is the cinematic scroll-video moment and stays
+ * constant across themes.
+ */
+
 :root {
-  --background: #150e08;
-  --foreground: #f1e6d3;
-  --copper: #c8934e;
-  --copper-light: #dba86a;
-  --espresso: #1b1108;
-  --surface: #1f150c;
-  --surface-border: rgba(241, 230, 212, 0.09);
+  --radius: 0.75rem;
+
+  /* base / ivory world — light (default, the flagship experience) */
+  --background: #f3eee4;
+  --foreground: #241c18;
+  --muted: #e8dfcf;
+  --muted-foreground: #665c53;
+  --surface: #efe7d9;
+  --card: #f9f5ec;
+  --border: rgba(36, 28, 24, 0.12);
+  --accent: #241c18;
+  --accent-foreground: #f3eee4;
+  --primary: #241c18;
+  --primary-foreground: #f3eee4;
+}
+
+:root[data-theme="dark"] {
+  /* base world — dark: espresso, not black */
+  --background: #1d1714;
+  --foreground: #f1ece2;
+  --muted: #211e1a;
+  --muted-foreground: #b8aea1;
+  --surface: #241f1b;
+  --card: #26211c;
+  --border: rgba(241, 236, 226, 0.1);
+  --accent: #d3af61;
+  --accent-foreground: #1d1714;
+  --primary: #f1ece2;
+  --primary-foreground: #1d1714;
+}
+
+.world-navy {
+  --background: #101d2b;
+  --foreground: #f3eee4;
+  --muted: #172738;
+  --muted-foreground: #b9c2cc;
+  --surface: #172738;
+  --card: #1a2c3f;
+  --border: rgba(243, 238, 228, 0.12);
+  --accent: #ead79b;
+  --accent-foreground: #101d2b;
+  --primary: #f3eee4;
+  --primary-foreground: #101d2b;
+}
+
+:root[data-theme="dark"] .world-navy {
+  --background: #0d1420;
+  --muted: #101b29;
+  --card: #131f2d;
+  --accent: #d3af61;
+  --accent-foreground: #0d1420;
+}
+
+.world-burgundy {
+  --background: #521e25;
+  --foreground: #f3eee4;
+  --muted: #47191f;
+  --muted-foreground: #d9c3c3;
+  --surface: #47191f;
+  --card: #5c2229;
+  --border: rgba(243, 238, 228, 0.12);
+  --accent: #f3eee4;
+  --accent-foreground: #521e25;
+  --primary: #f3eee4;
+  --primary-foreground: #521e25;
+}
+
+:root[data-theme="dark"] .world-burgundy {
+  --background: #35151a;
+  --muted: #2b1114;
+  --card: #40191f;
+  --accent: #d3af61;
+  --accent-foreground: #2b1114;
+}
+
+.world-emerald {
+  --background: #12382d;
+  --foreground: #f3eee4;
+  --muted: #0d3027;
+  --muted-foreground: #c3d3cd;
+  --surface: #0d3027;
+  --card: #164235;
+  --border: rgba(243, 238, 228, 0.12);
+  --accent: #e8dfcf;
+  --accent-foreground: #12382d;
+  --primary: #f3eee4;
+  --primary-foreground: #12382d;
+}
+
+:root[data-theme="dark"] .world-emerald {
+  --background: #0e241d;
+  --muted: #0a1c16;
+  --card: #112e25;
+  --accent: #d3af61;
+  --accent-foreground: #0a1c16;
+}
+
+.world-noir {
+  /* cinematic scroll-video moment — deliberately constant across themes */
+  --background: #0b1219;
+  --foreground: #f1ece2;
+  --muted: #111a22;
+  --muted-foreground: #b8aea1;
+  --surface: #111a22;
+  --card: #141e27;
+  --border: rgba(241, 236, 226, 0.1);
+  --accent: #d3af61;
+  --accent-foreground: #0b1219;
+  --primary: #f1ece2;
+  --primary-foreground: #0b1219;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-cream: var(--foreground);
-  --color-copper: var(--copper);
-  --color-espresso: var(--espresso);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
   --color-surface: var(--surface);
-  --font-sans: var(--font-sans);
-  --font-serif: var(--font-serif);
+  --color-card: var(--card);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --font-display: var(--font-playfair);
+  --font-sans: var(--font-inter);
+  --ease-apple: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 html {
-  background: var(--background);
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
 }
 
 body {
-  background:
-    radial-gradient(60% 40% at 82% 8%, rgba(200, 147, 78, 0.1) 0%, transparent 60%),
-    radial-gradient(50% 35% at 8% 92%, rgba(140, 92, 42, 0.08) 0%, transparent 60%),
-    linear-gradient(180deg, #150e08 0%, #1c130a 45%, #140d07 100%);
-  color: var(--foreground);
-  min-height: 100vh;
-  position: relative;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  transition: background-color 400ms var(--ease-apple), color 400ms var(--ease-apple);
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  opacity: 0.05;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+* {
+  border-color: var(--color-border);
 }
 
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: radial-gradient(120% 100% at 50% 20%, transparent 55%, rgba(10, 6, 3, 0.5) 100%);
+::selection {
+  background: var(--color-accent);
+  color: var(--color-accent-foreground);
 }
 
-@media (pointer: fine) {
-  body {
-    cursor: none;
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 0.98;
+}
+
+@utility reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 900ms var(--ease-apple), transform 900ms var(--ease-apple);
+  will-change: transform, opacity;
+}
+
+@utility reveal-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
-  a,
-  button {
-    cursor: none;
+}
+
+@utility glass-liquid {
+  position: relative;
+  isolation: isolate;
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--foreground) 12%, transparent),
+    color-mix(in oklab, var(--foreground) 4%, transparent) 45%,
+    color-mix(in oklab, var(--accent) 7%, transparent)
+  );
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid color-mix(in oklab, var(--foreground) 14%, transparent);
+  box-shadow:
+    0 20px 50px -24px oklch(0.2 0.03 50 / 0.28),
+    inset 0 1px 0 color-mix(in oklab, var(--foreground) 22%, transparent),
+    inset 0 -1px 0 color-mix(in oklab, var(--background) 30%, transparent);
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -40% -10%;
+    z-index: -1;
+    background: radial-gradient(
+      60% 45% at 20% 0%,
+      color-mix(in oklab, var(--foreground) 18%, transparent),
+      transparent 70%
+    );
+    animation: glass-sheen 9s var(--ease-apple) infinite alternate;
+    pointer-events: none;
+  }
+}
+
+:root[data-theme="dark"] .glass-liquid {
+  box-shadow:
+    0 24px 60px -24px oklch(0 0 0 / 0.5),
+    inset 0 1px 0 color-mix(in oklab, var(--foreground) 24%, transparent),
+    inset 0 -1px 0 color-mix(in oklab, var(--background) 35%, transparent);
+}
+
+/*
+ * Lighter sibling of glass-liquid for repeated small elements (option
+ * buttons in lists/grids) — no backdrop-filter, no animated sheen. Keeps
+ * the frosted-glass moment reserved for the one or two elements per
+ * section that actually benefit from it, instead of every button paying
+ * the blur cost.
+ */
+@utility glass-panel {
+  background: color-mix(in oklab, var(--foreground) 5%, transparent);
+  border: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent);
+  transition: background-color 300ms var(--ease-apple), border-color 300ms var(--ease-apple);
+}
+
+@utility glass-panel-active {
+  background: color-mix(in oklab, var(--accent) 12%, transparent);
+  border-color: color-mix(in oklab, var(--accent) 50%, transparent);
+}
+
+@keyframes glass-sheen {
+  from {
+    transform: translate3d(-12%, -6%, 0);
+    opacity: 0.4;
+  }
+  to {
+    transform: translate3d(14%, 8%, 0);
+    opacity: 0.7;
   }
 }
 
@@ -75,21 +270,17 @@ body::after {
   }
 }
 .animate-marquee {
-  animation: marquee 26s linear infinite;
+  animation: marquee 32s linear infinite;
 }
 
-::selection {
-  background: var(--copper);
-  color: #170f0a;
-}
-
-::-webkit-scrollbar {
-  width: 10px;
-}
-::-webkit-scrollbar-track {
-  background: var(--espresso);
-}
-::-webkit-scrollbar-thumb {
-  background: #4a3620;
-  border-radius: 999px;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
 }
