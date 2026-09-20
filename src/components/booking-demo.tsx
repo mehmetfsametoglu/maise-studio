@@ -103,7 +103,7 @@ export function BookingDemo() {
                           : "border-border text-foreground/80 hover:border-accent/50"
                       }`}
                     >
-                      <span className="text-[10px] uppercase opacity-70">Août</span>
+                      <span className="text-[10px] uppercase opacity-70">{t("booking.month")}</span>
                       <span className="font-display">{d}</span>
                     </button>
                   ))}

@@ -1,14 +1,22 @@
 "use client";
 
 import Link from "next/link";
+import { Code, LayoutTemplate, LifeBuoy, Palette, Search, Sparkles } from "lucide-react";
 import { useReveal } from "@/hooks/use-reveal";
 import { useLang, type DictKey } from "@/lib/i18n";
 
-const SERVICE_KEYS: DictKey[] = [
-  "services.s1",
-  "services.s2",
-  "services.s3",
-  "services.s4",
+const SERVICES: {
+  icon: typeof Palette;
+  nameKey: DictKey;
+  descKey: DictKey;
+  featured?: boolean;
+}[] = [
+  { icon: Palette, nameKey: "services.s1", descKey: "services.s1desc", featured: true },
+  { icon: Code, nameKey: "services.s2", descKey: "services.s2desc" },
+  { icon: LayoutTemplate, nameKey: "services.s3", descKey: "services.s3desc" },
+  { icon: Sparkles, nameKey: "services.s4", descKey: "services.s4desc" },
+  { icon: Search, nameKey: "services.s5", descKey: "services.s5desc" },
+  { icon: LifeBuoy, nameKey: "services.s6", descKey: "services.s6desc" },
 ];
 
 export function Services() {
@@ -18,7 +26,10 @@ export function Services() {
   return (
     <section className="relative border-t border-border bg-background px-6 py-28 md:px-10 md:py-40">
       <div className="mx-auto max-w-6xl">
-        <div ref={ref} className={`reveal ${visible ? "reveal-in" : ""} grid grid-cols-1 gap-14 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]`}>
+        <div
+          ref={ref}
+          className={`reveal ${visible ? "reveal-in" : ""} grid grid-cols-1 gap-14 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)]`}
+        >
           <div>
             <p className="mb-5 text-[11px] tracking-[0.42em] text-accent uppercase">
               {t("services.kicker")}
@@ -35,23 +46,40 @@ export function Services() {
             </Link>
           </div>
 
-          <ul className="flex flex-col divide-y divide-border border-t border-border">
-            {SERVICE_KEYS.map((key, i) => (
-              <li
-                key={key}
-                className="group flex items-baseline justify-between gap-6 py-5 transition-colors duration-300"
+          <div className="grid grid-cols-2 gap-4">
+            {SERVICES.map((s, i) => (
+              <div
+                key={s.nameKey}
+                className={`group rounded-2xl p-6 transition-all duration-300 md:p-7 ${
+                  s.featured
+                    ? "col-span-2 bg-foreground"
+                    : "glass-panel hover:border-accent/40"
+                }`}
               >
-                <span className="flex items-baseline gap-4">
-                  <span className="font-display text-xs text-accent">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="text-lg text-foreground transition-transform duration-300 group-hover:translate-x-1 md:text-xl">
-                    {t(key)}
-                  </span>
-                </span>
-              </li>
+                <s.icon
+                  size={s.featured ? 24 : 20}
+                  strokeWidth={1.4}
+                  className={`mb-4 transition-transform duration-300 group-hover:-translate-y-0.5 ${
+                    s.featured ? "text-background" : "text-accent"
+                  }`}
+                />
+                <h3
+                  className={`font-medium ${
+                    s.featured ? "text-xl text-background md:text-2xl" : "text-base text-foreground"
+                  }`}
+                >
+                  {t(s.nameKey)}
+                </h3>
+                <p
+                  className={`mt-2 max-w-sm text-sm leading-relaxed ${
+                    s.featured ? "text-background/70" : "text-muted-foreground"
+                  }`}
+                >
+                  {t(s.descKey)}
+                </p>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       </div>
     </section>

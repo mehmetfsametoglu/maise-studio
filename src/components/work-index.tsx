@@ -63,8 +63,13 @@ function ProjectCard({
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/10" />
 
-      <div className="relative z-10 flex items-start justify-between">
-        <span className="font-display text-sm text-white/70">{n}</span>
+      <div className="relative z-10 flex items-start justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <span className="font-display text-sm text-white/70">{n}</span>
+          <span className="rounded-full bg-white/15 px-3 py-1 text-[10px] font-medium tracking-widest text-white uppercase backdrop-blur-md">
+            {t("badge.realProject")}
+          </span>
+        </div>
         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-md transition-colors group-hover:bg-accent group-hover:text-accent-foreground">
           <ArrowUpRight size={16} />
         </span>

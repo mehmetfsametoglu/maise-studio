@@ -39,6 +39,9 @@ export function RealWork() {
                 className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-black/5" />
+              <span className="absolute top-5 left-5 z-10 rounded-full bg-white/15 px-3 py-1 text-[10px] font-medium tracking-widest text-white uppercase backdrop-blur-md">
+                {t("badge.realProject")}
+              </span>
               <div className="relative z-10 flex items-end justify-between gap-4">
                 <div>
                   <p className="text-[11px] tracking-[0.3em] text-white/60 uppercase">

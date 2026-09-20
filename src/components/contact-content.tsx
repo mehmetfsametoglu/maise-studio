@@ -2,6 +2,7 @@
 
 import { useLang } from "@/lib/i18n";
 import { ContactForm } from "@/components/contact-form";
+import { MapEmbed } from "@/components/map-embed";
 
 export function ContactContent() {
   const { t } = useLang();
@@ -49,48 +50,21 @@ export function ContactContent() {
               </a>
             </div>
             <div>
-              <p className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
-                {t("contact.team.label")}
+              <a
+                href="https://wa.me/33753406344"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-4 text-sm font-semibold text-white transition-transform duration-200 hover:scale-[1.02]"
+              >
+                {t("contact.whatsapp")}
+              </a>
+              <p className="mt-3 text-center text-xs text-muted-foreground">
+                {t("contact.team.label")} — Mehmet Sametoglu, Ismail Cakir
               </p>
-              <div className="flex flex-col gap-3">
-                <a
-                  href="https://wa.me/33753406344"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between rounded-xl border border-[#25D366]/30 bg-[#25D366]/[0.08] px-4 py-3 transition-colors hover:border-[#25D366]/55"
-                >
-                  <span>
-                    <span className="block text-sm text-foreground">Mehmet Sametoglu</span>
-                    <span className="block text-xs text-muted-foreground">+33 7 53 40 63 44</span>
-                  </span>
-                  <span className="text-[11px] font-medium tracking-widest text-[#25D366] uppercase">
-                    {t("contact.whatsapp")}
-                  </span>
-                </a>
-                <a
-                  href="tel:+33749829678"
-                  className="flex items-center justify-between rounded-xl border border-border px-4 py-3 transition-colors hover:border-accent/40"
-                >
-                  <span>
-                    <span className="block text-sm text-foreground">Ismail Cakir</span>
-                    <span className="block text-xs text-muted-foreground">+33 7 49 82 96 78</span>
-                  </span>
-                </a>
-              </div>
             </div>
 
             <div className="glass-liquid overflow-hidden rounded-2xl p-1.5">
-              <div className="aspect-[4/3] overflow-hidden rounded-xl">
-                <iframe
-                  title="Maisé Studio — Paris"
-                  src="https://maps.google.com/maps?q=Paris%2C%20France&t=&z=12&ie=UTF8&iwloc=&output=embed"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
-              </div>
+              <MapEmbed className="aspect-[4/3] overflow-hidden rounded-xl" />
             </div>
           </div>
 

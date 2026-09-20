@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLang, LANG_PRICE, type Lang, type DictKey } from "@/lib/i18n";
@@ -48,11 +48,14 @@ const TIERS: {
   tryAnchor: number;
   tryPrice: number;
 }[] = [
-  { key: "essentiel", nameKey: "tier.essentiel.name", tagKey: "tier.essentiel.tag", price: 500, tryAnchor: 29900, tryPrice: 22900 },
-  { key: "signature", nameKey: "tier.signature.name", tagKey: "tier.signature.tag", price: 850, tryAnchor: 49900, tryPrice: 37900 },
+  { key: "essentiel", nameKey: "tier.essentiel.name", tagKey: "tier.essentiel.tag", price: 400, tryAnchor: 19900, tryPrice: 15000 },
+  { key: "signature", nameKey: "tier.signature.name", tagKey: "tier.signature.tag", price: 690, tryAnchor: 32900, tryPrice: 24900 },
 ];
 
-const LANG_PRICE_TRY = { fr: 0, en: 1500, tr: 1500 } as const;
+// A single extra-language surcharge — whichever language is already the
+// visitor's market default (see `includedLang` below) is never looked up
+// here, so there is no need for a per-language price.
+const LANG_PRICE_TRY = { fr: 1500, en: 1500, tr: 1500 } as const;
 
 const LANGS: { key: Lang; nameKey: DictKey; noteKey?: DictKey }[] = [
   { key: "fr", nameKey: "lang.fr", noteKey: "lang.fr.note" },
@@ -64,13 +67,32 @@ export function Configurator() {
   const { t, lang } = useLang();
   const [biz, setBiz] = useState<BizKey>("cafe");
   const [tier, setTier] = useState<TierKey>("signature");
-  const [langs, setLangs] = useState<Set<Lang>>(new Set(["fr"]));
+  const [multilingual, setMultilingual] = useState(false);
+  const [langs, setLangs] = useState<Set<Lang>>(new Set());
 
   const b = BUSINESS.find((x) => x.key === biz)!;
   const tr = TIERS.find((x) => x.key === tier)!;
   // Turkish visitors see a Turkey-market TRY price (see the TIERS/LANG_PRICE_TRY
   // comment above) instead of a straight EUR conversion; FR/EN visitors pay EUR.
   const isTRY = lang === "tr";
+  // The included base language follows the visitor's own market rather than
+  // being hardcoded to French — a Turkish visitor quoting a Turkish-market
+  // price should get Turkish included, not be offered "add Turkish" as a
+  // paid extra for a language they're already browsing in.
+  const includedLang: Lang = isTRY ? "tr" : "fr";
+  const extraLangs = LANGS.filter((item) => item.key !== includedLang);
+
+  // If the included language changes (visitor switches the site's own
+  // language), drop it from the extras set so it isn't paid for twice.
+  useEffect(() => {
+    setLangs((prev) => {
+      if (!prev.has(includedLang)) return prev;
+      const next = new Set(prev);
+      next.delete(includedLang);
+      return next;
+    });
+  }, [includedLang]);
+
   const langTotal = [...langs].reduce(
     (sum, l) => sum + (isTRY ? LANG_PRICE_TRY[l] : LANG_PRICE[l]),
     0,
@@ -82,7 +104,7 @@ export function Configurator() {
   const isSquare = tier === "signature";
 
   function toggleLang(l: Lang) {
-    if (l === "fr") return;
+    if (l === includedLang) return;
     setLangs((prev) => {
       const next = new Set(prev);
       next.has(l) ? next.delete(l) : next.add(l);
@@ -90,10 +112,18 @@ export function Configurator() {
     });
   }
 
+  function toggleMultilingual() {
+    setMultilingual((prev) => {
+      const next = !prev;
+      if (!next) setLangs(new Set());
+      return next;
+    });
+  }
+
   const priceLabel = isTRY
     ? `${total.toLocaleString("tr-TR")}TL`
     : `${total.toLocaleString("fr-FR")}EUR`;
-  const message = `Bonjour Maisé Studio — ${t(b.nameKey)} / ${t(tr.nameKey)} / ${[...langs]
+  const message = `${t("wa.greeting")} — ${t(b.nameKey)} / ${t(tr.nameKey)} / ${[includedLang, ...langs]
     .map((l) => l.toUpperCase())
     .join("+")} -> ${priceLabel}`;
 
@@ -181,36 +211,67 @@ export function Configurator() {
             </div>
 
             <div>
-              <p className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
-                {t("config.step3")}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {LANGS.map((item) => {
-                  const active = langs.has(item.key);
-                  const locked = item.key === "fr";
-                  return (
-                    <button
-                      key={item.key}
-                      onClick={() => toggleLang(item.key)}
-                      disabled={locked}
-                      className={`rounded-full border px-4 py-2 text-xs font-medium transition-all duration-300 ${
-                        active
-                          ? "border-accent/50 bg-accent/15 text-accent"
-                          : "border-foreground/10 text-muted-foreground hover:border-foreground/25 hover:text-foreground"
-                      } ${locked ? "cursor-default opacity-60" : ""}`}
-                    >
-                      {t(item.nameKey)}
-                      <span className="ml-1.5 opacity-70">
-                        {locked
-                          ? t("lang.fr.note")
-                          : isTRY
-                            ? `+${LANG_PRICE_TRY[item.key].toLocaleString("tr-TR")}₺`
-                            : `+€${LANG_PRICE[item.key]}`}
-                      </span>
-                    </button>
-                  );
-                })}
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-xs tracking-widest text-muted-foreground uppercase">
+                    {t("config.multilingual")}
+                  </p>
+                  <p className="mt-1 max-w-[15rem] text-xs text-muted-foreground/80">
+                    {t("config.multilingual.hint")}
+                  </p>
+                  <p className="mt-1 text-[11px] text-muted-foreground/60">
+                    {t("config.includedLang")}: {t(LANGS.find((l) => l.key === includedLang)!.nameKey)}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={multilingual}
+                  aria-label={t("config.multilingual")}
+                  onClick={toggleMultilingual}
+                  className={`relative h-7 w-12 shrink-0 rounded-full transition-colors duration-300 ${
+                    multilingual ? "bg-accent" : "bg-foreground/15"
+                  }`}
+                >
+                  <motion.span
+                    layout
+                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                    className="absolute top-0.5 h-6 w-6 rounded-full bg-background shadow"
+                    style={{ left: multilingual ? "calc(100% - 1.625rem)" : "0.125rem" }}
+                  />
+                </button>
               </div>
+
+              <AnimatePresence initial={false}>
+                {multilingual && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {extraLangs.map((item) => {
+                        const active = langs.has(item.key);
+                        return (
+                          <button
+                            key={item.key}
+                            onClick={() => toggleLang(item.key)}
+                            className={`rounded-full border px-4 py-2 text-xs font-medium transition-all duration-300 ${
+                              active
+                                ? "border-accent/50 bg-accent/15 text-accent"
+                                : "border-foreground/10 text-muted-foreground hover:border-foreground/25 hover:text-foreground"
+                            }`}
+                          >
+                            {t(item.nameKey)}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             <div className="glass-liquid flex flex-col items-start justify-between gap-6 rounded-2xl p-6 sm:flex-row sm:items-center">
@@ -256,8 +317,8 @@ export function Configurator() {
             </div>
           </div>
 
-          <div className="lg:sticky lg:top-28 lg:self-start">
-            <div className="glass-liquid overflow-hidden rounded-[1.75rem] p-2">
+          <div className="order-first sticky top-20 z-10 -mx-6 bg-background px-6 pb-5 shadow-[0_16px_32px_-16px_rgba(0,0,0,0.45)] md:-mx-10 md:px-10 lg:order-none lg:top-28 lg:m-0 lg:self-start lg:bg-transparent lg:p-0 lg:shadow-none">
+            <div className="glass-liquid relative overflow-hidden rounded-[1.75rem] p-2">
               <div
                 className="relative w-full overflow-hidden rounded-[1.4rem]"
                 style={{ aspectRatio: isSquare ? "1 / 1" : "4 / 3" }}
@@ -279,6 +340,20 @@ export function Configurator() {
                       className="object-cover"
                     />
                   </motion.div>
+                </AnimatePresence>
+                <AnimatePresence>
+                  {tier === "signature" && (
+                    <motion.span
+                      key="signature-badge"
+                      initial={{ opacity: 0, y: -6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                      className="glass-liquid absolute top-4 right-4 z-10 rounded-full px-3 py-1.5 text-[10px] font-medium tracking-widest text-accent uppercase"
+                    >
+                      Motion · 3D
+                    </motion.span>
+                  )}
                 </AnimatePresence>
               </div>
             </div>

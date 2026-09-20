@@ -56,7 +56,7 @@ export function PhotoAlbum() {
   const x = useTransform(scrollYProgress, [0, 1], [range.start, -range.travel]);
 
   return (
-    <section ref={ref} className="world-noir relative bg-background" style={{ height: "420vh" }}>
+    <section ref={ref} className="world-noir relative bg-background" style={{ height: "240vh" }}>
       <div className="sticky top-0 flex h-[100svh] w-full flex-col overflow-hidden">
         <div className="px-6 pt-28 md:px-10 md:pt-32">
           <p className="mb-4 text-[11px] tracking-[0.42em] text-accent uppercase">

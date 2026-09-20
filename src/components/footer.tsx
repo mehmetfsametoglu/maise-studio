@@ -21,7 +21,29 @@ export function Footer() {
   return (
     <footer className="world-navy relative bg-background px-6 py-16 md:px-10 md:py-20">
       <div className="mx-auto max-w-6xl">
-        <div className="flex flex-col items-start justify-between gap-10 border-b border-border pb-10 md:flex-row md:items-center">
+        <div className="border-b border-border pb-14 text-center md:pb-16">
+          <h2 className="display mx-auto max-w-2xl text-[clamp(1.8rem,4.6vw,3.2rem)] text-foreground">
+            {t("footer.ctaTitle")}
+          </h2>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href="/contact"
+              className="rounded-full bg-accent px-8 py-4 text-sm font-semibold text-accent-foreground transition-transform duration-200 hover:scale-[1.03]"
+            >
+              {t("footer.ctaButton")}
+            </Link>
+            <a
+              href="https://wa.me/33753406344"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full border border-border px-8 py-4 text-sm font-semibold text-foreground transition-colors hover:bg-muted"
+            >
+              WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <div className="flex flex-col items-start justify-between gap-10 border-b border-border py-10 md:flex-row md:items-center">
           <div>
             <LogoMark size="text-xl" />
             <p className="mt-3 max-w-xs text-sm text-muted-foreground">{t("footer.tag")}</p>

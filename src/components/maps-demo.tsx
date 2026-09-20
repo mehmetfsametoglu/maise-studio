@@ -2,6 +2,7 @@
 
 import { useReveal } from "@/hooks/use-reveal";
 import { useLang } from "@/lib/i18n";
+import { MapEmbed } from "@/components/map-embed";
 
 export function MapsDemo() {
   const { t } = useLang();
@@ -33,17 +34,7 @@ export function MapsDemo() {
           </div>
 
           <div className="glass-liquid overflow-hidden rounded-[1.75rem] p-2">
-            <div className="aspect-[4/3] overflow-hidden rounded-[1.4rem] grayscale-[15%]">
-              <iframe
-                title="Maisé Studio — Paris"
-                src="https://maps.google.com/maps?q=Paris%2C%20France&t=&z=12&ie=UTF8&iwloc=&output=embed"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
+            <MapEmbed className="aspect-[4/3] overflow-hidden rounded-[1.4rem] grayscale-[15%]" />
           </div>
         </div>
       </div>

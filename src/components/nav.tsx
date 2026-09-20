@@ -24,8 +24,8 @@ const THEMES: { key: ThemeChoice; icon: typeof Sun }[] = [
 // of palettes instead — one per theme — so it stays legible over any
 // section, in both light and dark mode.
 const NAV_PALETTE = {
-  light: { text: "#241C10", textMuted: "rgba(36,28,16,0.62)", accent: "#8A5A2B", accentFg: "#FFFDF8", glassBg: "rgba(255,251,244,0.6)", border: "rgba(36,28,16,0.1)" },
-  dark: { text: "#F4EEE1", textMuted: "rgba(244,238,225,0.68)", accent: "#D9B36C", accentFg: "#1a1408", glassBg: "rgba(20,16,10,0.55)", border: "rgba(255,255,255,0.1)" },
+  light: { text: "#241C10", textMuted: "rgba(36,28,16,0.62)", accent: "#C9A24E", accentFg: "#241C10", glassBg: "rgba(255,251,244,0.6)", menuBg: "rgba(250,246,238,0.97)", border: "rgba(36,28,16,0.1)" },
+  dark: { text: "#F4EEE1", textMuted: "rgba(244,238,225,0.68)", accent: "#D9B36C", accentFg: "#1a1408", glassBg: "rgba(20,16,10,0.55)", menuBg: "rgba(16,13,9,0.97)", border: "rgba(255,255,255,0.1)" },
 };
 
 export function Nav() {
@@ -188,8 +188,8 @@ export function Nav() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="mx-auto mt-2 max-w-6xl rounded-3xl border p-6 backdrop-blur-2xl md:hidden"
-            style={{ background: c.glassBg, borderColor: c.border }}
+            className="mx-auto mt-2 max-w-6xl rounded-3xl border p-6 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.5)] backdrop-blur-2xl md:hidden"
+            style={{ background: c.menuBg, borderColor: c.border }}
           >
             <ul className="flex flex-col gap-4">
               {LINKS.map((l) => (
@@ -204,16 +204,16 @@ export function Nav() {
                   {t("nav.contact")}
                 </Link>
               </li>
-              <li className="flex items-center justify-between pt-3">
+              <li className="flex flex-col gap-4 pt-3">
                 <Link
                   href="/contact"
                   onClick={() => setOpen(false)}
-                  className="inline-flex rounded-full px-5 py-2.5 text-[12px] font-medium tracking-wide uppercase"
+                  className="inline-flex items-center justify-center rounded-full px-5 py-3 text-center text-[12px] font-medium tracking-wide whitespace-nowrap uppercase"
                   style={{ background: c.accent, color: c.accentFg }}
                 >
                   {t("nav.cta")}
                 </Link>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between">
                   <LangSwitch />
                   <button
                     onClick={cycleTheme}

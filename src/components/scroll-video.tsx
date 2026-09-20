@@ -87,7 +87,7 @@ export function ScrollVideo() {
     <section
       id="experience"
       ref={containerRef}
-      className="world-noir relative h-[380vh] bg-background"
+      className="world-noir relative h-[220vh] bg-background"
       aria-label="Maisé Studio immersive experience"
     >
       <div className="sticky top-0 h-[100svh] w-full overflow-hidden">
