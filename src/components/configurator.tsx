@@ -34,10 +34,25 @@ const BUSINESS: {
   },
 ];
 
-const TIERS: { key: TierKey; nameKey: DictKey; tagKey: DictKey; price: number }[] = [
-  { key: "essentiel", nameKey: "tier.essentiel.name", tagKey: "tier.essentiel.tag", price: 500 },
-  { key: "signature", nameKey: "tier.signature.name", tagKey: "tier.signature.tag", price: 850 },
+// TRY figures are a deliberate Turkey-market price, not a live FX
+// conversion: "anchor" is roughly what the EUR price converts to (~56
+// TRY/EUR, reviewed periodically), "discounted" is the actual launch price
+// shown crossed-out-to-discounted, priced in local terms rather than a
+// straight conversion. Review both alongside the EUR prices, not via a
+// currency API — they're merchandising numbers, not an exchange rate.
+const TIERS: {
+  key: TierKey;
+  nameKey: DictKey;
+  tagKey: DictKey;
+  price: number;
+  tryAnchor: number;
+  tryPrice: number;
+}[] = [
+  { key: "essentiel", nameKey: "tier.essentiel.name", tagKey: "tier.essentiel.tag", price: 500, tryAnchor: 29900, tryPrice: 22900 },
+  { key: "signature", nameKey: "tier.signature.name", tagKey: "tier.signature.tag", price: 850, tryAnchor: 49900, tryPrice: 37900 },
 ];
+
+const LANG_PRICE_TRY = { fr: 0, en: 1500, tr: 1500 } as const;
 
 const LANGS: { key: Lang; nameKey: DictKey; noteKey?: DictKey }[] = [
   { key: "fr", nameKey: "lang.fr", noteKey: "lang.fr.note" },
@@ -46,15 +61,22 @@ const LANGS: { key: Lang; nameKey: DictKey; noteKey?: DictKey }[] = [
 ];
 
 export function Configurator() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const [biz, setBiz] = useState<BizKey>("cafe");
   const [tier, setTier] = useState<TierKey>("signature");
   const [langs, setLangs] = useState<Set<Lang>>(new Set(["fr"]));
 
   const b = BUSINESS.find((x) => x.key === biz)!;
   const tr = TIERS.find((x) => x.key === tier)!;
-  const langTotal = [...langs].reduce((sum, l) => sum + LANG_PRICE[l], 0);
-  const total = tr.price + langTotal;
+  // Turkish visitors see a Turkey-market TRY price (see the TIERS/LANG_PRICE_TRY
+  // comment above) instead of a straight EUR conversion; FR/EN visitors pay EUR.
+  const isTRY = lang === "tr";
+  const langTotal = [...langs].reduce(
+    (sum, l) => sum + (isTRY ? LANG_PRICE_TRY[l] : LANG_PRICE[l]),
+    0,
+  );
+  const total = (isTRY ? tr.tryPrice : tr.price) + langTotal;
+  const anchorTotal = isTRY ? tr.tryAnchor + langTotal : null;
   // Essentiel previews are a 4:3 browser-style layout; Signature previews
   // are a square full-bleed composition.
   const isSquare = tier === "signature";
@@ -68,9 +90,12 @@ export function Configurator() {
     });
   }
 
+  const priceLabel = isTRY
+    ? `${total.toLocaleString("tr-TR")}TL`
+    : `${total.toLocaleString("fr-FR")}EUR`;
   const message = `Bonjour Maisé Studio — ${t(b.nameKey)} / ${t(tr.nameKey)} / ${[...langs]
     .map((l) => l.toUpperCase())
-    .join("+")} -> ${total}EUR`;
+    .join("+")} -> ${priceLabel}`;
 
   return (
     <section id="configurateur" className="world-burgundy relative bg-background px-6 py-28 md:px-10 md:py-40">
@@ -83,8 +108,8 @@ export function Configurator() {
         </h2>
         <p className="mt-6 max-w-lg text-muted-foreground">{t("config.subtitle")}</p>
 
-        <div className="mt-16 grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
-          <div className="flex flex-col gap-10">
+        <div className="mt-14 grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+          <div className="flex flex-col gap-8">
             <div>
               <p className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
                 {t("config.step1")}
@@ -131,9 +156,20 @@ export function Configurator() {
                         <span className="text-sm font-medium text-foreground">
                           {t(item.nameKey)}
                         </span>
-                        <span className="font-display text-sm font-semibold text-accent">
-                          €{item.price}
-                        </span>
+                        {isTRY ? (
+                          <span className="flex items-baseline gap-1.5">
+                            <span className="text-[11px] text-muted-foreground line-through">
+                              {item.tryAnchor.toLocaleString("tr-TR")}₺
+                            </span>
+                            <span className="font-display text-sm font-semibold text-accent">
+                              {item.tryPrice.toLocaleString("tr-TR")}₺
+                            </span>
+                          </span>
+                        ) : (
+                          <span className="font-display text-sm font-semibold text-accent">
+                            €{item.price}
+                          </span>
+                        )}
                       </div>
                       <span className="mt-1 block text-xs text-muted-foreground">
                         {t(item.tagKey)}
@@ -148,7 +184,7 @@ export function Configurator() {
               <p className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
                 {t("config.step3")}
               </p>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+              <div className="flex flex-wrap gap-2">
                 {LANGS.map((item) => {
                   const active = langs.has(item.key);
                   const locked = item.key === "fr";
@@ -157,15 +193,19 @@ export function Configurator() {
                       key={item.key}
                       onClick={() => toggleLang(item.key)}
                       disabled={locked}
-                      className={`glass-panel rounded-2xl p-4 text-left transition-all duration-300 ${
-                        active ? "glass-panel-active" : "opacity-70 hover:opacity-100"
-                      } ${locked ? "cursor-default" : ""}`}
+                      className={`rounded-full border px-4 py-2 text-xs font-medium transition-all duration-300 ${
+                        active
+                          ? "border-accent/50 bg-accent/15 text-accent"
+                          : "border-foreground/10 text-muted-foreground hover:border-foreground/25 hover:text-foreground"
+                      } ${locked ? "cursor-default opacity-60" : ""}`}
                     >
-                      <span className="block text-sm font-medium text-foreground">
-                        {t(item.nameKey)}
-                      </span>
-                      <span className="mt-1 block text-xs text-muted-foreground">
-                        {locked ? t("lang.fr.note") : `+€${LANG_PRICE[item.key]}`}
+                      {t(item.nameKey)}
+                      <span className="ml-1.5 opacity-70">
+                        {locked
+                          ? t("lang.fr.note")
+                          : isTRY
+                            ? `+${LANG_PRICE_TRY[item.key].toLocaleString("tr-TR")}₺`
+                            : `+€${LANG_PRICE[item.key]}`}
                       </span>
                     </button>
                   );
@@ -175,22 +215,35 @@ export function Configurator() {
 
             <div className="glass-liquid flex flex-col items-start justify-between gap-6 rounded-2xl p-6 sm:flex-row sm:items-center">
               <div>
-                <p className="text-xs tracking-widest text-muted-foreground uppercase">
-                  {t("config.price")}
-                </p>
-                <AnimatePresence mode="wait">
+                <div className="flex items-center gap-2">
+                  <p className="text-xs tracking-widest text-muted-foreground uppercase">
+                    {t("config.price")}
+                  </p>
+                  {isTRY && (
+                    <span className="rounded-full bg-accent/15 px-2 py-0.5 text-[10px] font-medium tracking-wide text-accent uppercase">
+                      {t("config.try.badge")}
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-baseline gap-3">
+                  {anchorTotal != null && (
+                    <span className="font-display text-xl text-muted-foreground line-through">
+                      {anchorTotal.toLocaleString("tr-TR")}₺
+                    </span>
+                  )}
                   <motion.p
                     key={total}
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.25 }}
                     className="display text-4xl text-accent"
                   >
-                    €{total.toLocaleString("fr-FR")}
+                    {isTRY ? `${total.toLocaleString("tr-TR")}₺` : `€${total.toLocaleString("fr-FR")}`}
                   </motion.p>
-                </AnimatePresence>
-                <p className="mt-1 text-xs text-muted-foreground">{t("config.priceNote")}</p>
+                </div>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  {isTRY ? t("config.try.note") : t("config.priceNote")}
+                </p>
               </div>
               <a
                 href={`https://wa.me/33753406344?text=${encodeURIComponent(message)}`}
@@ -224,7 +277,6 @@ export function Configurator() {
                       fill
                       sizes="(min-width: 1024px) 50vw, 100vw"
                       className="object-cover"
-                      priority
                     />
                   </motion.div>
                 </AnimatePresence>

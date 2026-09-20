@@ -1,0 +1,30 @@
+# Maisé Studio
+
+> Paris-based web design and development studio. We design and build bespoke,
+> high-end websites for restaurants, cafés, hotels, clinics and boutiques —
+> strategy, design and development under one roof, not templates.
+
+## Services
+- Custom web design and front-end development (no page builders, no templates)
+- 3D / WebGL and motion-driven web experiences
+- Multilingual websites (French, English, Turkish)
+- Booking, online menu, and payment-flow integrations
+- Search and AI-visibility optimization (classic SEO + generative-engine/AI-answer optimization)
+
+## Who we build for
+Cafés and restaurants, hotels and boutique hospitality, clinics and beauty
+businesses, and independent retail brands — primarily in Paris and, for
+pricing purposes, Turkey.
+
+## Contact
+- WhatsApp: https://wa.me/33753406344
+- Email: studiomaise@gmail.com
+- Based in: Paris, France
+- Hours: every day, 9:00–19:00 (Europe/Paris)
+
+## Key pages
+- Home: https://maisestudio.fr/
+- Work (real, live client sites): https://maisestudio.fr/work
+- Examples (interactive product demos): https://maisestudio.fr/examples
+- Studio (how we work): https://maisestudio.fr/studio
+- Contact: https://maisestudio.fr/contact

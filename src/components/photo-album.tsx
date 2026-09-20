@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useLang } from "@/lib/i18n";
@@ -25,12 +25,35 @@ const SIZE_CLASS: Record<string, string> = {
 export function PhotoAlbum() {
   const { t } = useLang();
   const ref = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end end"],
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["2vw", "-128vw"]);
+  const [range, setRange] = useState({ start: 0, travel: 0 });
+
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+
+    const measure = () => {
+      const start = window.innerWidth * 0.02;
+      const distance = el.scrollWidth - window.innerWidth + start;
+      setRange({ start, travel: distance > 0 ? distance : 0 });
+    };
+
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(el);
+    window.addEventListener("resize", measure);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, []);
+
+  const x = useTransform(scrollYProgress, [0, 1], [range.start, -range.travel]);
 
   return (
     <section ref={ref} className="world-noir relative bg-background" style={{ height: "420vh" }}>
@@ -46,6 +69,7 @@ export function PhotoAlbum() {
 
         <div className="relative mt-10 flex-1">
           <motion.div
+            ref={trackRef}
             style={{ x }}
             className="absolute inset-y-0 left-0 flex items-center gap-8 pl-6 md:gap-12 md:pl-10"
           >

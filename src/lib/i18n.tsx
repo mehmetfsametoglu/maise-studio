@@ -17,9 +17,9 @@ const dict = {
     "footer.tag": "Sites web sur mesure, conçus à Paris.",
 
     "hero.kicker": "Maisé Studio — Paris",
-    "hero.title": "Conçu pour votre métier. Pas pour un thème.",
+    "hero.title": "Un site pensé pour votre métier, pas pour un thème générique.",
     "hero.subtitle":
-      "Cafés, hôtels, cliniques, boutiques — nous concevons des sites qui donnent envie, et qui vendent.",
+      "Cafés, hôtels, cliniques, boutiques : nous dessinons des sites qui donnent envie d'entrer, et qui vendent.",
     "hero.cta1": "Découvrir Maisé Studio",
     "hero.scroll": "Faites défiler",
 
@@ -27,21 +27,36 @@ const dict = {
     "brand.title":
       "Nous construisons les sites que nos clients montrent avec fierté.",
     "brand.body":
-      "Maisé Studio est une agence parisienne de conception de sites web haut de gamme. Restaurants, hôtels, cliniques, boutiques — nous donnons à chaque marque une présence digitale à la hauteur de son savoir-faire.",
+      "Maisé Studio est une agence parisienne spécialisée dans les sites web haut de gamme. Restaurants, hôtels, cliniques, boutiques : à chaque projet, on cherche la même chose, une présence en ligne qui reflète vraiment le travail fait sur place.",
     "brand.v1.title": "Conçu sur mesure",
     "brand.v1.body":
-      "Aucun template. Chaque site est pensé pour votre métier, votre clientèle, votre ambition.",
+      "Pas de template. Chaque site part de votre métier, de vos clients, de ce que vous voulez vraiment.",
     "brand.v2.title": "Un vrai métier technique",
     "brand.v2.body":
-      "3D, mouvement, interaction — la même exigence technique, du premier pixel au dernier clic.",
+      "3D, animations, interactions : on garde la même exigence du premier croquis à la dernière ligne de code.",
     "brand.v3.title": "Pensé pour convertir",
     "brand.v3.body":
-      "Beau ne suffit pas. Chaque page est construite pour transformer la visite en client.",
+      "Un beau site qui ne vend rien ne sert pas à grand-chose. Chaque page est construite pour transformer une visite en client.",
+
+    "geo.kicker": "Visibilité IA",
+    "geo.title": "Trouvé par vos clients. Recommandé par leur IA.",
+    "geo.body":
+      "De plus en plus de gens demandent carrément à ChatGPT ou à Gemini où aller, avant même d'ouvrir Instagram. \"Le meilleur café du 10e\", \"un hôtel calme près de Bastille\"... Ces IA lisent des sites web, pas des stories qui disparaissent au bout de 24 heures. Si votre site n'est pas construit pour ça, vous n'existez tout simplement pas dans leur réponse.",
+    "geo.tag":
+      "On construit chaque site pour que Google et les IA le comprennent dès la mise en ligne, pas comme une option qu'on ajoute plus tard.",
+    "geo.p1.title": "Référencement classique",
+    "geo.p1.body": "Titres, balises, vitesse de chargement, structure des pages : les bases du SEO, faites sérieusement.",
+    "geo.p2.title": "Compris par les IA",
+    "geo.p2.body": "On ajoute les données structurées et le fichier llms.txt qui permettent aux assistants IA de comprendre ce que vous faites.",
+    "geo.p3.title": "Rendu, pas caché",
+    "geo.p3.body": "Le contenu est servi en vrai HTML, pas généré au dernier moment. Les robots le voient aussi bien que vos visiteurs.",
+    "geo.p4.title": "Cité, pas juste classé",
+    "geo.p4.body": "Être en première page Google ne suffit plus. L'objectif, c'est d'être la réponse que l'IA donne.",
 
     "services.kicker": "Ce que nous faisons",
     "services.title": "Stratégie. Design. Développement.",
     "services.body":
-      "Du premier croquis à la dernière interaction — nous concevons et développons, nous ne faisons pas que des maquettes.",
+      "On s'occupe de tout, du premier croquis à la dernière animation. Pas seulement des maquettes, un site qui tourne vraiment.",
     "services.s1": "Design web",
     "services.s2": "Développement web",
     "services.s3": "UX / UI",
@@ -51,22 +66,22 @@ const dict = {
     "process.kicker": "Notre méthode",
     "process.title": "De l'idée au site en ligne.",
     "process.body":
-      "Un projet Maisé suit toujours le même chemin — clair, sans surprise, du premier échange à la mise en ligne.",
+      "Un projet Maisé avance toujours de la même façon : simple, sans mauvaise surprise, du premier échange jusqu'à la mise en ligne.",
     "process.step1.title": "Le brief",
     "process.step1.body":
-      "On discute de votre métier, de vos clients, de ce que le site doit accomplir. Pas de questionnaire générique — une vraie conversation.",
+      "On parle de votre métier, de vos clients, de ce que ce site doit vraiment faire pour vous. Pas de formulaire à remplir, une vraie discussion.",
     "process.step2.title": "La direction artistique",
     "process.step2.body":
-      "Une première proposition visuelle, pensée pour votre marque. Vous réagissez, on ajuste, jusqu'à ce que ça sonne juste.",
+      "On vous montre une première direction visuelle, pensée pour votre marque. Vous réagissez, on ajuste, jusqu'à ce que ce soit vraiment juste.",
     "process.step3.title": "Le développement",
     "process.step3.body":
-      "Le site prend vie — pour de vrai, pas en maquette. Animations, formulaires, intégrations : tout est testé au fur et à mesure.",
+      "Le site prend forme pour de vrai, plus en maquette. Animations, formulaires, intégrations : on teste tout au fur et à mesure.",
     "process.step4.title": "La mise en ligne",
     "process.step4.body":
       "Domaine, hébergement, dernières vérifications. Vous repartez avec un site qui vous appartient, prêt pour vos clients.",
 
-    "studio.visual1": "L'esprit Maisé — sobre, chaleureux, pensé dans le détail.",
-    "studio.visual2": "Stratégie, design, développement — une même méthode, à chaque étape.",
+    "studio.visual1": "L'esprit Maisé : sobre, chaleureux, soigné jusque dans les détails.",
+    "studio.visual2": "Stratégie, design, développement : la même méthode à chaque étape du projet.",
 
     "cap.kicker": "Ce que nous savons construire",
     "cap.c1": "Réservations",
@@ -83,7 +98,7 @@ const dict = {
     "sv.c1.kicker": "Aperçu",
     "sv.c1.title": "Ici, la vidéo de votre site.",
     "sv.c1.body":
-      "Chaque marque a sa propre histoire à l'écran — nous la mettons en scène dès l'arrivée du visiteur.",
+      "Chaque marque raconte sa propre histoire à l'écran. On la met en scène dès la première seconde, dès que le visiteur arrive.",
     "sv.c2.kicker": "Navigation",
     "sv.c2.title": "On peut même naviguer dans votre site.",
     "sv.c2.body":
@@ -106,12 +121,12 @@ const dict = {
     "responsive.kicker": "Conçu pour chaque écran",
     "responsive.title": "Pensé à chaque point de rupture.",
     "responsive.body":
-      "Le mobile n'est pas un simple site desktop réduit — chaque format a sa propre composition, pensée pour l'usage réel.",
+      "Le mobile, ce n'est pas juste un site desktop rétréci. Chaque format a sa propre composition, pensée pour la façon dont on l'utilise vraiment.",
 
     "menu.kicker": "Exemple — Menu en ligne",
     "menu.title": "Si vous aviez un menu, voici à quoi il ressemblerait.",
     "menu.body":
-      "Un exemple de menu construit avec notre système de design — catégories, prix, descriptions, tout est personnalisable pour votre carte réelle.",
+      "Un exemple de menu construit avec notre système de design. Catégories, prix, descriptions : tout se personnalise pour votre carte à vous.",
     "menu.cat1": "Cafés & Boissons",
     "menu.cat2": "Pâtisseries",
     "menu.item1": "Espresso",
@@ -126,22 +141,24 @@ const dict = {
     "maps.kicker": "Exemple — Localisation",
     "maps.title": "Votre adresse, mise en valeur.",
     "maps.body":
-      "Une carte intégrée directement dans votre site — pour que vos clients vous trouvent sans quitter la page. Ici, un exemple centré sur Paris.",
+      "Une carte intégrée directement dans votre site, pour que vos clients vous trouvent sans quitter la page. Ici, un exemple centré sur Paris.",
     "maps.cta": "Ouvrir dans Google Maps",
 
     "config.kicker": "Configurateur en direct",
     "config.title": "Composez votre site, en temps réel.",
     "config.subtitle":
-      "Trois choix, un aperçu qui change instantanément — design, contenu et prix.",
-    "config.step1": "1. Votre métier",
-    "config.step2": "2. Votre niveau",
-    "config.step3": "3. Vos langues",
+      "Trois choix suffisent. Le design, le contenu et le prix changent instantanément sous vos yeux.",
+    "config.step1": "Votre métier",
+    "config.step2": "Le niveau",
+    "config.step3": "Langues en plus",
     "config.price": "Investissement estimé",
     "config.priceNote": "Prix indicatif · devis final sur mesure",
+    "config.try.badge": "Prix de lancement — Turquie",
+    "config.try.note": "Prix indicatif en TL · devis final sur mesure",
     "config.cta": "Recevoir ce devis",
-    "config.essentiel.caption": "Propre, rapide, efficace — l'essentiel, bien fait.",
+    "config.essentiel.caption": "Propre, rapide, efficace. L'essentiel, mais bien fait.",
     "config.signature.caption":
-      "Motion, liquid glass et mise en scène complète — le niveau Signature.",
+      "Motion, liquid glass, mise en scène complète. C'est le niveau Signature.",
     "biz.cafe.name": "Café & Restaurant",
     "biz.cafe.desc": "Menu, ambiance, réservation",
     "biz.clinic.name": "Clinique & Beauté",
@@ -192,7 +209,7 @@ const dict = {
     "examples.kicker": "Exemples",
     "examples.title": "Voici ce que votre site pourrait faire.",
     "examples.body":
-      "Ce ne sont pas nos projets — ce sont des démonstrations. Chaque module est un aperçu de ce que nous pouvons construire pour vous.",
+      "Ce ne sont pas nos projets, ce sont des démonstrations. Chaque module montre un aperçu de ce qu'on peut construire pour vous.",
     "examples.ctaTitle": "Autre chose en tête ?",
     "examples.ctaButton": "Échanger sur votre projet",
 
@@ -201,7 +218,7 @@ const dict = {
     "booking.kicker": "Exemple — Réservation",
     "booking.title": "Un rendez-vous pris en quelques secondes.",
     "booking.body":
-      "Service, date, créneau, coordonnées — une prise de rendez-vous que vos clients terminent sans réfléchir.",
+      "Service, date, créneau, coordonnées : une prise de rendez-vous que vos clients terminent sans même y réfléchir.",
     "booking.svc1": "Coupe",
     "booking.svc2": "Soin visage",
     "booking.svc3": "Consultation",
@@ -219,7 +236,7 @@ const dict = {
     "payment.kicker": "Exemple — Paiement",
     "payment.title": "Un acompte, encaissé proprement.",
     "payment.body":
-      "Dépôt de garantie, achat, réservation avec acompte — un parcours de paiement fluide et rassurant.",
+      "Dépôt de garantie, achat, réservation avec acompte : un parcours de paiement fluide, qui rassure.",
     "payment.summaryLabel": "Récapitulatif",
     "payment.service": "Soin visage",
     "payment.total": "Total",
@@ -259,30 +276,45 @@ const dict = {
     "footer.tag": "Bespoke websites, designed in Paris.",
 
     "hero.kicker": "Maisé Studio — Paris",
-    "hero.title": "Built for your business. Not a theme.",
+    "hero.title": "A website built for your business, not a generic theme.",
     "hero.subtitle":
-      "Cafés, hotels, clinics, boutiques — we design websites that create desire, and that sell.",
+      "Cafés, hotels, clinics, boutiques: we design sites that make people want to walk in, and that sell.",
     "hero.cta1": "Discover Maisé Studio",
     "hero.scroll": "Scroll",
 
     "brand.kicker": "The Studio",
     "brand.title": "We build the websites our clients show off with pride.",
     "brand.body":
-      "Maisé Studio is a Paris-based agency crafting premium websites. Restaurants, hotels, clinics, boutiques — we give every brand a digital presence worthy of its craft.",
+      "Maisé Studio is a Paris-based agency building premium websites. Restaurants, hotels, clinics, boutiques: on every project we're after the same thing, an online presence that actually reflects the work happening in the room.",
     "brand.v1.title": "Built to measure",
     "brand.v1.body":
-      "No templates. Every site is designed around your business, your clients, your ambition.",
+      "No templates. Every site starts from your business, your clients, what you actually want.",
     "brand.v2.title": "Genuine technical craft",
     "brand.v2.body":
-      "3D, motion, interaction — the same technical care, from first pixel to last click.",
+      "3D, motion, interaction: we hold the same standard from the first sketch to the last line of code.",
     "brand.v3.title": "Built to convert",
     "brand.v3.body":
-      "Beautiful isn't enough. Every page is built to turn a visit into a client.",
+      "A beautiful site that doesn't sell isn't worth much. Every page is built to turn a visit into a client.",
+
+    "geo.kicker": "AI Visibility",
+    "geo.title": "Found by your customers. Recommended by their AI.",
+    "geo.body":
+      "More people are asking ChatGPT or Gemini where to go before they even open Instagram. \"Best coffee shop nearby,\" \"a quiet hotel near downtown\"... These tools read websites, not stories that disappear after 24 hours. If your site isn't built for that, you simply don't exist in their answer.",
+    "geo.tag":
+      "We build every site so Google and AI assistants understand it from the day it goes live, not as something bolted on later.",
+    "geo.p1.title": "Classic SEO",
+    "geo.p1.body": "Titles, tags, load speed, page structure: the basics of SEO, done properly.",
+    "geo.p2.title": "Understood by AI",
+    "geo.p2.body": "We add structured data and an llms.txt file so AI assistants can actually understand what your business does.",
+    "geo.p3.title": "Rendered, not hidden",
+    "geo.p3.body": "Content is served as real HTML, not assembled at the last second. Crawlers see it exactly like your visitors do.",
+    "geo.p4.title": "Cited, not just ranked",
+    "geo.p4.body": "Ranking on page one isn't enough anymore. The goal is being the answer the AI gives.",
 
     "services.kicker": "What we do",
     "services.title": "Strategy. Design. Development.",
     "services.body":
-      "From first sketch to final interaction — we design and build, we don't just deliver mockups.",
+      "We handle all of it, from the first sketch to the last animation. Not just mockups, a site that actually works.",
     "services.s1": "Web design",
     "services.s2": "Web development",
     "services.s3": "UX / UI",
@@ -292,22 +324,22 @@ const dict = {
     "process.kicker": "Our method",
     "process.title": "From idea to live site.",
     "process.body":
-      "Every Maisé project follows the same path — clear, no surprises, from the first conversation to launch.",
+      "Every Maisé project moves the same way: simple, no surprises, from the first conversation to launch.",
     "process.step1.title": "The brief",
     "process.step1.body":
-      "We talk through your business, your clients, what the site actually needs to do. No generic questionnaire — a real conversation.",
+      "We talk about your business, your clients, what this site actually needs to do for you. No form to fill in, a real conversation.",
     "process.step2.title": "Art direction",
     "process.step2.body":
-      "A first visual proposal, built for your brand. You react, we refine, until it feels right.",
+      "We show you a first direction, built around your brand. You react, we adjust, until it actually feels right.",
     "process.step3.title": "Development",
     "process.step3.body":
-      "The site comes to life — for real, not as a mockup. Animations, forms, integrations: tested as we go.",
+      "The site takes shape for real, not as a mockup anymore. Animations, forms, integrations: we test everything as we build it.",
     "process.step4.title": "Launch",
     "process.step4.body":
       "Domain, hosting, final checks. You leave with a site that's genuinely yours, ready for your clients.",
 
-    "studio.visual1": "The Maisé aesthetic — understated, warm, considered in every detail.",
-    "studio.visual2": "Strategy, design, development — the same method, every step.",
+    "studio.visual1": "The Maisé aesthetic: understated, warm, worked out down to the smallest detail.",
+    "studio.visual2": "Strategy, design, development: the same method at every stage of the project.",
 
     "cap.kicker": "What we can build",
     "cap.c1": "Reservations",
@@ -324,7 +356,7 @@ const dict = {
     "sv.c1.kicker": "Preview",
     "sv.c1.title": "This is where your site's video goes.",
     "sv.c1.body":
-      "Every brand has its own story on screen — we stage it from the moment a visitor arrives.",
+      "Every brand has its own story on screen. We stage it from the first second a visitor lands.",
     "sv.c2.kicker": "Navigation",
     "sv.c2.title": "We can even let visitors navigate your site.",
     "sv.c2.body":
@@ -347,12 +379,12 @@ const dict = {
     "responsive.kicker": "Designed for every screen",
     "responsive.title": "Considered at every breakpoint.",
     "responsive.body":
-      "Mobile isn't just a shrunken desktop site — every format gets its own composition, built for how it's actually used.",
+      "Mobile isn't just a shrunken-down desktop site. Every format gets its own layout, built for how people actually use it.",
 
     "menu.kicker": "Example — Online menu",
     "menu.title": "If you had a menu, here's what it could look like.",
     "menu.body":
-      "A sample menu built with our design system — categories, prices, descriptions all fully customizable for your real menu.",
+      "A sample menu built with our design system. Categories, prices, descriptions: all of it customizable for your actual menu.",
     "menu.cat1": "Coffee & Drinks",
     "menu.cat2": "Pastries",
     "menu.item1": "Espresso",
@@ -367,22 +399,24 @@ const dict = {
     "maps.kicker": "Example — Location",
     "maps.title": "Your address, showcased.",
     "maps.body":
-      "A map embedded directly in your site — so clients can find you without leaving the page. Here, an example centered on Paris.",
+      "A map embedded directly in your site, so clients can find you without leaving the page. Here, an example centered on Paris.",
     "maps.cta": "Open in Google Maps",
 
     "config.kicker": "Live configurator",
     "config.title": "Build your site, in real time.",
     "config.subtitle":
-      "Three choices, one preview that changes instantly — design, content and price.",
-    "config.step1": "1. Your business",
-    "config.step2": "2. Your tier",
-    "config.step3": "3. Your languages",
+      "Three choices are all it takes. The design, content and price change instantly in front of you.",
+    "config.step1": "Your business",
+    "config.step2": "The tier",
+    "config.step3": "Extra languages",
     "config.price": "Estimated investment",
     "config.priceNote": "Indicative price · final quote tailored to you",
+    "config.try.badge": "Turkey launch price",
+    "config.try.note": "Indicative price in TRY · final quote tailored to you",
     "config.cta": "Get this quote",
-    "config.essentiel.caption": "Clean, fast, effective — the essentials, done right.",
+    "config.essentiel.caption": "Clean, fast, effective. The essentials, done right.",
     "config.signature.caption":
-      "Motion, liquid glass and full staging — the Signature level.",
+      "Motion, liquid glass, full staging. This is the Signature level.",
     "biz.cafe.name": "Café & Restaurant",
     "biz.cafe.desc": "Menu, atmosphere, reservations",
     "biz.clinic.name": "Clinic & Beauty",
@@ -433,7 +467,7 @@ const dict = {
     "examples.kicker": "Examples",
     "examples.title": "Here's what your website could do.",
     "examples.body":
-      "These aren't our projects — they're demonstrations. Each module is a preview of what we can build for you.",
+      "These aren't our projects, they're demonstrations. Each module is a preview of what we can build for you.",
     "examples.ctaTitle": "Have something else in mind?",
     "examples.ctaButton": "Talk to us",
 
@@ -442,7 +476,7 @@ const dict = {
     "booking.kicker": "Example — Booking",
     "booking.title": "An appointment booked in seconds.",
     "booking.body":
-      "Service, date, time slot, contact details — a booking flow your clients finish without a second thought.",
+      "Service, date, time slot, contact details: a booking flow your clients finish without a second thought.",
     "booking.svc1": "Haircut",
     "booking.svc2": "Facial",
     "booking.svc3": "Consultation",
@@ -460,7 +494,7 @@ const dict = {
     "payment.kicker": "Example — Payment",
     "payment.title": "A deposit, taken cleanly.",
     "payment.body":
-      "Deposits, purchases, bookings with a deposit — a payment flow that feels smooth and trustworthy.",
+      "Deposits, purchases, bookings with a deposit: a payment flow that feels smooth, and trustworthy.",
     "payment.summaryLabel": "Summary",
     "payment.service": "Facial treatment",
     "payment.total": "Total",
@@ -500,27 +534,42 @@ const dict = {
     "nav.cta": "Projenizi konuşalım",
 
     "hero.kicker": "Maisé Studio — Paris",
-    "hero.title": "İşletmeniz için. Bir tema için değil.",
+    "hero.title": "İşletmeniz için tasarlanmış bir site, hazır bir tema değil.",
     "hero.subtitle":
-      "Kafeler, oteller, klinikler, butikler — istek uyandıran ve satan siteler tasarlıyoruz.",
+      "Kafeler, oteller, klinikler, butikler: girmek isteyeceğiniz ve gerçekten satan siteler tasarlıyoruz.",
     "hero.cta1": "Maisé Studio'yu Keşfet",
     "hero.scroll": "Kaydır",
 
     "brand.kicker": "Stüdyo",
     "brand.title": "Müşterilerimizin gururla gösterdiği siteler kuruyoruz.",
     "brand.body":
-      "Maisé Studio, Paris merkezli premium web tasarım ajansıdır. Restoranlar, oteller, klinikler, butikler — her markaya, ustalığına yakışan bir dijital varlık kazandırıyoruz.",
+      "Maisé Studio, Paris merkezli bir premium web tasarım ajansı. Restoranlar, oteller, klinikler, butikler: her projede aynı şeyin peşindeyiz, gerçekten yaptığınız işi yansıtan bir dijital varlık.",
     "brand.v1.title": "Kişiye özel tasarım",
-    "brand.v1.body": "Şablon yok. Her site işletmeniz, müşterileriniz, hedefleriniz için kurulur.",
+    "brand.v1.body": "Şablon kullanmıyoruz. Her site işletmenizden, müşterilerinizden, gerçekten istediğinizden yola çıkarak kurulur.",
     "brand.v2.title": "Gerçek teknik ustalık",
-    "brand.v2.body": "3D, hareket, etkileşim — ilk pikselden son tıklamaya aynı teknik özen.",
+    "brand.v2.body": "3D, hareket, etkileşim: ilk taslaktan son satır koda kadar aynı özeni koruyoruz.",
     "brand.v3.title": "Dönüşüm için kurulur",
-    "brand.v3.body": "Güzellik yetmez. Her sayfa ziyareti müşteriye çevirmek için inşa edilir.",
+    "brand.v3.body": "Güzel ama satmayan bir site pek işe yaramaz. Her sayfa, ziyaretçiyi müşteriye çevirmek için kurulur.",
+
+    "geo.kicker": "Yapay Zeka Görünürlüğü",
+    "geo.title": "Müşteriniz sizi bulsun. Yapay zekası sizi önersin.",
+    "geo.body":
+      "Artık pek çok kişi Instagram'ı açmadan önce ChatGPT'ye ya da Gemini'ye soruyor. \"Yakınımdaki en iyi kafe\", \"merkeze yakın sakin bir otel\"... Bu yapay zekalar 24 saatte kaybolan story'leri değil, web sitelerini okuyor. Siteniz buna göre kurulmadıysa, onların cevabında basitçe yoksunuz demektir.",
+    "geo.tag":
+      "Her Maisé sitesini, yayına girdiği ilk günden itibaren hem Google hem de yapay zeka asistanları anlayacak şekilde kuruyoruz, sonradan eklenen bir özellik olarak değil.",
+    "geo.p1.title": "Klasik SEO",
+    "geo.p1.body": "Başlıklar, etiketler, yüklenme hızı, sayfa yapısı: SEO'nun temelleri, gerçekten doğru yapılmış.",
+    "geo.p2.title": "Yapay Zeka Tarafından Anlaşılır",
+    "geo.p2.body": "Yapay zeka asistanlarının işletmenizi gerçekten anlayabilmesi için yapılandırılmış veri ve llms.txt dosyası ekliyoruz.",
+    "geo.p3.title": "Gizli Değil, Görünür",
+    "geo.p3.body": "İçerik son anda oluşturulmuyor, gerçek HTML olarak sunuluyor. Arama robotları da tıpkı ziyaretçileriniz gibi görüyor.",
+    "geo.p4.title": "Sıralanmak Değil, Önerilmek",
+    "geo.p4.body": "Google'da ilk sayfada olmak artık yetmiyor. Hedef, yapay zekanın verdiği cevabın kendisi olmak.",
 
     "services.kicker": "Ne yapıyoruz",
     "services.title": "Strateji. Tasarım. Geliştirme.",
     "services.body":
-      "İlk taslaktan son etkileşime kadar — sadece maket teslim etmiyoruz, tasarlayıp geliştiriyoruz.",
+      "İlk taslaktan son animasyona kadar her şeyi biz yapıyoruz. Sadece maket değil, gerçekten çalışan bir site.",
     "services.s1": "Web tasarımı",
     "services.s2": "Web geliştirme",
     "services.s3": "UX / UI",
@@ -530,22 +579,22 @@ const dict = {
     "process.kicker": "Yöntemimiz",
     "process.title": "Fikirden yayındaki siteye.",
     "process.body":
-      "Her Maisé projesi aynı yolu izler — net, sürprizsiz, ilk görüşmeden yayına kadar.",
+      "Her Maisé projesi aynı şekilde ilerler: net, sürprizsiz, ilk görüşmeden yayına kadar.",
     "process.step1.title": "Brief",
     "process.step1.body":
-      "İşinizi, müşterilerinizi, sitenin gerçekten ne yapması gerektiğini konuşuruz. Genel bir formdan çok gerçek bir sohbet.",
+      "İşinizi, müşterilerinizi, bu sitenin sizin için gerçekten ne yapması gerektiğini konuşuruz. Doldurulacak bir form değil, gerçek bir sohbet.",
     "process.step2.title": "Sanat yönetimi",
     "process.step2.body":
-      "Markanız için tasarlanmış ilk görsel öneri. Siz değerlendirirsiniz, biz ince ayar yaparız — tam oturana kadar.",
+      "Markanız için kurduğumuz ilk görsel yönü size gösteririz. Siz değerlendirirsiniz, biz ince ayar yaparız, tam oturana kadar.",
     "process.step3.title": "Geliştirme",
     "process.step3.body":
-      "Site gerçekten hayat bulur — maket değil. Animasyonlar, formlar, entegrasyonlar: ilerledikçe test edilir.",
+      "Site artık gerçekten hayat buluyor, maket olmaktan çıkıyor. Animasyonlar, formlar, entegrasyonlar: ilerledikçe hepsini test ediyoruz.",
     "process.step4.title": "Yayına alma",
     "process.step4.body":
       "Alan adı, barındırma, son kontroller. Gerçekten size ait, müşterilerinizi karşılamaya hazır bir siteyle ayrılırsınız.",
 
-    "studio.visual1": "Maisé ruhu — sade, sıcak, her detayda düşünülmüş.",
-    "studio.visual2": "Strateji, tasarım, geliştirme — her adımda aynı yöntem.",
+    "studio.visual1": "Maisé ruhu: sade, sıcak, en küçük detayına kadar düşünülmüş.",
+    "studio.visual2": "Strateji, tasarım, geliştirme: projenin her aşamasında aynı yöntem.",
 
     "cap.kicker": "Neler inşa edebiliriz",
     "cap.c1": "Rezervasyonlar",
@@ -562,7 +611,7 @@ const dict = {
     "sv.c1.kicker": "Önizleme",
     "sv.c1.title": "İşte sitenizin videosu burada olacak.",
     "sv.c1.body":
-      "Her markanın ekrandaki kendi hikayesi var — ziyaretçi geldiği andan itibaren onu sahneliyoruz.",
+      "Her markanın ekrandaki kendi hikayesi var. Ziyaretçi siteye girdiği ilk saniyeden itibaren onu sahneliyoruz.",
     "sv.c2.kicker": "Gezinme",
     "sv.c2.title": "Sitenizde gezinme imkanı bile sağlıyoruz.",
     "sv.c2.body":
@@ -585,12 +634,12 @@ const dict = {
     "responsive.kicker": "Her ekran için tasarlandı",
     "responsive.title": "Her kırılma noktasında düşünülmüş.",
     "responsive.body":
-      "Mobil, küçültülmüş bir masaüstü sitesi değildir — her format gerçek kullanıma göre kendi kompozisyonuna sahiptir.",
+      "Mobil, küçültülmüş bir masaüstü sitesi değil. Her format, gerçekten nasıl kullanıldığına göre kendi düzenine sahip.",
 
     "menu.kicker": "Örnek — Online menü",
     "menu.title": "Bir menünüz olsaydı, işte böyle görünürdü.",
     "menu.body":
-      "Tasarım sistemimizle kurulmuş örnek bir menü — kategoriler, fiyatlar, açıklamalar, gerçek menünüz için tamamen özelleştirilebilir.",
+      "Tasarım sistemimizle kurulmuş örnek bir menü. Kategoriler, fiyatlar, açıklamalar: hepsi gerçek menünüze göre özelleştirilebilir.",
     "menu.cat1": "Kahveler & İçecekler",
     "menu.cat2": "Pastalar",
     "menu.item1": "Espresso",
@@ -605,20 +654,22 @@ const dict = {
     "maps.kicker": "Örnek — Konum",
     "maps.title": "Adresiniz, öne çıkarılmış.",
     "maps.body":
-      "Sitenize doğrudan gömülü bir harita — müşterileriniz sayfadan çıkmadan sizi bulsun. Burada, Paris merkezli bir örnek.",
+      "Sitenize doğrudan gömülü bir harita, müşterileriniz sayfadan çıkmadan sizi bulsun diye. Burada, Paris merkezli bir örnek görüyorsunuz.",
     "maps.cta": "Google Maps'te Aç",
 
     "config.kicker": "Canlı Yapılandırıcı",
     "config.title": "Sitenizi gerçek zamanlı kurun.",
-    "config.subtitle": "Üç seçim, anında değişen bir önizleme — tasarım, içerik ve fiyat.",
-    "config.step1": "1. İşletmeniz",
-    "config.step2": "2. Seviyeniz",
-    "config.step3": "3. Dilleriniz",
+    "config.subtitle": "Sadece üç seçim yeterli. Tasarım, içerik ve fiyat gözünüzün önünde anında değişiyor.",
+    "config.step1": "İşletmeniz",
+    "config.step2": "Seviye",
+    "config.step3": "Ek diller",
     "config.price": "Tahmini yatırım",
     "config.priceNote": "Yaklaşık fiyat · nihai teklif projeye özel",
+    "config.try.badge": "Türkiye lansman fiyatı",
+    "config.try.note": "TL olarak yaklaşık fiyat · nihai teklif projeye özel",
     "config.cta": "Bu teklifi al",
-    "config.essentiel.caption": "Temiz, hızlı, işlevsel — doğru yapılmış bir temel site.",
-    "config.signature.caption": "Hareket, liquid glass ve tam sahneleme — Signature seviyesi.",
+    "config.essentiel.caption": "Temiz, hızlı, işlevsel. Doğru yapılmış bir temel site.",
+    "config.signature.caption": "Hareket, liquid glass, tam sahneleme. Bu, Signature seviyesi.",
     "biz.cafe.name": "Kafe & Restoran",
     "biz.cafe.desc": "Menü, atmosfer, rezervasyon",
     "biz.clinic.name": "Klinik & Güzellik",
@@ -669,7 +720,7 @@ const dict = {
     "examples.kicker": "Örnekler",
     "examples.title": "Siteniz neler yapabilir, işte burada.",
     "examples.body":
-      "Bunlar bizim projelerimiz değil — birer demo. Her modül, sizin için neler inşa edebileceğimizin bir önizlemesi.",
+      "Bunlar bizim projelerimiz değil, birer demo. Her modül, sizin için neler kurabileceğimizin bir önizlemesi.",
     "examples.ctaTitle": "Aklınızda başka bir şey mi var?",
     "examples.ctaButton": "Bize ulaşın",
 
@@ -678,7 +729,7 @@ const dict = {
     "booking.kicker": "Örnek — Rezervasyon",
     "booking.title": "Saniyeler içinde alınan bir randevu.",
     "booking.body":
-      "Hizmet, tarih, saat, iletişim bilgileri — müşterilerinizin düşünmeden tamamladığı bir randevu akışı.",
+      "Hizmet, tarih, saat, iletişim bilgileri: müşterilerinizin hiç düşünmeden tamamladığı bir randevu akışı.",
     "booking.svc1": "Saç Kesimi",
     "booking.svc2": "Cilt Bakımı",
     "booking.svc3": "Danışma",
@@ -696,7 +747,7 @@ const dict = {
     "payment.kicker": "Örnek — Ödeme",
     "payment.title": "Sorunsuz alınan bir kapora.",
     "payment.body":
-      "Kapora, satın alma, kaporalı rezervasyon — akıcı ve güven veren bir ödeme deneyimi.",
+      "Kapora, satın alma, kaporalı rezervasyon: akıcı ve güven veren bir ödeme deneyimi.",
     "payment.summaryLabel": "Özet",
     "payment.service": "Cilt Bakımı",
     "payment.total": "Toplam",

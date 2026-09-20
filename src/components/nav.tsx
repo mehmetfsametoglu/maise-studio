@@ -62,6 +62,31 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // The mobile menu is a fixed overlay, not part of normal document flow —
+  // without this, the page behind it keeps scrolling while it's open (the
+  // panel stays visually pinned near the top since its parent <header> is
+  // fixed, while the hero/sections underneath shift around it). Locking
+  // scroll here, and closing on route change, keeps it feeling like a real
+  // modal instead of a floating card with a scrollable page leaking through.
+  useEffect(() => {
+    if (!open) return;
+    // document.scrollingElement is <html> here (not <body>), so overflow
+    // has to be locked on the root element or it has no effect at all.
+    const root = document.documentElement;
+    const prevRoot = root.style.overflow;
+    const prevBody = document.body.style.overflow;
+    root.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+    return () => {
+      root.style.overflow = prevRoot;
+      document.body.style.overflow = prevBody;
+    };
+  }, [open]);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
   const cycleTheme = () => {
     const idx = THEMES.findIndex((x) => x.key === choice);
     setChoice(THEMES[(idx + 1) % THEMES.length].key);
@@ -141,6 +166,20 @@ export function Nav() {
           </button>
         </div>
       </nav>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={() => setOpen(false)}
+            aria-hidden="true"
+            className="fixed inset-0 -z-10 bg-black/40 backdrop-blur-sm md:hidden"
+          />
+        )}
+      </AnimatePresence>
 
       <AnimatePresence>
         {open && (
