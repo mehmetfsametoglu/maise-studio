@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { WorkIndex } from "@/components/work-index";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/work" },
   title: "Réalisations — Maisé Studio",
   description: "Les sites que Maisé Studio a conçus et mis en ligne.",
 };

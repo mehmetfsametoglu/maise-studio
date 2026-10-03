@@ -3,6 +3,7 @@
 import { useLang } from "@/lib/i18n";
 import { ContactForm } from "@/components/contact-form";
 import { MapEmbed } from "@/components/map-embed";
+import { whatsappHref } from "@/lib/contact";
 
 export function ContactContent() {
   const { t } = useLang();
@@ -51,7 +52,7 @@ export function ContactContent() {
             </div>
             <div>
               <a
-                href="https://wa.me/33753406344"
+                href={whatsappHref(t("wa.greeting"))}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-4 text-sm font-semibold text-white transition-transform duration-200 hover:scale-[1.02]"

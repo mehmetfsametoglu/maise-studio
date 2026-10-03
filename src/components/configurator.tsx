@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLang, LANG_PRICE, type Lang, type DictKey } from "@/lib/i18n";
+import { whatsappHref } from "@/lib/contact";
 
 type BizKey = "cafe" | "clinic" | "hotel";
 type TierKey = "essentiel" | "signature";
@@ -35,8 +36,8 @@ const BUSINESS: {
 ];
 
 // TRY figures are a deliberate Turkey-market price, not a live FX
-// conversion: "anchor" is roughly what the EUR price converts to (~56
-// TRY/EUR, reviewed periodically), "discounted" is the actual launch price
+// conversion: "anchor" is roughly what the EUR price converts to
+// (reviewed periodically), "discounted" is the actual launch price
 // shown crossed-out-to-discounted, priced in local terms rather than a
 // straight conversion. Review both alongside the EUR prices, not via a
 // currency API — they're merchandising numbers, not an exchange rate.
@@ -48,8 +49,8 @@ const TIERS: {
   tryAnchor: number;
   tryPrice: number;
 }[] = [
-  { key: "essentiel", nameKey: "tier.essentiel.name", tagKey: "tier.essentiel.tag", price: 400, tryAnchor: 19900, tryPrice: 15000 },
-  { key: "signature", nameKey: "tier.signature.name", tagKey: "tier.signature.tag", price: 690, tryAnchor: 32900, tryPrice: 24900 },
+  { key: "essentiel", nameKey: "tier.essentiel.name", tagKey: "tier.essentiel.tag", price: 399, tryAnchor: 19900, tryPrice: 14900 },
+  { key: "signature", nameKey: "tier.signature.name", tagKey: "tier.signature.tag", price: 699, tryAnchor: 33300, tryPrice: 25200 },
 ];
 
 // A single extra-language surcharge — whichever language is already the
@@ -69,6 +70,13 @@ export function Configurator() {
   const [tier, setTier] = useState<TierKey>("signature");
   const [multilingual, setMultilingual] = useState(false);
   const [langs, setLangs] = useState<Set<Lang>>(new Set());
+  // Compact price bar for phones: shown while the visitor is inside the
+  // section but the full price card is out of view. It is `fixed`, never a
+  // sticky/100vh wrapper, so it cannot trap the page scroll.
+  const sectionRef = useRef<HTMLElement>(null);
+  const priceRef = useRef<HTMLDivElement>(null);
+  const [inSection, setInSection] = useState(false);
+  const [priceInView, setPriceInView] = useState(false);
 
   const b = BUSINESS.find((x) => x.key === biz)!;
   const tr = TIERS.find((x) => x.key === tier)!;
@@ -92,6 +100,22 @@ export function Configurator() {
       return next;
     });
   }, [includedLang]);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const price = priceRef.current;
+    if (!section || !price) return;
+    const sectionObserver = new IntersectionObserver(([e]) => setInSection(e.isIntersecting), {
+      threshold: 0.05,
+    });
+    const priceObserver = new IntersectionObserver(([e]) => setPriceInView(e.isIntersecting));
+    sectionObserver.observe(section);
+    priceObserver.observe(price);
+    return () => {
+      sectionObserver.disconnect();
+      priceObserver.disconnect();
+    };
+  }, []);
 
   const langTotal = [...langs].reduce(
     (sum, l) => sum + (isTRY ? LANG_PRICE_TRY[l] : LANG_PRICE[l]),
@@ -128,7 +152,7 @@ export function Configurator() {
     .join("+")} -> ${priceLabel}`;
 
   return (
-    <section id="configurateur" className="world-burgundy relative bg-background px-6 py-28 md:px-10 md:py-40">
+    <section id="configurateur" ref={sectionRef} className="world-burgundy relative bg-background px-6 py-28 md:px-10 md:py-40">
       <div className="mx-auto max-w-6xl">
         <p className="mb-5 text-[11px] tracking-[0.42em] text-accent uppercase">
           {t("config.kicker")}
@@ -274,7 +298,10 @@ export function Configurator() {
               </AnimatePresence>
             </div>
 
-            <div className="glass-liquid flex flex-col items-start justify-between gap-6 rounded-2xl p-6 sm:flex-row sm:items-center">
+            <div
+              ref={priceRef}
+              className="glass-liquid flex flex-col items-start justify-between gap-6 rounded-2xl p-6 sm:flex-row sm:items-center"
+            >
               <div>
                 <div className="flex items-center gap-2">
                   <p className="text-xs tracking-widest text-muted-foreground uppercase">
@@ -307,17 +334,17 @@ export function Configurator() {
                 </p>
               </div>
               <a
-                href={`https://wa.me/33753406344?text=${encodeURIComponent(message)}`}
+                href={whatsappHref(message)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full bg-accent px-7 py-3.5 text-xs font-medium tracking-widest text-accent-foreground uppercase transition-transform duration-200 hover:scale-[1.03]"
+                className="rounded-full bg-accent px-7 py-3.5 text-xs font-medium tracking-widest text-accent-foreground uppercase transition-transform duration-200 hover:scale-[1.03] active:scale-[0.98]"
               >
                 {t("config.cta")}
               </a>
             </div>
           </div>
 
-          <div className="order-first sticky top-20 z-10 -mx-6 bg-background px-6 pb-5 shadow-[0_16px_32px_-16px_rgba(0,0,0,0.45)] md:-mx-10 md:px-10 lg:order-none lg:top-28 lg:m-0 lg:self-start lg:bg-transparent lg:p-0 lg:shadow-none">
+          <div className="order-first lg:sticky lg:top-28 lg:order-none lg:self-start">
             <div className="glass-liquid relative overflow-hidden rounded-[1.75rem] p-2">
               <div
                 className="relative w-full overflow-hidden rounded-[1.4rem]"
@@ -363,6 +390,36 @@ export function Configurator() {
           </div>
         </div>
       </div>
+
+      <AnimatePresence>
+        {inSection && !priceInView && (
+          <motion.div
+            key="price-bar"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 24 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="glass-liquid fixed inset-x-4 bottom-4 z-40 flex items-center justify-between gap-3 rounded-full py-2 pr-2 pl-5 lg:hidden"
+          >
+            <div className="min-w-0">
+              <p className="truncate text-[10px] tracking-widest text-muted-foreground uppercase">
+                {t(tr.nameKey)}
+              </p>
+              <p className="display text-xl leading-tight text-accent">
+                {isTRY ? `${total.toLocaleString("tr-TR")}₺` : `€${total.toLocaleString("fr-FR")}`}
+              </p>
+            </div>
+            <a
+              href={whatsappHref(message)}
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              className="shrink-0 rounded-full bg-accent px-5 py-3 text-[11px] font-semibold tracking-widest whitespace-nowrap text-accent-foreground uppercase active:scale-[0.97]"
+            >
+              {t("config.cta")}
+            </a>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

@@ -20,10 +20,25 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
+const SITE_URL = "https://maisestudio.com";
+const TITLE = "Maisé Studio — Digital craftsmanship for ambitious brands";
+const DESCRIPTION =
+  "Maisé Studio designs and builds premium, bespoke websites — from café menus to luxury hospitality. Paris.";
+
 export const metadata: Metadata = {
-  title: "Maisé Studio — Digital craftsmanship for ambitious brands",
-  description:
-    "Maisé Studio designs and builds premium, bespoke websites — from café menus to luxury hospitality. Paris.",
+  metadataBase: new URL(SITE_URL),
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName: "Maisé Studio",
+    url: SITE_URL,
+    title: TITLE,
+    description: DESCRIPTION,
+    locale: "fr_FR",
+  },
+  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION },
 };
 
 // Read by search engines and, increasingly, by AI assistants (ChatGPT,
@@ -36,7 +51,7 @@ const ORG_JSON_LD = {
   name: "Maisé Studio",
   description:
     "Paris-based web design and development studio building bespoke websites for restaurants, hotels, clinics and boutiques.",
-  url: "https://maisestudio.fr",
+  url: "https://maisestudio.com",
   email: "studiomaise@gmail.com",
   areaServed: ["FR", "TR"],
   address: { "@type": "PostalAddress", addressLocality: "Paris", addressCountry: "FR" },

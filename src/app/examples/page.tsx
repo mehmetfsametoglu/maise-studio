@@ -11,6 +11,7 @@ import { RealWork } from "@/components/real-work";
 import { ExamplesCta } from "@/components/examples-cta";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/examples" },
   title: "Exemples — Maisé Studio",
   description:
     "Démonstrations interactives : réservation, paiement, menu, carte, galerie. Un aperçu de ce que Maisé Studio peut construire.",

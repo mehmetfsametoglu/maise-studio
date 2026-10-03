@@ -3,8 +3,12 @@ import { StudioIntro } from "@/components/studio-intro";
 import { StudioVisual } from "@/components/studio-visual";
 import { StudioProcess } from "@/components/studio-process";
 import { Capabilities } from "@/components/capabilities";
+import { BrandIntro } from "@/components/brand-intro";
+import { Services } from "@/components/services";
+import { ScrollVideo } from "@/components/scroll-video";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/studio" },
   title: "Studio — Maisé Studio",
   description: "Comment Maisé Studio conçoit et développe un site, du brief à la mise en ligne.",
 };
@@ -13,6 +17,9 @@ export default function StudioPage() {
   return (
     <div>
       <StudioIntro />
+      <BrandIntro />
+      <Services />
+      <ScrollVideo />
       <StudioVisual
         src="/studio/interior.png"
         alt="Maisé Studio — brand aesthetic"

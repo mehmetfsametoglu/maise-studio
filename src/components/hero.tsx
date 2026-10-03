@@ -125,7 +125,7 @@ export function Hero() {
               <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
               <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
               <span className="ml-2 truncate rounded-full bg-white/[0.06] px-3 py-1 text-[10px] text-white/40">
-                maisestudio.fr
+                maisestudio.com
               </span>
             </div>
             <div className="relative aspect-[4/3] w-full">

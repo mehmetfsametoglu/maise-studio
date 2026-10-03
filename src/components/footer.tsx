@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LogoMark } from "@/components/logo-mark";
 import { useLang } from "@/lib/i18n";
+import { whatsappHref } from "@/lib/contact";
 
 export function Footer() {
   const { t } = useLang();
@@ -33,7 +34,7 @@ export function Footer() {
               {t("footer.ctaButton")}
             </Link>
             <a
-              href="https://wa.me/33753406344"
+              href={whatsappHref()}
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-full border border-border px-8 py-4 text-sm font-semibold text-foreground transition-colors hover:bg-muted"
@@ -63,7 +64,7 @@ export function Footer() {
 
           <div className="flex flex-col gap-2 text-sm">
             <a
-              href="https://wa.me/33753406344"
+              href={whatsappHref()}
               target="_blank"
               rel="noopener noreferrer"
               className="text-foreground/80 transition-colors hover:text-accent"

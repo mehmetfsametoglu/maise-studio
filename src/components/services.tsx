@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { Code, LayoutTemplate, LifeBuoy, Palette, Search, Sparkles } from "lucide-react";
 import { useReveal } from "@/hooks/use-reveal";
 import { useLang, type DictKey } from "@/lib/i18n";
@@ -38,16 +37,10 @@ export function Services() {
               {t("services.title")}
             </h2>
             <p className="mt-6 max-w-sm text-muted-foreground">{t("services.body")}</p>
-            <Link
-              href="/studio"
-              className="mt-8 inline-flex items-center gap-2 text-sm text-foreground underline decoration-border underline-offset-4 transition-colors hover:decoration-accent"
-            >
-              {t("services.seeAll")}
-            </Link>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            {SERVICES.map((s, i) => (
+            {SERVICES.map((s) => (
               <div
                 key={s.nameKey}
                 className={`group rounded-2xl p-6 transition-all duration-300 md:p-7 ${

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useLang } from "@/lib/i18n";
+import { useScrubCapable } from "@/hooks/use-scrub-capable";
 
 const FRAMES = [
   { src: "/img/beaute-sillas.png", size: "portrait", n: "01", industryKey: "album.i1" },
@@ -23,6 +24,44 @@ const SIZE_CLASS: Record<string, string> = {
 };
 
 export function PhotoAlbum() {
+  const capable = useScrubCapable();
+  // Phones and tablets get a plain swipeable strip: no pinned section, no
+  // scroll hijacking, nothing that can hold the page in place.
+  return capable ? <PinnedAlbum /> : <SwipeAlbum />;
+}
+
+function SwipeAlbum() {
+  const { t } = useLang();
+  return (
+    <section className="world-noir relative bg-background py-20 md:py-28">
+      <div className="px-6 md:px-10">
+        <p className="mb-4 text-[11px] tracking-[0.42em] text-accent uppercase">
+          {t("album.kicker")}
+        </p>
+        <h2 className="display max-w-xl text-[clamp(1.8rem,4.4vw,3rem)] text-foreground">
+          {t("album.title")}
+        </h2>
+      </div>
+      <div className="no-scrollbar mt-10 flex snap-x snap-mandatory items-center gap-5 overflow-x-auto px-6 pb-2 md:gap-8 md:px-10">
+        {FRAMES.map((f) => (
+          <figure
+            key={f.src}
+            className={`relative shrink-0 snap-center overflow-hidden rounded-2xl ${SIZE_CLASS[f.size]}`}
+          >
+            <Image src={f.src} alt="" fill sizes="60vw" className="object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
+            <figcaption className="glass-liquid absolute bottom-4 left-4 rounded-full px-4 py-2">
+              <span className="text-[10px] tracking-[0.2em] text-accent">{f.n}</span>
+              <span className="ml-2 text-xs text-foreground">{t(f.industryKey)}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function PinnedAlbum() {
   const { t } = useLang();
   const ref = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);

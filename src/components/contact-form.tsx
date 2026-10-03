@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useLang, type DictKey } from "@/lib/i18n";
+import { CONTACT_REDIRECT } from "@/lib/contact";
 
 const PROJECT_OPTIONS: { key: string; labelKey: DictKey }[] = [
   { key: "restaurant", labelKey: "contactform.opt.restaurant" },
@@ -44,10 +45,12 @@ export function ContactForm() {
 
   return (
     <form
+      method="post"
+      action={CONTACT_REDIRECT}
+      target="_blank"
+      rel="noopener noreferrer"
       onSubmit={(e) => {
-        e.preventDefault();
-        if (!canSend) return;
-        window.open(`https://wa.me/33753406344?text=${encodeURIComponent(waMessage)}`, "_blank", "noopener,noreferrer");
+        if (!canSend) e.preventDefault();
       }}
       className="glass-liquid flex flex-col gap-4 rounded-[1.75rem] p-8 md:p-10"
     >
@@ -82,6 +85,8 @@ export function ContactForm() {
           className="resize-none rounded-xl border border-border bg-transparent px-4 py-3 text-sm text-foreground outline-none focus:border-accent"
         />
       </label>
+
+      <input type="hidden" name="text" value={waMessage} />
 
       <button
         type="submit"

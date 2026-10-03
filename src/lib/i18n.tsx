@@ -43,9 +43,14 @@ const dict = {
     "geo.kicker": "Visibilité IA",
     "geo.title": "Trouvé par vos clients. Recommandé par leur IA.",
     "geo.body":
-      "De plus en plus de gens demandent carrément à ChatGPT ou à Gemini où aller, avant même d'ouvrir Instagram. \"Le meilleur café du 10e\", \"un hôtel calme près de Bastille\"... Ces IA lisent des sites web, pas des stories qui disparaissent au bout de 24 heures. Si votre site n'est pas construit pour ça, vous n'existez tout simplement pas dans leur réponse.",
+      "Vos clients demandent de plus en plus à ChatGPT ou à Gemini où aller. Ces IA lisent des sites web, pas des stories qui disparaissent en 24 heures. Si le vôtre n'est pas construit pour elles, vous n'existez pas dans leur réponse.",
     "geo.tag":
-      "On construit chaque site pour que Google et les IA le comprennent dès la mise en ligne, pas comme une option qu'on ajoute plus tard.",
+      "Chaque site que nous construisons est lisible par Google et par les IA dès le premier jour.",
+    "geo.q": "Un café calme et soigné près de Bastille ?",
+    "geo.a.intro": "Voici ce que je recommande :",
+    "geo.a.you": "Votre établissement",
+    "geo.a.you.desc": "Horaires, menu et adresse lus directement sur le site.",
+    "geo.mock": "Illustration",
     "geo.p1.title": "Référencement classique",
     "geo.p1.body": "Titres, balises, vitesse de chargement, structure des pages : les bases du SEO, faites sérieusement.",
     "geo.p2.title": "Compris par les IA",
@@ -71,7 +76,6 @@ const dict = {
     "services.s5desc": "Structuré pour Google et compris par les assistants IA dès la mise en ligne.",
     "services.s6": "Suivi & maintenance",
     "services.s6desc": "Le site évolue avec vous : mises à jour, ajustements, assistance après la mise en ligne.",
-    "services.seeAll": "Voir tous nos services →",
 
     "process.kicker": "Notre méthode",
     "process.title": "De l'idée au site en ligne.",
@@ -117,6 +121,10 @@ const dict = {
     "sv.c3.title": "Ce niveau, pour votre marque.",
     "sv.c3.body":
       "Ce que vous voyez ici n'est pas une démonstration abstraite : c'est exactement ce que nous livrons à nos clients.",
+    "sv.c1.more": "Une scène pensée pour votre marque, calée sur le défilement : le visiteur avance, l'image avance avec lui. Idéal pour un lieu, un produit, une ambiance.",
+    "sv.c2.more": "Le même principe guide la lecture : sections qui arrivent au bon moment, textes qui accompagnent l'image, aucun saut brusque. Sur mobile, on passe à une boucle légère pour garder la fluidité et la batterie.",
+    "sv.c3.more": "Un site qui se raconte au lieu de simplement s'afficher. Chaque effet a une raison d'être : retenir l'attention, puis mener vers la réservation ou le message.",
+    "sv.mobileHint": "Sur ordinateur, cette scène suit votre défilement image par image.",
 
     "album.kicker": "Un savoir-faire, en images",
     "album.title": "Des univers différents, une même exigence.",
@@ -333,9 +341,14 @@ const dict = {
     "geo.kicker": "AI Visibility",
     "geo.title": "Found by your customers. Recommended by their AI.",
     "geo.body":
-      "More people are asking ChatGPT or Gemini where to go before they even open Instagram. \"Best coffee shop nearby,\" \"a quiet hotel near downtown\"... These tools read websites, not stories that disappear after 24 hours. If your site isn't built for that, you simply don't exist in their answer.",
+      "Your customers increasingly ask ChatGPT or Gemini where to go. Those AIs read websites, not stories that vanish in 24 hours. If yours isn't built for them, you don't exist in their answer.",
     "geo.tag":
-      "We build every site so Google and AI assistants understand it from the day it goes live, not as something bolted on later.",
+      "Every site we build is readable by Google and by AI from day one.",
+    "geo.q": "A calm, well-made café near Bastille?",
+    "geo.a.intro": "Here is what I would recommend:",
+    "geo.a.you": "Your business",
+    "geo.a.you.desc": "Hours, menu and address read straight from the site.",
+    "geo.mock": "Illustration",
     "geo.p1.title": "Classic SEO",
     "geo.p1.body": "Titles, tags, load speed, page structure: the basics of SEO, done properly.",
     "geo.p2.title": "Understood by AI",
@@ -361,7 +374,6 @@ const dict = {
     "services.s5desc": "Structured for Google and understood by AI assistants from day one.",
     "services.s6": "Ongoing support",
     "services.s6desc": "The site grows with you: updates, adjustments, help after launch.",
-    "services.seeAll": "See all our services →",
 
     "process.kicker": "Our method",
     "process.title": "From idea to live site.",
@@ -407,6 +419,10 @@ const dict = {
     "sv.c3.title": "This level, for your brand.",
     "sv.c3.body":
       "What you're seeing isn't an abstract demo — it's exactly what we ship for our clients.",
+    "sv.c1.more": "A scene built for your brand and tied to scrolling: the visitor moves, the image moves with them. Ideal for a venue, a product, a mood.",
+    "sv.c2.more": "The same idea guides reading: sections that arrive at the right moment, text that accompanies the image, no abrupt jumps. On mobile we switch to a light loop to keep things smooth and save battery.",
+    "sv.c3.more": "A site that tells its story instead of just displaying itself. Every effect has a reason: hold attention, then lead to the booking or the message.",
+    "sv.mobileHint": "On desktop, this scene follows your scrolling frame by frame.",
 
     "album.kicker": "One craft, many worlds",
     "album.title": "Different industries, the same standard.",
@@ -620,9 +636,14 @@ const dict = {
     "geo.kicker": "Yapay Zeka Görünürlüğü",
     "geo.title": "Müşteriniz sizi bulsun. Yapay zekası sizi önersin.",
     "geo.body":
-      "Artık pek çok kişi Instagram'ı açmadan önce ChatGPT'ye ya da Gemini'ye soruyor. \"Yakınımdaki en iyi kafe\", \"merkeze yakın sakin bir otel\"... Bu yapay zekalar 24 saatte kaybolan story'leri değil, web sitelerini okuyor. Siteniz buna göre kurulmadıysa, onların cevabında basitçe yoksunuz demektir.",
+      "Müşterileriniz giderek daha sık ChatGPT'ye ya da Gemini'ye nereye gideceklerini soruyor. Bu yapay zekalar 24 saatte kaybolan hikayeleri değil, web sitelerini okur. Siteniz buna göre kurulmadıysa, verdikleri cevapta yoksunuz.",
     "geo.tag":
-      "Her Maisé sitesini, yayına girdiği ilk günden itibaren hem Google hem de yapay zeka asistanları anlayacak şekilde kuruyoruz, sonradan eklenen bir özellik olarak değil.",
+      "Yaptığımız her site, yayına girdiği ilk günden itibaren Google ve yapay zeka tarafından anlaşılır.",
+    "geo.q": "Bastille yakınında sakin, özenli bir kafe var mı?",
+    "geo.a.intro": "Benim önerim şu:",
+    "geo.a.you": "İşletmeniz",
+    "geo.a.you.desc": "Saatler, menü ve adres doğrudan siteden okunur.",
+    "geo.mock": "Örnek görsel",
     "geo.p1.title": "Klasik SEO",
     "geo.p1.body": "Başlıklar, etiketler, yüklenme hızı, sayfa yapısı: SEO'nun temelleri, gerçekten doğru yapılmış.",
     "geo.p2.title": "Yapay Zeka Tarafından Anlaşılır",
@@ -648,7 +669,6 @@ const dict = {
     "services.s5desc": "Yayına girdiği andan itibaren Google ve yapay zeka asistanları tarafından anlaşılır şekilde yapılandırılır.",
     "services.s6": "Sürekli destek",
     "services.s6desc": "Site sizinle birlikte gelişir: güncellemeler, ince ayarlar, yayın sonrası destek.",
-    "services.seeAll": "Tüm hizmetlerimiz →",
 
     "process.kicker": "Yöntemimiz",
     "process.title": "Fikirden yayındaki siteye.",
@@ -694,6 +714,10 @@ const dict = {
     "sv.c3.title": "Bu seviye, sizin markanız için.",
     "sv.c3.body":
       "Burada gördüğünüz soyut bir demo değil — müşterilerimize tam olarak bunu teslim ediyoruz.",
+    "sv.c1.more": "Markanıza göre kurgulanmış, kaydırmaya bağlı bir sahne: ziyaretçi ilerler, görüntü de onunla birlikte ilerler. Bir mekan, bir ürün ya da bir atmosfer için ideal.",
+    "sv.c2.more": "Aynı fikir okumayı da yönlendirir: doğru anda gelen bölümler, görüntüye eşlik eden metinler, ani sıçramalar yok. Mobilde akıcılığı ve pili korumak için hafif bir döngüye geçiyoruz.",
+    "sv.c3.more": "Kendini sadece göstermek yerine anlatan bir site. Her efektin bir nedeni var: dikkati tutmak, sonra rezervasyona ya da mesaja yönlendirmek.",
+    "sv.mobileHint": "Bilgisayarda bu sahne kaydırmanızı kare kare takip eder.",
 
     "album.kicker": "Tek ustalık, birçok dünya",
     "album.title": "Farklı sektörler, aynı standart.",
