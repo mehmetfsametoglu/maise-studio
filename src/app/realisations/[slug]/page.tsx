@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import { PROJECTS, getProject } from "@/lib/projects";
 import { getService } from "@/lib/services";
 import { L, UI } from "@/lib/l10n";
@@ -11,6 +11,7 @@ import {
   CaseShots,
   ClosingCta,
   ContentSection,
+  LivePreview,
   PageHero,
   ProjectLinkCard,
   Summary,
@@ -109,12 +110,10 @@ export default async function CaseStudyPage({ params }: Props) {
       >
         <div className="mt-8 flex flex-wrap gap-3">
           <a
-            href={p.url}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#apercu"
             className="inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3.5 text-sm font-semibold whitespace-nowrap text-accent-foreground transition-transform duration-200 hover:scale-[1.03] active:scale-[0.98]"
           >
-            <T l={UI.viewLive} /> <ArrowUpRight size={16} aria-hidden />
+            <T l={UI.viewLive} /> <ArrowDown size={16} aria-hidden />
           </a>
         </div>
       </PageHero>
@@ -134,6 +133,10 @@ export default async function CaseStudyPage({ params }: Props) {
             </div>
           ))}
         </dl>
+      </ContentSection>
+
+      <ContentSection id="apercu" title={UI.previewTitle}>
+        <LivePreview concept={p} real />
       </ContentSection>
 
       <ContentSection title={UI.design}>

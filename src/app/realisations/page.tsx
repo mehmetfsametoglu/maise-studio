@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { WorkIndex } from "@/components/work-index";
+import { ConceptSites } from "@/components/concept-sites";
 import { PROJECTS } from "@/lib/projects";
 import { JsonLd, breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site";
@@ -34,6 +35,7 @@ export default function RealisationsPage() {
         ]}
       />
       <WorkIndex />
+      <ConceptSites />
     </>
   );
 }

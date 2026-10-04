@@ -8,8 +8,6 @@ import { L } from "@/lib/l10n";
 export type Concept = {
   slug: string;
   name: string;
-  /** Live address of the example site. */
-  url: string;
   shots: {
     desktop: { src: string; alt: L };
     mobile: { src: string; alt: L };
@@ -30,7 +28,6 @@ export const CONCEPTS: Concept[] = [
   {
     slug: "maison-vesper",
     name: "Maison Vesper",
-    url: "https://maison-vesper-concept.lovable.app",
     shots: {
       desktop: {
         src: "/work/shots/maison-vesper-desktop.webp",
@@ -86,7 +83,6 @@ export const CONCEPTS: Concept[] = [
   {
     slug: "lumea-skin",
     name: "Lumea Skin Clinic",
-    url: "https://lumeaskin-calm-concept.lovable.app",
     shots: {
       desktop: {
         src: "/work/shots/lumea-skin-desktop.webp",

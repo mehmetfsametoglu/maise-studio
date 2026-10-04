@@ -342,10 +342,15 @@ export function ConceptCard({ concept }: { concept: Concept }) {
   );
 }
 
-// Interactive preview of an example site inside ours. Nothing is requested from
-// the example site until the visitor clicks. The iframe is taller than its
-// frame so the host platform's corner badge falls outside the visible area.
-export function LivePreview({ concept }: { concept: Concept }) {
+// Interactive preview of a client or example site inside ours. Nothing is
+// requested from that site until the visitor clicks.
+export function LivePreview({
+  concept,
+  real = false,
+}: {
+  concept: { slug: string; name: string; shots: Project["shots"] };
+  real?: boolean;
+}) {
   const r = useText();
   const [loaded, setLoaded] = useState(false);
   const [device, setDevice] = useState<"desktop" | "phone">("desktop");
@@ -369,9 +374,9 @@ export function LivePreview({ concept }: { concept: Concept }) {
           ))}
         </div>
         <a
-          href={concept.url}
+          href={`/go/${concept.slug}`}
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener noreferrer nofollow"
           className="inline-flex items-center gap-1.5 text-sm text-accent underline-offset-4 hover:underline"
         >
           {r(UI.previewOpen)} <ArrowUpRight size={14} aria-hidden />
@@ -385,11 +390,10 @@ export function LivePreview({ concept }: { concept: Concept }) {
       >
         {loaded ? (
           <iframe
-            src={concept.url}
+            src={`/go/${concept.slug}`}
             title={concept.name}
             loading="lazy"
-            className="absolute top-0 left-0 w-full border-0"
-            style={{ height: "calc(100% + 72px)" }}
+            className="absolute inset-0 h-full w-full border-0"
           />
         ) : (
           <>
@@ -412,7 +416,7 @@ export function LivePreview({ concept }: { concept: Concept }) {
           </>
         )}
       </div>
-      <p className="mt-3 text-xs text-muted-foreground">{r(UI.previewNote)}</p>
+      <p className="mt-3 text-xs text-muted-foreground">{r(real ? UI.previewNoteReal : UI.previewNote)}</p>
     </div>
   );
 }

@@ -30,6 +30,10 @@ Chaque fiche reprend ce qui est visible sur le site en ligne du client (menus, h
 
 Maison Vesper (hôtel) et Lumea Skin Clinic (clinique) sont des sites que vous avez fait dessiner pour des lieux imaginaires. Ils sont présentés partout comme « site d'exemple, pas un projet client » (page Démos, pages Hôtels et Commerces, page de chaque exemple). Gardez cette mention : ne les déplacez jamais dans « Réalisations ». Leurs boutons WhatsApp doivent passer par `https://www.maisestudio.com/api/contact-redirect?text=...` pour ne jamais publier votre numéro.
 
+## Adresses des sites clients et d'exemple
+
+Les adresses d'hébergement des six sites sont dans `src/lib/outbound.ts`, un fichier lu seulement par le serveur. Les pages ne les contiennent pas : les boutons et les aperçus passent par `/go/<nom>`. Pour ajouter un projet ou changer une adresse (par exemple le jour où un client a son propre nom de domaine), modifiez ce fichier. Le badge « Edit with Lovable » est masqué dans les réglages Lovable des six projets (Settings, Publishing, Hide Lovable badge). Un nouveau projet Lovable aura le badge tant que ce réglage n'est pas activé.
+
 ## Traductions
 
 Les versions anglaise et turque des pages de services, des études de cas, de la FAQ et de la page de confidentialité ont été écrites à partir du français, sans relecture par une personne dont c'est la langue. Faites-les relire, surtout le turc, qui touche vos clients à Istanbul. Les textes sont dans `src/lib/services.ts`, `projects.ts`, `faq.ts` et `l10n.ts`.

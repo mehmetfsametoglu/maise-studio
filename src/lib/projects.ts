@@ -13,8 +13,6 @@ export type Project = {
   name: string;
   /** Page heading. The French one matches the SEO title. */
   h1: L;
-  /** Live site of the client. */
-  url: string;
   /** Editorial photo, used for the social card. */
   image: string;
   /** Real captures of the live site, taken at 1440 px and 390 px wide. */
@@ -54,7 +52,6 @@ export const PROJECTS: Project[] = [
     slug: "le-40",
     name: "Le 40",
     h1: L("Le 40, site web d'un bar à Paris", "Le 40, a bar's website in Paris", "Le 40, Paris'te bir barın web sitesi"),
-    url: "https://lequarante.lovable.app",
     image: "/work/lequarante.jpg",
     shots: {
       desktop: {
@@ -112,7 +109,6 @@ export const PROJECTS: Project[] = [
     slug: "route-95",
     name: "Route 95",
     h1: L("Route 95, site web d'un restaurant à Istanbul", "Route 95, a restaurant's website in Istanbul", "Route 95, İstanbul'da bir restoranın web sitesi"),
-    url: "https://route95.lovable.app",
     image: "/work/route95.jpg",
     shots: {
       desktop: {
@@ -170,7 +166,6 @@ export const PROJECTS: Project[] = [
     slug: "voler-coffee",
     name: "Vøler Coffee & Breakfast",
     h1: L("Vøler Coffee, site web d'un café à Istanbul", "Vøler Coffee, a café's website in Istanbul", "Vøler Coffee, İstanbul'da bir kafenin web sitesi"),
-    url: "https://voolercoffee.lovable.app",
     image: "/work/voolercoffee.jpg",
     shots: {
       desktop: {
@@ -229,7 +224,6 @@ export const PROJECTS: Project[] = [
     slug: "bloom-mosaic",
     name: "Bloom Mosaic Studio",
     h1: L("Bloom Mosaic, site d'un atelier à Los Angeles", "Bloom Mosaic, a workshop's website in Los Angeles", "Bloom Mosaic, Los Angeles'ta bir atölyenin web sitesi"),
-    url: "https://mosaic-motion-studio.lovable.app",
     image: "/work/bloom-mosaic.jpg",
     shots: {
       desktop: {

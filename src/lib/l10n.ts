@@ -117,6 +117,11 @@ export const UI = {
     "The preview loads only when you click. The contact buttons of the example site are for demonstration only.",
     "Önizleme yalnızca tıkladığınızda yüklenir. Örnek sitedeki iletişim düğmeleri yalnızca gösterim içindir.",
   ),
+  previewNoteReal: L(
+    "L'aperçu se charge seulement quand vous cliquez. C'est le vrai site du client, tel qu'il est en ligne.",
+    "The preview loads only when you click. It is the client's real site, as it is online.",
+    "Önizleme yalnızca tıkladığınızda yüklenir. Bu, müşterinin gerçek sitesidir, yayındaki haliyle.",
+  ),
   previewOpen: L("Ouvrir dans un nouvel onglet", "Open in a new tab", "Yeni sekmede aç"),
   deviceDesktop: L("Ordinateur", "Computer", "Bilgisayar"),
   devicePhone: L("Téléphone", "Phone", "Telefon"),
