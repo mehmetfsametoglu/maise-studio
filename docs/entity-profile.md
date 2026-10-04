@@ -11,6 +11,7 @@ Les faits viennent de `src/lib/site.ts`. Si vous changez l'un, changez l'autre.
 | Catégorie | Studio de design et développement web (agence web) |
 | Lieu | Paris, France |
 | E-mail | studiomaise@gmail.com |
+| Instagram | @maisestudio.fr (français), @maisestudio.tr (turc) |
 | WhatsApp | via la page https://www.maisestudio.com/contact (le numéro n'est volontairement pas publié sur le site) |
 | Disponibilité | Tous les jours, 9h à 19h (heure de Paris), réponse en moins de 3 heures |
 | Langues | Français, anglais, turc |
@@ -38,4 +39,9 @@ Le 40 (bar, Paris), Route 95 (restaurant, Istanbul), Vøler Coffee & Breakfast (
 
 ## Profils sociaux vérifiés
 
-Aucun pour l'instant. À ajouter ici, puis dans `SITE.sameAs` (`src/lib/site.ts`), uniquement quand les profils existent vraiment et sont à jour. Le JSON-LD les reprendra automatiquement.
+- Instagram (français) : https://www.instagram.com/maisestudio.fr/ (nom affiché : « Maisé Studio — Paris »)
+- Instagram (turc) : https://www.instagram.com/maisestudio.tr/ (nom affiché : « Maisé Studio | Web Tasarım »)
+
+Les deux sont dans `SITE.instagram` (`src/lib/site.ts`) : le pied de page et le JSON-LD (`sameAs`) les reprennent. Pour un profil à ajouter (LinkedIn par exemple), l'ajouter dans la même liste, uniquement quand il existe et est à jour.
+
+Conseil : donnez au compte turc le même nom qu'en français, avec seulement la langue qui change (par exemple « Maisé Studio | Paris »), et la même phrase de présentation. Les moteurs de recherche relient mieux les profils quand le nom est identique.

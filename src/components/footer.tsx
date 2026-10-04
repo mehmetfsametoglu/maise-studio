@@ -101,6 +101,13 @@ export function Footer() {
                   {SITE.email}
                 </a>
               </li>
+              {SITE.instagram.map((i) => (
+                <li key={i.handle}>
+                  <a href={i.url} target="_blank" rel="noopener noreferrer me" className={linkClass}>
+                    {i.label}
+                  </a>
+                </li>
+              ))}
               <li className="text-xs text-muted-foreground">{t("contact.hours.value")}</li>
             </ul>
           </div>
@@ -122,7 +129,6 @@ export function Footer() {
               </Link>
             </li>
           </ul>
-          {/* Instagram / LinkedIn go here once the real profile URLs are confirmed. */}
         </div>
       </div>
     </footer>

@@ -30,7 +30,7 @@ La canonique doit commencer par `https://www.maisestudio.com`. `/work` doit rép
 ## B. Ce que vous devez faire (impossible depuis le code)
 
 1. **Variable `WHATSAPP_NUMBER`** dans Vercel (Settings, Environment Variables, Production). Sans elle, tous les boutons WhatsApp renvoient vers `/contact`. Redéployer après l'avoir ajoutée.
-2. **Domaine** : brancher `www.maisestudio.com` au projet Vercel et choisir **une seule** adresse principale. Le code suppose `www`. Faire rediriger `maisestudio.com` vers `www.maisestudio.com` dans les réglages de domaine de Vercel (301). Si vous préférez l'adresse sans `www`, changez `SITE.url` dans `src/lib/site.ts` : tout le reste suit.
+2. **Domaine** : déjà branché à Vercel, et `maisestudio.com` redirige déjà vers `www.maisestudio.com` (vérifié le 4 octobre 2026). `www.maisestudio.com` est donc l'adresse officielle, et c'est celle que le code utilise (`SITE.url` dans `src/lib/site.ts`). Ne changez pas le sens de cette redirection dans Vercel sans changer `SITE.url` en même temps.
 3. **Search Console** : vérifier le domaine, envoyer le sitemap, inspecter les URL importantes, surveiller l'indexation et les erreurs 404.
 4. **Bing Webmaster Tools** : importer le site depuis Search Console, envoyer le sitemap.
 5. **Mentions légales** : compléter `src/app/mentions-legales/page.tsx` (forme juridique, numéro d'immatriculation, adresse), vérifier l'hébergeur indiqué, puis retirer `noindex` dans les deux pages légales (`confidentialite` aussi).

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { SITE, absoluteUrl } from "@/lib/site";
+import { SITE, SAME_AS, absoluteUrl } from "@/lib/site";
 
 // One metadata pattern for every page: unique title and description, a
 // self-referencing canonical, Open Graph and Twitter tags with absolute URLs.
@@ -77,7 +77,7 @@ export const ORGANIZATION_JSON_LD = {
       closes: "19:00",
     },
   },
-  ...(SITE.sameAs.length ? { sameAs: [...SITE.sameAs] } : {}),
+  ...(SAME_AS.length ? { sameAs: SAME_AS } : {}),
 };
 
 export const WEBSITE_JSON_LD = {

@@ -7,8 +7,8 @@ Le code rend le site lisible et indexable. Il ne peut pas créer de réputation.
 1. **Google Search Console** : vérifier le domaine, envoyer `https://www.maisestudio.com/sitemap.xml`, demander l'indexation de l'accueil, de `/realisations`, de `/services` et des 5 pages de service.
 2. **Google Business Profile** : créer la fiche seulement si Maisé a une adresse où recevoir des clients, ou en zone de service sans afficher d'adresse. Reprendre le profil de `docs/entity-profile.md` mot pour mot. Ne pas inventer d'adresse.
 3. **Un seul nom, une seule description, une seule URL** partout (voir `docs/entity-profile.md`).
-4. **LinkedIn** : page entreprise Maisé Studio avec la même description. Ajouter l'URL dans `SITE.sameAs`.
-5. **Instagram** : profil au même nom. Ajouter l'URL dans `SITE.sameAs` et dans le pied de page (commentaire dans `footer.tsx`).
+4. **LinkedIn** : page entreprise Maisé Studio avec la même description. Ajouter ensuite son adresse dans `src/lib/site.ts` (liste `SAME_AS`), pour qu'elle apparaisse dans les données structurées.
+5. **Instagram** : les deux comptes existent (`@maisestudio.fr` et `@maisestudio.tr`) et sont déjà liés depuis le site. À faire : même nom affiché et même phrase de présentation sur les deux, et le lien vers `https://www.maisestudio.com/` dans la bio (il manque peut-être).
 
 ## 2. Ce qui apporte de la confiance (dans les 2 mois)
 
