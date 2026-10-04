@@ -34,6 +34,10 @@ Maison Vesper (hôtel) et Lumea Skin Clinic (clinique) sont des sites que vous a
 
 Les versions anglaise et turque des pages de services, des études de cas, de la FAQ et de la page de confidentialité ont été écrites à partir du français, sans relecture par une personne dont c'est la langue. Faites-les relire, surtout le turc, qui touche vos clients à Istanbul. Les textes sont dans `src/lib/services.ts`, `projects.ts`, `faq.ts` et `l10n.ts`.
 
+## Mesure d'audience
+
+La page de confidentialité affirme que Vercel Web Analytics n'utilise pas de cookie et ne vous suit pas d'un site à l'autre. C'est ce que Vercel annonce dans sa documentation. Si vous voulez une certitude juridique (CNIL, RGPD), faites relire cette phrase par la personne qui rédigera vos mentions légales.
+
 ## Autres
 
 - Hébergeur « Vercel Inc. » dans les mentions légales : à confirmer selon votre hébergement réel.

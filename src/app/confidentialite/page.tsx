@@ -4,7 +4,7 @@ import { L, UI } from "@/lib/l10n";
 import { pageMetadata } from "@/lib/seo";
 import { PageHero, T } from "@/components/page-kit";
 
-// Describes what the code actually does today: no analytics, no advertising
+// Describes what the code actually does today: cookie-free visit counting only, no advertising
 // cookies, no stored form data. If any of that changes, update this page first.
 export const metadata: Metadata = pageMetadata({
   title: "Confidentialité et cookies | Maisé Studio",
@@ -17,9 +17,9 @@ const BLOCKS: { title: L; text: L }[] = [
   {
     title: L("Ce que ce site ne fait pas", "What this site does not do", "Bu sitenin yapmadıkları"),
     text: L(
-      "Aucun outil de mesure d'audience, aucune publicité, aucun cookie de suivi. Pour cette raison, le site n'affiche pas de bannière de cookies.",
-      "No audience measurement tool, no advertising, no tracking cookie. For this reason, the site shows no cookie banner.",
-      "Ziyaretçi ölçüm aracı, reklam ve takip çerezi yoktur. Bu nedenle site bir çerez bildirimi göstermez.",
+      "Aucune publicité, aucun cookie de suivi, aucun profil de visiteur. Le site compte seulement ses visites avec Vercel Web Analytics, un outil sans cookie qui ne vous suit pas d'un site à l'autre. Pour cette raison, le site n'affiche pas de bannière de cookies.",
+      "No advertising, no tracking cookie, no visitor profile. The site only counts its visits with Vercel Web Analytics, a cookie-free tool that does not follow you from site to site. For this reason, the site shows no cookie banner.",
+      "Reklam, takip çerezi ve ziyaretçi profili yoktur. Site yalnızca ziyaret sayısını, sizi siteden siteye takip etmeyen, çerezsiz bir araç olan Vercel Web Analytics ile sayar. Bu nedenle site bir çerez bildirimi göstermez.",
     ),
   },
   {

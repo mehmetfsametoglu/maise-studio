@@ -50,7 +50,7 @@ La canonique doit commencer par `https://www.maisestudio.com`. `/work` doit rép
 
 ## D. Mesure d'audience
 
-Aucun outil de mesure n'est installé, volontairement : pas de bannière de cookies à gérer, pas de suivi avant consentement. Si vous en ajoutez un, choisissez un outil sans cookie (Plausible, Fathom, Umami) ou ajoutez un vrai bandeau de consentement, puis mettez à jour `/confidentialite`.
+Le site utilise **Vercel Web Analytics** (composant `<Analytics />` dans `src/app/layout.tsx`). C'est un outil sans cookie : le site n'affiche donc pas de bannière de cookies, et la page `/confidentialite` le dit. Pour qu'il compte les visites, il faut **l'activer une fois dans Vercel** : projet, onglet Analytics, bouton Enable. Sans cela, rien n'est mesuré (et rien n'est envoyé non plus). Les chiffres apparaissent quelques minutes après les premières visites sur le site déployé, pas en local. Si un jour vous ajoutez un autre outil qui utilise des cookies, il faudra un vrai bandeau de consentement et une mise à jour de `/confidentialite`.
 
 Événements à suivre le jour où un outil est en place :
 

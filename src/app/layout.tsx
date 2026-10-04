@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
@@ -54,6 +55,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <Footer />
           </LanguageProvider>
         </ThemeProvider>
+        {/* Cookie-free visit counts, active once Web Analytics is enabled for the project in Vercel. */}
+        <Analytics />
       </body>
     </html>
   );
