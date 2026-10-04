@@ -51,6 +51,20 @@ export function ContactContent() {
             >
               {t("contact.whatsapp")}
             </a>
+            <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted-foreground">
+              <span>{t("ig.contactLead")}</span>
+              {SITE.instagram.map((i) => (
+                <a
+                  key={i.handle}
+                  href={i.url}
+                  target="_blank"
+                  rel="noopener noreferrer me"
+                  className="rounded-full border border-border px-4 py-2 text-foreground transition-colors hover:border-accent/50 hover:text-accent"
+                >
+                  @{i.handle}
+                </a>
+              ))}
+            </div>
             <div className="mt-8 flex items-center gap-4 text-xs tracking-widest text-muted-foreground uppercase">
               <span className="h-px flex-1 bg-border" />
               {t("contactform.or")}
@@ -89,6 +103,22 @@ export function ContactContent() {
               >
                 {SITE.email}
               </a>
+            </div>
+            <div>
+              <p className="text-xs tracking-widest text-muted-foreground uppercase">Instagram</p>
+              <div className="mt-1 flex flex-col gap-1">
+                {SITE.instagram.map((i) => (
+                  <a
+                    key={i.handle}
+                    href={i.url}
+                    target="_blank"
+                    rel="noopener noreferrer me"
+                    className="text-foreground/85 transition-colors hover:text-accent"
+                  >
+                    @{i.handle}
+                  </a>
+                ))}
+              </div>
             </div>
             <div>
               <p className="text-xs tracking-widest text-muted-foreground uppercase">

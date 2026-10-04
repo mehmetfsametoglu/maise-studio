@@ -9,6 +9,7 @@ import { SectionTransition } from "@/components/section-transition";
 import { MapsDemo } from "@/components/maps-demo";
 import { PhotoAlbum } from "@/components/photo-album";
 import { ExamplesCta } from "@/components/examples-cta";
+import { ConceptSites } from "@/components/concept-sites";
 
 export const metadata: Metadata = pageMetadata({
   title: "Démos : réservation, paiement, menu en ligne | Maisé Studio",
@@ -21,6 +22,7 @@ export default function ExamplesPage() {
   return (
     <div>
       <ExamplesIntro />
+      <ConceptSites />
       <ResponsiveShowcase />
       <BookingDemo />
       <PaymentDemo />

@@ -1,4 +1,5 @@
 import { PROJECTS } from "@/lib/projects";
+import { CONCEPTS } from "@/lib/concepts";
 import { SERVICES } from "@/lib/services";
 import { PACKAGES, EXTRA_LANGUAGE, formatEur } from "@/lib/pricing";
 import { SITE, absoluteUrl } from "@/lib/site";
@@ -21,6 +22,9 @@ ${SERVICES.map((s) => `- [${s.name.fr}](${absoluteUrl(`/services/${s.slug}`)}): 
 ## Selected work
 ${PROJECTS.map((p) => `- [${p.name}](${absoluteUrl(`/realisations/${p.slug}`)}): ${p.sector.fr}, ${p.city}. Langue du site : ${p.siteLanguage.fr.toLowerCase()}.`).join("\n")}
 
+## Example sites (designed by Maisé Studio for imaginary venues, NOT client projects)
+${CONCEPTS.map((c) => `- [${c.name}](${absoluteUrl(`/examples/${c.slug}`)}): ${c.sector.fr}, ${c.city}.`).join("\n")}
+
 ## Pricing (indicative, final quote depends on scope)
 - ${PACKAGES.essentiel.name}: from ${formatEur(PACKAGES.essentiel.eur)}. ${PACKAGES.essentiel.summary}
 - ${PACKAGES.signature.name}: from ${formatEur(PACKAGES.signature.eur)}. ${PACKAGES.signature.summary}
@@ -36,6 +40,7 @@ ${PROJECTS.map((p) => `- [${p.name}](${absoluteUrl(`/realisations/${p.slug}`)}):
 
 ## Contact
 - E-mail: ${SITE.email}
+- Instagram: ${SITE.instagram.map((i) => i.url).join(", ")}
 - Location: Paris, France
 - Availability: every day, 9:00 to 19:00 (Europe/Paris)
 - Languages: French, English, Turkish

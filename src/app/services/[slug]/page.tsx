@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SERVICES, getService } from "@/lib/services";
 import { PROJECTS } from "@/lib/projects";
+import { CONCEPTS } from "@/lib/concepts";
 import { faqById } from "@/lib/faq";
 import { PACKAGES } from "@/lib/pricing";
 import { UI } from "@/lib/l10n";
@@ -11,6 +12,7 @@ import { SITE, absoluteUrl } from "@/lib/site";
 import {
   Callout,
   ClosingCta,
+  ConceptCard,
   ContentSection,
   FaqList,
   ItemGrid,
@@ -44,6 +46,7 @@ export default async function ServicePage({ params }: Props) {
   if (!s) notFound();
 
   const projects = s.projects.map((id) => PROJECTS.find((p) => p.slug === id)!);
+  const concepts = (s.concepts ?? []).map((id) => CONCEPTS.find((c) => c.slug === id)!);
   const faq = faqById(s.faq);
   const url = absoluteUrl(`/services/${s.slug}`);
 
@@ -109,6 +112,16 @@ export default async function ServicePage({ params }: Props) {
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {projects.map((p) => (
               <ProjectLinkCard key={p.slug} project={p} />
+            ))}
+          </div>
+        </ContentSection>
+      )}
+
+      {concepts.length > 0 && (
+        <ContentSection id="exemples" title={UI.conceptSection}>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {concepts.map((c) => (
+              <ConceptCard key={c.slug} concept={c} />
             ))}
           </div>
         </ContentSection>

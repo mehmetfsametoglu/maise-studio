@@ -39,6 +39,14 @@ const BLOCKS: { title: L; text: L }[] = [
     ),
   },
   {
+    title: L("Aperçus des sites d'exemple", "Previews of the example sites", "Örnek site önizlemeleri"),
+    text: L(
+      "Sur les pages des sites d'exemple, l'aperçu interactif est chargé depuis le site d'exemple (hébergé sur lovable.app) seulement si vous cliquez sur le bouton. Avant ce clic, aucune donnée n'est envoyée.",
+      "On the example site pages, the interactive preview is loaded from the example site (hosted on lovable.app) only if you click the button. Before that click, no data is sent.",
+      "Örnek site sayfalarında etkileşimli önizleme, örnek siteden (lovable.app üzerinde barındırılır) yalnızca düğmeye tıklarsanız yüklenir. Bu tıklamadan önce hiçbir veri gönderilmez.",
+    ),
+  },
+  {
     title: L("Google Maps", "Google Maps", "Google Haritalar"),
     text: L(
       "Sur la page des démonstrations, une carte Google Maps d'exemple s'affiche seulement si vous cliquez dessus. Avant ce clic, aucune donnée n'est envoyée à Google.",

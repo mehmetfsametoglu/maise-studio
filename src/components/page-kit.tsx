@@ -2,11 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { ArrowRight, ArrowUpRight, ChevronRight, Plus } from "lucide-react";
 import { useLang, type DictKey } from "@/lib/i18n";
 import { UI, type L } from "@/lib/l10n";
 import type { Faq } from "@/lib/faq";
 import type { Project } from "@/lib/projects";
+import type { Concept } from "@/lib/concepts";
 import type { Item } from "@/lib/services";
 import { PACKAGES, EXTRA_LANGUAGE, formatEur, type TierKey } from "@/lib/pricing";
 
@@ -252,7 +254,7 @@ export function ProjectLinkCard({ project, priority = false }: { project: Projec
 }
 
 // Desktop and phone captures of a live client site, side by side.
-export function CaseShots({ project }: { project: Project }) {
+export function CaseShots({ project }: { project: { shots: Project["shots"] } }) {
   const r = useText();
   return (
     <section className="px-6 pb-16 md:px-10 md:pb-24">
@@ -299,5 +301,118 @@ export function ClosingCta({ title, text }: { title?: Text; text?: Text }) {
         </div>
       </div>
     </section>
+  );
+}
+
+// Card for an example (concept) site. Always carries the "not a client project" label.
+export function ConceptCard({ concept }: { concept: Concept }) {
+  const r = useText();
+  return (
+    <Link
+      href={`/examples/${concept.slug}`}
+      className="group block overflow-hidden rounded-[1.5rem] border border-border bg-card transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1"
+    >
+      <div className="relative aspect-[16/10] overflow-hidden">
+        <Image
+          src={concept.shots.desktop.src}
+          alt={r(concept.shots.desktop.alt)}
+          fill
+          sizes="(min-width: 768px) 45vw, 100vw"
+          className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
+        />
+        <span className="absolute top-4 left-4 rounded-full bg-black/60 px-3 py-1 text-[10px] font-medium tracking-widest text-white uppercase backdrop-blur-md">
+          {r(UI.conceptLabel)}
+        </span>
+      </div>
+      <div className="flex items-start justify-between gap-4 p-6">
+        <div>
+          <p className="text-[11px] tracking-[0.25em] text-muted-foreground uppercase">
+            {r(concept.sector)} · {concept.city}
+          </p>
+          <h3 className="display mt-2 text-2xl text-foreground">{concept.name}</h3>
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{r(concept.summary)}</p>
+        </div>
+        <ArrowUpRight
+          size={18}
+          aria-hidden
+          className="mt-1 shrink-0 text-muted-foreground transition-colors group-hover:text-accent"
+        />
+      </div>
+    </Link>
+  );
+}
+
+// Interactive preview of an example site inside ours. Nothing is requested from
+// the example site until the visitor clicks. The iframe is taller than its
+// frame so the host platform's corner badge falls outside the visible area.
+export function LivePreview({ concept }: { concept: Concept }) {
+  const r = useText();
+  const [loaded, setLoaded] = useState(false);
+  const [device, setDevice] = useState<"desktop" | "phone">("desktop");
+
+  return (
+    <div>
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <div role="group" aria-label={r(UI.previewTitle)} className="flex gap-2">
+          {(["desktop", "phone"] as const).map((d) => (
+            <button
+              key={d}
+              type="button"
+              aria-pressed={device === d}
+              onClick={() => setDevice(d)}
+              className={`min-h-11 rounded-full border px-4 py-2 text-xs font-medium transition-colors focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:outline-none ${
+                device === d ? "border-accent/50 bg-accent/15 text-accent" : "border-border text-foreground/80 hover:border-accent/40"
+              }`}
+            >
+              {r(d === "desktop" ? UI.deviceDesktop : UI.devicePhone)}
+            </button>
+          ))}
+        </div>
+        <a
+          href={concept.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-sm text-accent underline-offset-4 hover:underline"
+        >
+          {r(UI.previewOpen)} <ArrowUpRight size={14} aria-hidden />
+        </a>
+      </div>
+
+      <div
+        className={`relative mx-auto h-[min(72svh,720px)] min-h-[440px] overflow-hidden rounded-2xl border border-border bg-muted transition-[max-width] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          device === "phone" ? "max-w-[390px]" : "max-w-full"
+        }`}
+      >
+        {loaded ? (
+          <iframe
+            src={concept.url}
+            title={concept.name}
+            loading="lazy"
+            className="absolute top-0 left-0 w-full border-0"
+            style={{ height: "calc(100% + 72px)" }}
+          />
+        ) : (
+          <>
+            <Image
+              src={device === "phone" ? concept.shots.mobile.src : concept.shots.desktop.src}
+              alt={r(device === "phone" ? concept.shots.mobile.alt : concept.shots.desktop.alt)}
+              fill
+              sizes="(min-width: 896px) 880px, 90vw"
+              className="object-cover object-top"
+            />
+            <div className="absolute inset-0 flex items-center justify-center bg-black/35">
+              <button
+                type="button"
+                onClick={() => setLoaded(true)}
+                className="rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-accent-foreground transition-transform duration-200 hover:scale-[1.03] active:scale-[0.98]"
+              >
+                {r(UI.previewLoad)}
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+      <p className="mt-3 text-xs text-muted-foreground">{r(UI.previewNote)}</p>
+    </div>
   );
 }

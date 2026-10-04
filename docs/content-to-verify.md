@@ -26,6 +26,10 @@ Le code ne peut pas savoir si ces phrases sont exactes. Elles sont écrites prud
 
 Chaque fiche reprend ce qui est visible sur le site en ligne du client (menus, horaires, langues, boutons). Rien n'est ajouté sur les résultats, le trafic ou les avis. « Rôle de Maisé : conception et développement du site » vient du texte existant « les sites que nous avons faits ». Si votre rôle a été différent sur un projet, corrigez `role` et `services`.
 
+## Sites d'exemple (`src/lib/concepts.ts`)
+
+Maison Vesper (hôtel) et Lumea Skin Clinic (clinique) sont des sites que vous avez fait dessiner pour des lieux imaginaires. Ils sont présentés partout comme « site d'exemple, pas un projet client » (page Démos, pages Hôtels et Commerces, page de chaque exemple). Gardez cette mention : ne les déplacez jamais dans « Réalisations ». Leurs boutons WhatsApp doivent passer par `https://www.maisestudio.com/api/contact-redirect?text=...` pour ne jamais publier votre numéro.
+
 ## Traductions
 
 Les versions anglaise et turque des pages de services, des études de cas, de la FAQ et de la page de confidentialité ont été écrites à partir du français, sans relecture par une personne dont c'est la langue. Faites-les relire, surtout le turc, qui touche vos clients à Istanbul. Les textes sont dans `src/lib/services.ts`, `projects.ts`, `faq.ts` et `l10n.ts`.

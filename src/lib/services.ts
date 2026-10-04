@@ -26,6 +26,8 @@ export type Service = {
   honesty?: { title: L; text: L };
   projects: string[];
   projectsTitle?: L;
+  /** Example (concept) sites shown under a clear "not a client project" label. */
+  concepts?: string[];
   faq: string[];
   serviceType: string;
   /** Shows the price block and adds Offer data to the Service JSON-LD. */
@@ -189,9 +191,9 @@ export const SERVICES: Service[] = [
     honesty: {
       title: L("Pas encore d'hôtel dans nos réalisations", "No hotel in our work yet", "Projelerimizde henüz otel yok"),
       text: L(
-        "Nous n'avons pas encore publié de site d'hôtel. Nous préférons vous le dire. Les projets les plus proches sont nos restaurants, notre bar et notre atelier, que vous pouvez visiter. Si vous avez un hôtel, on en parle avant de faire un devis, pour voir ce qui est réaliste.",
-        "We have not yet published a hotel site. We prefer to tell you. The closest projects are our restaurants, our bar and our workshop, which you can visit. If you run a hotel, we talk before making a quote, to see what is realistic.",
-        "Henüz bir otel sitesi yayınlamadık. Bunu size söylemeyi tercih ediyoruz. En yakın projeler restoranlarımız, barımız ve atölyemiz; hepsini ziyaret edebilirsiniz. Bir otel işletiyorsanız teklif vermeden önce neyin gerçekçi olduğunu görmek için konuşuruz.",
+        "Nous n'avons pas encore de client hôtelier. Pour vous montrer ce que nous ferions, nous avons dessiné nous-mêmes un site pour un hôtel imaginaire, Maison Vesper : ce n'est pas un projet client. Nos projets réels les plus proches sont nos restaurants, notre bar et notre atelier. Si vous avez un hôtel, on en parle avant de faire un devis, pour voir ce qui est réaliste.",
+        "We do not have a hotel client yet. To show you what we would do, we designed a site ourselves for an imaginary hotel, Maison Vesper: it is not a client project. Our closest real projects are our restaurants, our bar and our workshop. If you run a hotel, we talk before making a quote, to see what is realistic.",
+        "Henüz bir otel müşterimiz yok. Neler yapacağımızı göstermek için hayali bir otel olan Maison Vesper için kendimiz bir site tasarladık: bu bir müşteri projesi değildir. Gerçek projelerimizden en yakınları restoranlarımız, barımız ve atölyemizdir. Bir otel işletiyorsanız teklif vermeden önce neyin gerçekçi olduğunu görmek için konuşuruz.",
       ),
     },
     sections: [
@@ -225,6 +227,7 @@ export const SERVICES: Service[] = [
       },
     ],
     projects: ["le-40", "route-95", "bloom-mosaic"],
+    concepts: ["maison-vesper"],
     projectsTitle: L("Ce qui s'en rapproche dans nos réalisations", "What comes closest in our work", "Projelerimizde buna en yakın olanlar"),
     faq: ["prix", "langues", "reservation", "delai"],
     serviceType: "Création de site web pour hôtels",
@@ -257,9 +260,9 @@ export const SERVICES: Service[] = [
     honesty: {
       title: L("Ce qu'on peut montrer aujourd'hui", "What we can show today", "Bugün gösterebileceğimiz"),
       text: L(
-        "Notre exemple le plus proche est Bloom Mosaic Studio, un atelier de Los Angeles. Nous n'avons pas encore publié de site de clinique ou de boutique en ligne. La prise de rendez-vous et le paiement d'acompte sont visibles en démonstration sur la page Démos, et ce ne sont pas des projets clients.",
-        "Our closest example is Bloom Mosaic Studio, a workshop in Los Angeles. We have not yet published a clinic or online shop site. Appointment booking and deposit payment can be seen as demonstrations on the Demos page, and they are not client projects.",
-        "En yakın örneğimiz Los Angeles'taki bir atölye olan Bloom Mosaic Studio. Henüz bir klinik veya online mağaza sitesi yayınlamadık. Randevu alma ve kapora ödemesi Demolar sayfasında demo olarak görülebilir ve bunlar müşteri projesi değildir.",
+        "Notre projet réel le plus proche est Bloom Mosaic Studio, un atelier de Los Angeles. Nous n'avons pas encore de client clinique ou boutique en ligne. Pour une clinique, nous avons dessiné nous-mêmes un site pour un établissement imaginaire, Lumea Skin Clinic : ce n'est pas un projet client. La prise de rendez-vous et le paiement d'acompte sont aussi visibles en démonstration sur la page Démos.",
+        "Our closest real project is Bloom Mosaic Studio, a workshop in Los Angeles. We do not have a clinic or online shop client yet. For a clinic, we designed a site ourselves for an imaginary one, Lumea Skin Clinic: it is not a client project. Appointment booking and deposit payment can also be seen as demonstrations on the Demos page.",
+        "En yakın gerçek projemiz Los Angeles'taki bir atölye olan Bloom Mosaic Studio. Henüz bir klinik veya online mağaza müşterimiz yok. Bir klinik için hayali bir kurum olan Lumea Skin Clinic'e kendimiz bir site tasarladık: bu bir müşteri projesi değildir. Randevu alma ve kapora ödemesi de Demolar sayfasında demo olarak görülebilir.",
       ),
     },
     sections: [
@@ -299,6 +302,7 @@ export const SERVICES: Service[] = [
       },
     ],
     projects: ["bloom-mosaic", "voler-coffee"],
+    concepts: ["lumea-skin"],
     projectsTitle: L("Un exemple dans nos réalisations", "An example from our work", "Projelerimizden bir örnek"),
     faq: ["ecommerce", "reservation", "prix", "modifier"],
     serviceType: "Création de site web pour boutiques et commerces locaux",

@@ -44,6 +44,7 @@ La canonique doit commencer par `https://www.maisestudio.com`. `/work` doit rép
 | Page | Statut | Raison |
 |---|---|---|
 | `/examples` | indexable, pas dans le sitemap | démonstrations, pas du contenu à positionner |
+| `/examples/maison-vesper`, `/examples/lumea-skin` | `noindex`, pas dans le sitemap | sites d'exemple, jamais présentés comme travail client |
 | `/mentions-legales`, `/confidentialite` | `noindex` | à compléter d'abord |
 | `/api/*` | bloqué dans `robots.txt` | redirection WhatsApp, jamais explorée |
 

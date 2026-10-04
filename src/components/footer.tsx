@@ -51,6 +51,20 @@ export function Footer() {
               WhatsApp
             </a>
           </div>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-3 text-sm text-muted-foreground">
+            <span>{t("ig.lead")}</span>
+            {SITE.instagram.map((i) => (
+              <a
+                key={i.handle}
+                href={i.url}
+                target="_blank"
+                rel="noopener noreferrer me"
+                className="rounded-full border border-border px-4 py-2 text-foreground transition-colors hover:border-accent/50 hover:text-accent"
+              >
+                @{i.handle}
+              </a>
+            ))}
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-x-6 gap-y-10 border-b border-border py-12 md:grid-cols-[1.3fr_1fr_1.2fr_1fr]">

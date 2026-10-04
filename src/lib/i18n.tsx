@@ -253,6 +253,8 @@ const dict = {
 
     "footer.ctaTitle": "Un site pour votre commerce ? Écrivez-nous.",
     "footer.ctaButton": "Nous écrire",
+    "ig.lead": "Ou écrivez-nous sur Instagram",
+    "ig.contactLead": "Vous préférez Instagram ? Écrivez-nous en message privé.",
 
     "examples.kicker": "Démos",
     "examples.title": "Voici ce que votre site pourrait faire.",
@@ -558,6 +560,8 @@ const dict = {
 
     "footer.ctaTitle": "Need a website for your business? Message us.",
     "footer.ctaButton": "Message us",
+    "ig.lead": "Or message us on Instagram",
+    "ig.contactLead": "Prefer Instagram? Send us a direct message.",
 
     "examples.kicker": "Demos",
     "examples.title": "Here's what your website could do.",
@@ -863,6 +867,8 @@ const dict = {
 
     "footer.ctaTitle": "İşletmeniz için bir site mi lazım? Bize yazın.",
     "footer.ctaButton": "Bize yazın",
+    "ig.lead": "Veya Instagram'dan yazın",
+    "ig.contactLead": "Instagram'ı mı tercih edersiniz? Bize mesaj atın.",
 
     "examples.kicker": "Demolar",
     "examples.title": "Siteniz neler yapabilir, işte burada.",
