@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useReveal } from "@/hooks/use-reveal";
 import { useLang } from "@/lib/i18n";
-import { REAL_PROJECTS } from "@/lib/real-projects";
+import { REAL_PROJECTS } from "@/lib/projects";
 
 export function WorkIndex() {
   const { t } = useLang();
@@ -45,18 +45,18 @@ function ProjectCard({
   n: string;
   project: (typeof REAL_PROJECTS)[number];
 }) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const { ref, visible } = useReveal<HTMLAnchorElement>();
 
   return (
     <Link
       ref={ref}
-      href={`/ornek/${project.slug}`}
+      href={`/realisations/${project.slug}`}
       className={`reveal ${visible ? "reveal-in" : ""} glass-liquid group relative flex aspect-[4/3] flex-col justify-between overflow-hidden rounded-[1.75rem] p-8 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.015]`}
     >
       <Image
-        src={project.image}
-        alt={project.name}
+        src={project.shots.desktop.src}
+        alt={project.shots.desktop.alt[lang]}
         fill
         sizes="(min-width: 768px) 50vw, 100vw"
         className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"

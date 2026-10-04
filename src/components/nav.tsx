@@ -3,11 +3,14 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import dynamic from "next/dynamic";
 import { Menu, X, Sun, Moon, Monitor } from "lucide-react";
 import { LogoMark } from "@/components/logo-mark";
 import { useLang, type Lang } from "@/lib/i18n";
 import { useTheme, type ThemeChoice } from "@/lib/theme";
+
+// Loaded the first time the menu opens (see nav-menu.tsx).
+const NavMenu = dynamic(() => import("@/components/nav-menu"), { ssr: false });
 
 const LANGS: Lang[] = ["fr", "en", "tr"];
 const THEMES: { key: ThemeChoice; icon: typeof Sun }[] = [
@@ -31,7 +34,6 @@ const NAV_PALETTE = {
 export function Nav() {
   const pathname = usePathname();
   const isHome = pathname === "/";
-  const isProjectFrame = pathname?.startsWith("/ornek/") ?? false;
   const [scrolledRaw, setScrolledRaw] = useState(false);
   // Only the homepage has a guaranteed-dark hero photo behind the nav at
   // scroll-top, so only there can the nav go fully transparent. Every
@@ -40,7 +42,13 @@ export function Nav() {
   // state there from the very top — otherwise light-mode pages would get
   // dark-on-light-unreadable (or the reverse) at scroll position 0.
   const scrolled = isHome ? scrolledRaw : true;
-  const [open, setOpen] = useState(false);
+  // The menu belongs to the page it was opened on: navigating closes it
+  // without an effect.
+  const [openFor, setOpenFor] = useState<string | null>(null);
+  const open = openFor === pathname;
+  const [menuUsed, setMenuUsed] = useState(false);
+  const setOpen = (v: boolean | ((prev: boolean) => boolean)) =>
+    setOpenFor((cur) => ((typeof v === "function" ? v(cur === pathname) : v) ? pathname : null));
   const { lang, setLang, t } = useLang();
   const { choice, resolved, setChoice } = useTheme();
   // On the homepage, unscrolled-over-the-hero always needs light text
@@ -49,8 +57,8 @@ export function Nav() {
   const c = isHome && !scrolledRaw ? NAV_PALETTE.dark : NAV_PALETTE[resolved];
 
   const LINKS = [
-    { href: "/work", label: t("nav.work") },
-    { href: "/examples", label: t("nav.examples") },
+    { href: "/realisations", label: t("nav.work") },
+    { href: "/services", label: t("nav.services") },
     { href: "/studio", label: t("nav.studio") },
     { href: "/#configurateur", label: t("nav.configurator") },
   ];
@@ -83,22 +91,20 @@ export function Nav() {
     };
   }, [open]);
 
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
-
   const cycleTheme = () => {
     const idx = THEMES.findIndex((x) => x.key === choice);
     setChoice(THEMES[(idx + 1) % THEMES.length].key);
   };
   const ThemeIcon = THEMES.find((x) => x.key === choice)?.icon ?? Sun;
 
-  const LangSwitch = () => (
+  const langSwitch = (
     <div className="flex items-center gap-0.5 rounded-full p-0.5 text-[10px] font-medium tracking-wide uppercase" style={{ background: "rgba(128,128,128,0.16)" }}>
       {LANGS.map((l) => (
         <button
           key={l}
           onClick={() => setLang(l)}
+          aria-pressed={lang === l}
+          aria-label={{ fr: "Français", en: "English", tr: "Türkçe" }[l]}
           className="rounded-full px-2 py-1 transition-colors duration-200"
           style={lang === l ? { background: c.accent, color: c.accentFg } : { color: c.textMuted }}
         >
@@ -108,11 +114,10 @@ export function Nav() {
     </div>
   );
 
-  if (isProjectFrame) return null;
-
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-6 md:pt-5">
       <nav
+        aria-label="Navigation principale"
         className={`mx-auto flex h-14 max-w-6xl items-center justify-between rounded-full px-5 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] md:px-6 ${
           scrolled ? "border shadow-[0_16px_40px_-16px_rgba(0,0,0,0.35)] backdrop-blur-2xl" : "border border-transparent bg-transparent"
         }`}
@@ -138,7 +143,7 @@ export function Nav() {
 
         <div className="flex items-center gap-3">
           <div className="hidden items-center gap-2 sm:flex">
-            <LangSwitch />
+            {langSwitch}
             <button
               onClick={cycleTheme}
               aria-label="Toggle theme"
@@ -158,7 +163,10 @@ export function Nav() {
           <button
             type="button"
             aria-label={open ? "Close menu" : "Open menu"}
-            onClick={() => setOpen((v) => !v)}
+            onClick={() => {
+              setMenuUsed(true);
+              setOpen((v) => !v);
+            }}
             className="flex h-9 w-9 items-center justify-center rounded-full transition-colors md:hidden"
             style={{ color: c.text }}
           >
@@ -167,68 +175,28 @@ export function Nav() {
         </div>
       </nav>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            onClick={() => setOpen(false)}
-            aria-hidden="true"
-            className="fixed inset-0 -z-10 bg-black/40 backdrop-blur-sm md:hidden"
-          />
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="mx-auto mt-2 max-w-6xl rounded-3xl border p-6 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.5)] backdrop-blur-2xl md:hidden"
-            style={{ background: c.menuBg, borderColor: c.border }}
-          >
-            <ul className="flex flex-col gap-4">
-              {LINKS.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} onClick={() => setOpen(false)} className="text-base" style={{ color: c.text }}>
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <Link href="/contact" onClick={() => setOpen(false)} className="text-base" style={{ color: c.text }}>
-                  {t("nav.contact")}
-                </Link>
-              </li>
-              <li className="flex flex-col gap-4 pt-3">
-                <Link
-                  href="/contact"
-                  onClick={() => setOpen(false)}
-                  className="inline-flex items-center justify-center rounded-full px-5 py-3 text-center text-[12px] font-medium tracking-wide whitespace-nowrap uppercase"
-                  style={{ background: c.accent, color: c.accentFg }}
-                >
-                  {t("nav.cta")}
-                </Link>
-                <div className="flex items-center justify-between">
-                  <LangSwitch />
-                  <button
-                    onClick={cycleTheme}
-                    aria-label="Toggle theme"
-                    className="flex h-7 w-7 items-center justify-center rounded-full"
-                    style={{ background: "rgba(128,128,128,0.16)", color: c.textMuted }}
-                  >
-                    <ThemeIcon size={13} />
-                  </button>
-                </div>
-              </li>
-            </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {menuUsed && (
+        <NavMenu
+          open={open}
+          onClose={() => setOpen(false)}
+          links={LINKS}
+          palette={c}
+          contactLabel={t("nav.contact")}
+          ctaLabel={t("nav.cta")}
+        >
+          <div className="flex items-center justify-between">
+            {langSwitch}
+            <button
+              onClick={cycleTheme}
+              aria-label="Toggle theme"
+              className="flex h-7 w-7 items-center justify-center rounded-full"
+              style={{ background: "rgba(128,128,128,0.16)", color: c.textMuted }}
+            >
+              <ThemeIcon size={13} />
+            </button>
+          </div>
+        </NavMenu>
+      )}
     </header>
   );
 }

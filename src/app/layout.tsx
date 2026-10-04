@@ -5,6 +5,9 @@ import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { LanguageProvider } from "@/lib/i18n";
 import { ThemeProvider, THEME_INIT_SCRIPT } from "@/lib/theme";
+import { SITE } from "@/lib/site";
+import { PACKAGES, formatEur } from "@/lib/pricing";
+import { JsonLd, ORGANIZATION_JSON_LD, WEBSITE_JSON_LD, pageMetadata } from "@/lib/seo";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -19,43 +22,12 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
-const SITE_URL = "https://maisestudio.com";
-const TITLE = "Maisé Studio | Sites web pour cafés, hôtels et boutiques, à Paris";
-const DESCRIPTION =
-  "On crée votre site web et on s'occupe de tout. Pour les cafés, restaurants, hôtels, cliniques et boutiques. Paris.";
+const TITLE = "Maisé Studio | Agence web et sites sur mesure à Paris";
+const DESCRIPTION = `Studio web à Paris : sites sur mesure pour restaurants, cafés, hôtels et boutiques, du design à la mise en ligne. Formules à partir de ${formatEur(PACKAGES.essentiel.eur)}.`;
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-  title: TITLE,
-  description: DESCRIPTION,
-  alternates: { canonical: "/" },
-  openGraph: {
-    type: "website",
-    siteName: "Maisé Studio",
-    url: SITE_URL,
-    title: TITLE,
-    description: DESCRIPTION,
-    locale: "fr_FR",
-  },
-  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION },
-};
-
-// Read by search engines and, increasingly, by AI assistants (ChatGPT,
-// Gemini, Claude) that cite or recommend businesses from structured data
-// rather than page copy alone — see also /llms.txt for the same context in
-// the plain-text format those assistants' crawlers look for.
-const ORG_JSON_LD = {
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: "Maisé Studio",
-  description:
-    "Paris-based web design and development studio building bespoke websites for restaurants, hotels, clinics and boutiques.",
-  url: "https://maisestudio.com",
-  email: "studiomaise@gmail.com",
-  areaServed: ["FR", "TR"],
-  address: { "@type": "PostalAddress", addressLocality: "Paris", addressCountry: "FR" },
-  openingHours: "Mo-Su 09:00-19:00",
-  sameAs: [],
+  metadataBase: new URL(SITE.url),
+  ...pageMetadata({ title: TITLE, description: DESCRIPTION, path: "/" }),
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -68,10 +40,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_JSON_LD) }}
-        />
+        <JsonLd data={[ORGANIZATION_JSON_LD, WEBSITE_JSON_LD]} />
+        {/* Without JavaScript the scroll-reveal never fires: show everything. */}
+        <noscript>
+          <style>{`.reveal{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
       </head>
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <ThemeProvider>

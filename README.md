@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Maisé Studio
 
-## Getting Started
-
-First, run the development server:
+Site du studio web Maisé Studio (Paris). Next.js 16 (App Router), React 19, Tailwind 4, Framer Motion.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev      # http://localhost:3003
+npm run build    # build de production, tout est statique sauf /api/contact-redirect
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Où modifier quoi
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Je veux changer | Fichier |
+|---|---|
+| Nom, e-mail, description, équipe, profils sociaux | `src/lib/site.ts` |
+| Prix et formules | `src/lib/pricing.ts` (le configurateur, la FAQ, le JSON-LD et `llms.txt` les lisent) |
+| Un projet ou en ajouter un | `src/lib/projects.ts` + captures dans `public/work/shots/` |
+| Une page de service | `src/lib/services.ts` |
+| La FAQ | `src/lib/faq.ts` |
+| Textes du film, de l'accueil, du configurateur (fr, en, tr) | `src/lib/i18n.tsx` |
+| Titres, descriptions, Open Graph, JSON-LD | `src/lib/seo.tsx` |
+| Robots, sitemap, `llms.txt` | `src/app/robots.ts`, `src/app/sitemap.ts`, `src/app/llms.txt/route.ts` |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Un nouveau projet dans `projects.ts` crée sa page `/realisations/[slug]`, sa carte de partage, son entrée dans le sitemap et dans `llms.txt`.
 
-## Learn More
+## Variables d'environnement
 
-To learn more about Next.js, take a look at the following resources:
+`WHATSAPP_NUMBER` (serveur seulement, voir `.env.local` en local et les variables Vercel). Le numéro ne doit jamais apparaître dans le code, le HTML ni les requêtes du navigateur : les boutons passent par `/api/contact-redirect`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Documentation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`docs/` : profil officiel de l'entreprise, audit, liste de contrôle de mise en ligne, textes à confirmer, feuille de route de visibilité.

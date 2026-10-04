@@ -1,8 +1,22 @@
 "use client";
 
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { useLang } from "@/lib/i18n";
 import { ContactForm } from "@/components/contact-form";
 import { whatsappHref } from "@/lib/contact";
+import { parsePrefill } from "@/lib/prefill";
+import { SITE } from "@/lib/site";
+
+// Reads the configurator's choice from the URL. It sits in its own Suspense
+// boundary so the rest of the page, including the contact details, stays in
+// the static HTML. Until the URL is read, the plain form is shown.
+function PrefilledForm() {
+  const params = useSearchParams();
+  const prefill = parsePrefill((k) => params.get(k));
+  const key = prefill ? JSON.stringify(prefill) : "none";
+  return <ContactForm key={key} prefill={prefill} />;
+}
 
 // On a phone the order is: write on WhatsApp right away, or leave details in
 // the form, and only then the practical information. On a large screen the
@@ -33,7 +47,7 @@ export function ContactContent() {
               href={whatsappHref(t("wa.greeting"))}
               target="_blank"
               rel="noopener noreferrer nofollow"
-              className="flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-4 text-sm font-semibold whitespace-nowrap text-white transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
+              className="flex items-center justify-center gap-2 rounded-full bg-[#0b7a4b] px-6 py-4 text-sm font-semibold whitespace-nowrap text-white transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
             >
               {t("contact.whatsapp")}
             </a>
@@ -45,7 +59,9 @@ export function ContactContent() {
           </div>
 
           <div className="-mt-4 lg:col-start-2 lg:row-start-2 lg:mt-0">
-            <ContactForm />
+            <Suspense fallback={<ContactForm />}>
+              <PrefilledForm />
+            </Suspense>
           </div>
 
           <div className="flex flex-col gap-8 lg:col-start-1 lg:row-span-2 lg:row-start-1">
@@ -68,17 +84,17 @@ export function ContactContent() {
                 {t("contact.email.label")}
               </p>
               <a
-                href="mailto:studiomaise@gmail.com"
+                href={`mailto:${SITE.email}`}
                 className="mt-1 block text-foreground/85 transition-colors hover:text-accent"
               >
-                studiomaise@gmail.com
+                {SITE.email}
               </a>
             </div>
             <div>
               <p className="text-xs tracking-widest text-muted-foreground uppercase">
                 {t("contact.team.label")}
               </p>
-              <p className="mt-1 text-foreground/85">Mehmet Sametoglu, Ismail Cakir</p>
+              <p className="mt-1 text-foreground/85">{SITE.team.join(", ")}</p>
             </div>
           </div>
         </div>

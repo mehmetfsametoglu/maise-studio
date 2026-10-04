@@ -3,11 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { useLang, LANG_PRICE, type Lang, type DictKey } from "@/lib/i18n";
+import Link from "next/link";
+import { useLang, type Lang, type DictKey } from "@/lib/i18n";
 import { whatsappHref } from "@/lib/contact";
-
-type BizKey = "cafe" | "clinic" | "hotel";
-type TierKey = "essentiel" | "signature";
+import { PACKAGES, LANG_PRICE, EXTRA_LANGUAGE, type TierKey } from "@/lib/pricing";
+import type { BizKey } from "@/lib/prefill";
 
 const BUSINESS: {
   key: BizKey;
@@ -35,12 +35,7 @@ const BUSINESS: {
   },
 ];
 
-// TRY figures are a deliberate Turkey-market price, not a live FX
-// conversion: "anchor" is roughly what the EUR price converts to
-// (reviewed periodically), "discounted" is the actual launch price
-// shown crossed-out-to-discounted, priced in local terms rather than a
-// straight conversion. Review both alongside the EUR prices, not via a
-// currency API — they're merchandising numbers, not an exchange rate.
+// Prices come from lib/pricing.ts (EUR, and the Turkey-market TRY figures).
 const TIERS: {
   key: TierKey;
   nameKey: DictKey;
@@ -49,14 +44,13 @@ const TIERS: {
   tryAnchor: number;
   tryPrice: number;
 }[] = [
-  { key: "essentiel", nameKey: "tier.essentiel.name", tagKey: "tier.essentiel.tag", price: 399, tryAnchor: 19900, tryPrice: 14900 },
-  { key: "signature", nameKey: "tier.signature.name", tagKey: "tier.signature.tag", price: 699, tryAnchor: 33300, tryPrice: 25200 },
+  { key: "essentiel", nameKey: "tier.essentiel.name", tagKey: "tier.essentiel.tag", price: PACKAGES.essentiel.eur, tryAnchor: PACKAGES.essentiel.tryAnchor, tryPrice: PACKAGES.essentiel.tryPrice },
+  { key: "signature", nameKey: "tier.signature.name", tagKey: "tier.signature.tag", price: PACKAGES.signature.eur, tryAnchor: PACKAGES.signature.tryAnchor, tryPrice: PACKAGES.signature.tryPrice },
 ];
 
-// A single extra-language surcharge — whichever language is already the
-// visitor's market default (see `includedLang` below) is never looked up
-// here, so there is no need for a per-language price.
-const LANG_PRICE_TRY = { fr: 1500, en: 1500, tr: 1500 } as const;
+// A single extra-language surcharge: the visitor's own market language is
+// included, so it is never looked up here.
+const LANG_PRICE_TRY = { fr: EXTRA_LANGUAGE.try, en: EXTRA_LANGUAGE.try, tr: EXTRA_LANGUAGE.try } as const;
 
 const LANGS: { key: Lang; nameKey: DictKey; noteKey?: DictKey }[] = [
   { key: "fr", nameKey: "lang.fr", noteKey: "lang.fr.note" },
@@ -69,7 +63,7 @@ export function Configurator() {
   const [biz, setBiz] = useState<BizKey>("cafe");
   const [tier, setTier] = useState<TierKey>("signature");
   const [multilingual, setMultilingual] = useState(false);
-  const [langs, setLangs] = useState<Set<Lang>>(new Set());
+  const [pickedLangs, setLangs] = useState<Set<Lang>>(new Set());
   // Compact price bar for phones: shown while the visitor is inside the
   // section but the full price card is out of view. It is `fixed`, never a
   // sticky/100vh wrapper, so it cannot trap the page scroll.
@@ -89,17 +83,9 @@ export function Configurator() {
   // paid extra for a language they're already browsing in.
   const includedLang: Lang = isTRY ? "tr" : "fr";
   const extraLangs = LANGS.filter((item) => item.key !== includedLang);
-
-  // If the included language changes (visitor switches the site's own
-  // language), drop it from the extras set so it isn't paid for twice.
-  useEffect(() => {
-    setLangs((prev) => {
-      if (!prev.has(includedLang)) return prev;
-      const next = new Set(prev);
-      next.delete(includedLang);
-      return next;
-    });
-  }, [includedLang]);
+  // A language that became the included one (the visitor switched the site's
+  // language) is never charged twice.
+  const langs = new Set([...pickedLangs].filter((l) => l !== includedLang));
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -131,7 +117,8 @@ export function Configurator() {
     if (l === includedLang) return;
     setLangs((prev) => {
       const next = new Set(prev);
-      next.has(l) ? next.delete(l) : next.add(l);
+      if (next.has(l)) next.delete(l);
+      else next.add(l);
       return next;
     });
   }
@@ -150,6 +137,15 @@ export function Configurator() {
   const message = `${t("wa.greeting")}, ${t(b.nameKey)} / ${t(tr.nameKey)} / ${[includedLang, ...langs]
     .map((l) => l.toUpperCase())
     .join("+")} -> ${priceLabel}`;
+
+  // The contact page reads this to show the visitor's choice and prefill the form.
+  const contactHref = `/contact?${new URLSearchParams({
+    activite: biz,
+    formule: tier,
+    langues: [includedLang, ...langs].join(","),
+    prix: String(total),
+    devise: isTRY ? "TRY" : "EUR",
+  }).toString()}#formulaire`;
 
   return (
     <section id="configurateur" ref={sectionRef} className="world-burgundy relative bg-background px-6 py-28 md:px-10 md:py-40">
@@ -175,8 +171,9 @@ export function Configurator() {
                     <button
                       key={item.key}
                       onClick={() => setBiz(item.key)}
+                      aria-pressed={active}
                       className={`glass-panel rounded-2xl p-4 text-left transition-all duration-300 ${
-                        active ? "glass-panel-active" : "opacity-70 hover:opacity-100"
+                        active ? "glass-panel-active" : "opacity-[0.86] hover:opacity-100"
                       }`}
                     >
                       <span className="block text-sm font-medium text-foreground">
@@ -202,8 +199,9 @@ export function Configurator() {
                     <button
                       key={item.key}
                       onClick={() => setTier(item.key)}
+                      aria-pressed={active}
                       className={`glass-panel rounded-2xl p-4 text-left transition-all duration-300 ${
-                        active ? "glass-panel-active" : "opacity-70 hover:opacity-100"
+                        active ? "glass-panel-active" : "opacity-[0.86] hover:opacity-100"
                       }`}
                     >
                       <div className="flex items-center justify-between">
@@ -243,7 +241,7 @@ export function Configurator() {
                   <p className="mt-1 max-w-[15rem] text-xs text-muted-foreground/80">
                     {t("config.multilingual.hint")}
                   </p>
-                  <p className="mt-1 text-[11px] text-muted-foreground/60">
+                  <p className="mt-1 text-[11px] text-muted-foreground/90">
                     {t("config.includedLang")}: {t(LANGS.find((l) => l.key === includedLang)!.nameKey)}
                   </p>
                 </div>
@@ -282,6 +280,7 @@ export function Configurator() {
                           <button
                             key={item.key}
                             onClick={() => toggleLang(item.key)}
+                            aria-pressed={active}
                             className={`rounded-full border px-4 py-2 text-xs font-medium transition-all duration-300 ${
                               active
                                 ? "border-accent/50 bg-accent/15 text-accent"
@@ -333,15 +332,21 @@ export function Configurator() {
                   {isTRY ? t("config.try.note") : t("config.priceNote")}
                 </p>
               </div>
-              <a
-                href={whatsappHref(message)}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href={contactHref}
                 className="rounded-full bg-accent px-7 py-3.5 text-xs font-medium tracking-widest text-accent-foreground uppercase transition-transform duration-200 hover:scale-[1.03] active:scale-[0.98]"
               >
                 {t("config.cta")}
-              </a>
+              </Link>
             </div>
+            <a
+              href={whatsappHref(message)}
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              className="-mt-4 text-sm text-muted-foreground underline-offset-4 transition-colors hover:text-accent hover:underline"
+            >
+              {t("contactform.whatsappAlt")}
+            </a>
           </div>
 
           <div className="order-first lg:sticky lg:top-28 lg:order-none lg:self-start">
@@ -409,14 +414,12 @@ export function Configurator() {
                 {isTRY ? `${total.toLocaleString("tr-TR")}₺` : `€${total.toLocaleString("fr-FR")}`}
               </p>
             </div>
-            <a
-              href={whatsappHref(message)}
-              target="_blank"
-              rel="noopener noreferrer nofollow"
+            <Link
+              href={contactHref}
               className="shrink-0 rounded-full bg-accent px-5 py-3 text-[11px] font-semibold tracking-widest whitespace-nowrap text-accent-foreground uppercase active:scale-[0.97]"
             >
               {t("config.cta")}
-            </a>
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>

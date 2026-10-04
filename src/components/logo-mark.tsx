@@ -17,7 +17,7 @@ export function LogoMark({
           className="absolute top-0 -right-1 h-[1.05em] w-px origin-bottom -translate-y-[0.1em] rotate-[18deg] bg-[#C9A24E]"
         />
       </span>
-      <span className="ml-1.5 self-center text-[0.32em] font-sans font-light tracking-[0.4em] uppercase opacity-60 not-italic">
+      <span className="ml-1.5 self-center text-[0.32em] font-sans font-normal tracking-[0.4em] uppercase opacity-80 not-italic">
         Studio
       </span>
     </span>

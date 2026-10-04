@@ -8,7 +8,7 @@ Maisé Studio in a new tab.
 Paste once before `</body>`:
 
 ```html
-<script src="https://maisestudio.com/embed/maise-credit.js" defer></script>
+<script src="https://www.maisestudio.com/embed/maise-credit.js" defer></script>
 ```
 
 - Appends the line to the page's `<footer>` (or the end of `<body>` if there
@@ -32,7 +32,7 @@ Copy `SiteCredit.tsx` into the project and render it last in the footer:
 
 1. Add the script tag (or component) to the client's layout.
 2. Check it is visible on mobile and does not clash with the footer colours.
-3. Confirm the link opens https://maisestudio.com in a new tab.
+3. Confirm the link opens https://www.maisestudio.com in a new tab.
 
 Current client sites that need it: Route 95, Le 40, Vøler Coffee, Bloom Mosaic.
 Their code lives in separate repositories, not in this one.

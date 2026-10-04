@@ -1,13 +1,14 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useSyncExternalStore } from "react";
 
 export type Lang = "fr" | "en" | "tr";
-export const LANG_PRICE: Record<Lang, number> = { fr: 0, en: 50, tr: 50 };
+export { LANG_PRICE } from "@/lib/pricing";
 
 const dict = {
   fr: {
-    "nav.work": "Projets",
+    "nav.work": "Réalisations",
+    "nav.services": "Services",
     "nav.examples": "Démos",
     "nav.studio": "À propos",
     "nav.experience": "Expérience",
@@ -18,7 +19,7 @@ const dict = {
     "wa.greeting": "Bonjour Maisé Studio",
 
     "hero.kicker": "Maisé Studio, Paris",
-    "hero.title": "Un site web pour votre commerce.",
+    "hero.title": "Un site web sur mesure pour votre commerce.",
     "hero.title2": "Que vos clients trouvent facilement.",
     "hero.subtitle": "Cafés, hôtels, cliniques, boutiques : on crée votre site et on s'occupe de tout.",
     "hero.cta1": "Voir nos projets",
@@ -33,22 +34,23 @@ const dict = {
     "brand.v3.body": "Un beau site qui ne rapporte rien ne sert à rien. Chaque page aide le visiteur à vous écrire ou à réserver.",
 
     "geo.kicker": "ChatGPT et Google",
-    "geo.title": "Ce qu'on fait pour que Google et ChatGPT vous trouvent.",
-    "geo.body": "Quand quelqu'un cherche un bon café près de chez lui, ces outils cherchent des sites clairs. On écrit le vôtre pour qu'il dise tout de suite qui vous êtes, où vous êtes et ce que vous proposez.",
-    "geo.tag": "Nos sites sont prêts pour Google et pour ces outils dès le premier jour.",
+    "geo.title": "Un site que Google et les assistants IA peuvent lire.",
+    "geo.body": "On structure votre site pour que les moteurs de recherche et les assistants IA comprennent qui vous êtes, où vous êtes et ce que vous proposez. On ne peut pas garantir une place dans leurs réponses, mais on s'occupe de tout ce qui dépend du site.",
+    "geo.tag": "Votre site est structuré pour être compris par Google et par les assistants IA.",
     "geo.q": "Un café calme et soigné près de Bastille ?",
     "geo.a.intro": "Voici ce que je recommande :",
     "geo.a.you": "Votre établissement",
     "geo.a.you.desc": "Horaires, menu et adresse lus directement sur le site.",
-    "geo.mock": "Illustration",
-    "geo.p1.title": "Bien placé sur Google",
-    "geo.p1.body": "Le site charge vite et chaque page est claire, donc Google la comprend.",
-    "geo.p2.title": "Compris par les IA",
-    "geo.p2.body": "On ajoute ce qu'il faut pour que ChatGPT et les autres comprennent ce que vous faites.",
+    "geo.mock": "Illustration, pas un résultat réel",
+    "geo.p1.title": "Un site rapide et clair",
+    "geo.p1.body": "Le site charge vite et chaque page est claire, ce qui aide Google à la comprendre.",
+    "geo.p2.title": "Lisible par les IA",
+    "geo.p2.body": "On ajoute les informations structurées qui aident ChatGPT et les autres à comprendre ce que vous faites.",
     "geo.p3.title": "Lisible par tous",
     "geo.p3.body": "Le texte est écrit directement dans la page. Google et les IA le lisent sans effort.",
-    "geo.p4.title": "Dans la réponse",
-    "geo.p4.body": "Être en première page ne suffit plus. Le but est que votre nom apparaisse quand on pose la question.",
+    "geo.p4.title": "Sans fausse promesse",
+    "geo.p4.body": "Personne ne peut garantir d'apparaître dans ChatGPT. On vous dit ce qui dépend du site, et ce qui n'en dépend pas.",
+    "geo.more": "Voir ce qu'on met en place",
 
     "services.kicker": "Ce que nous faisons",
     "services.title": "Tout ce qu'il faut pour votre site.",
@@ -62,7 +64,7 @@ const dict = {
     "services.s4": "Style et images",
     "services.s4desc": "Le ton, les images et la mise en page vont ensemble, de la première page à la dernière.",
     "services.s5": "Google et ChatGPT",
-    "services.s5desc": "Votre site est prêt à apparaître sur Google et dans les réponses des IA.",
+    "services.s5desc": "Votre site est structuré pour être compris par Google et par les assistants IA.",
     "services.s6": "Aide après la mise en ligne",
     "services.s6desc": "On met à jour et on corrige quand vous en avez besoin.",
 
@@ -99,7 +101,7 @@ const dict = {
     "film.b2.title": "Vous nous parlez, on fait le reste.",
     "film.b2.body": "On s'occupe du design, des textes et de la mise en ligne.",
     "film.b3.title": "Aujourd'hui, on demande à ChatGPT où aller.",
-    "film.b3.body": "On construit votre site pour qu'il puisse aussi apparaître dans ces réponses, comme sur Google.",
+    "film.b3.body": "On structure votre site pour que ces assistants comprennent qui vous êtes, comme Google.",
     "album.kicker": "Images d'exemple",
     "album.title": "Chaque métier a son style.",
     "album.i1": "Beauté",
@@ -135,7 +137,7 @@ const dict = {
     "maps.title": "Vos clients vous trouvent facilement.",
     "maps.body": "La carte est dans votre site. Vos clients voient où vous êtes sans quitter la page. Ici, un exemple à Paris.",
     "maps.cta": "Ouvrir dans Google Maps",
-    "map.activate": "Cliquez pour interagir avec la carte",
+    "map.activate": "Afficher la carte Google Maps",
 
     "config.kicker": "Votre prix",
     "config.title": "Choisissez, et voyez le prix.",
@@ -180,6 +182,30 @@ const dict = {
     "contact.team.label": "L'équipe",
     "contact.email.label": "E-mail",
     "footer.rights": "Tous droits réservés.",
+    "footer.col.nav": "Navigation",
+    "footer.col.expertise": "Expertises",
+    "footer.col.contact": "Contact",
+    "footer.legal": "Mentions légales",
+    "footer.privacy": "Confidentialité",
+    "footer.faq": "Questions fréquentes",
+    "svcnav.creation": "Création de site",
+    "svcnav.restaurant": "Restaurants et cafés",
+    "svcnav.hotel": "Hôtels",
+    "svcnav.commerce": "Boutiques et commerces",
+    "svcnav.seo": "SEO et visibilité IA",
+    "pos.text": "Maisé Studio est un studio de design et développement web basé à Paris. On conçoit des sites sur mesure pour restaurants, cafés, hôtels, boutiques et entreprises, de la direction artistique à la mise en ligne.",
+    "pos.process": "Du premier brief à la mise en ligne : brief, direction artistique, développement, mise en ligne, suivi.",
+    "pos.cta": "Voir nos services",
+    "pos.method": "Notre méthode",
+    "ind.kicker": "Services",
+    "ind.title": "Un site pour votre activité.",
+    "ind.restaurant": "Menu lisible sur téléphone, horaires, réservation.",
+    "ind.hotel": "Photos, chambres, localisation, lien vers votre réservation.",
+    "ind.commerce": "Catalogue, horaires, rendez-vous ou boutique en ligne.",
+    "ind.seo": "Un site que Google et les assistants IA savent lire.",
+    "faq.kicker": "Questions",
+    "faq.title": "Ce qu'on nous demande souvent.",
+    "faq.more": "Toutes les questions",
 
     "contactform.name": "Nom",
     "contactform.company": "Entreprise",
@@ -201,10 +227,20 @@ const dict = {
     "contactform.note": "WhatsApp s'ouvre avec votre message déjà écrit.",
     "contactform.or": "ou",
     "contactform.whatsappAlt": "Vous préférez WhatsApp ? Écrivez-nous directement",
+    "contactform.err.name": "Indiquez votre nom.",
+    "contactform.err.email": "Indiquez une adresse e-mail valide.",
+    "contactform.optional": "facultatif",
+    "contactform.privacy": "Ces informations servent seulement à écrire votre message. Rien n'est enregistré sur nos serveurs.",
+    "contactform.sent.title": "WhatsApp s'est ouvert.",
+    "contactform.sent.body": "Votre message est prêt. Il ne reste qu'à l'envoyer.",
+    "contactform.sent.fallback": "Rien ne s'est ouvert ? Écrivez-nous par e-mail :",
+    "contactform.sent.again": "Modifier le message",
+    "contactform.selection": "Votre sélection",
+    "contactform.selection.note": "Elle sera ajoutée à votre message.",
 
     "realwork.kicker": "Nos projets",
     "realwork.title": "Des sites déjà en ligne.",
-    "realwork.body": "Voici quatre sites que nous avons faits. Cliquez pour voir le vrai site.",
+    "realwork.body": "Voici quatre sites que nous avons faits. Cliquez pour voir le projet en détail et le site en ligne.",
     "realwork.route95": "Restaurant · Kağıthane",
     "realwork.bloom": "Atelier · Los Angeles",
     "realwork.le40": "Bar à cocktails · Paris",
@@ -264,6 +300,8 @@ const dict = {
     "studio.kicker": "À propos",
     "studio.title": "Qui sommes-nous ?",
     "studio.body": "Maisé Studio est une agence web à Paris. On travaille avec des restaurants, des hôtels, des cliniques et des boutiques. Notre but : un site qui ressemble au travail que vous faites sur place.",
+    "studio.team.title": "Deux interlocuteurs, du brief à la mise en ligne.",
+    "studio.team.body": "Vous parlez directement à Mehmet Sametoglu et Ismail Cakir, l'équipe de Maisé Studio, à Paris.",
 
     "worktease.kicker": "Réalisations",
     "worktease.title": "Des sites que nous avons conçus, en ligne aujourd'hui.",
@@ -271,10 +309,11 @@ const dict = {
 
     "work.kicker": "Nos projets",
     "work.title": "Des sites que nous avons conçus et mis en ligne.",
-    "work.body": "Cliquez sur un projet pour voir le vrai site.",
+    "work.body": "Cliquez sur un projet pour voir les détails et le site en ligne.",
   },
   en: {
-    "nav.work": "Projects",
+    "nav.work": "Work",
+    "nav.services": "Services",
     "nav.examples": "Demos",
     "nav.studio": "About",
     "nav.experience": "Experience",
@@ -285,7 +324,7 @@ const dict = {
     "wa.greeting": "Hello Maisé Studio",
 
     "hero.kicker": "Maisé Studio, Paris",
-    "hero.title": "A website for your business.",
+    "hero.title": "A custom website for your business.",
     "hero.title2": "Easy for your customers to find.",
     "hero.subtitle": "Cafés, hotels, clinics, shops: we build your site and handle everything.",
     "hero.cta1": "View our projects",
@@ -300,22 +339,23 @@ const dict = {
     "brand.v3.body": "A good-looking site that brings in nothing is useless. Every page helps the visitor message you or book.",
 
     "geo.kicker": "ChatGPT and Google",
-    "geo.title": "What we do so Google and ChatGPT can find you.",
-    "geo.body": "When someone looks for a good café nearby, these tools look for clear sites. We write yours so it says right away who you are, where you are and what you offer.",
-    "geo.tag": "Our sites are ready for Google and these tools from day one.",
+    "geo.title": "A site Google and AI assistants can read.",
+    "geo.body": "We structure your site so search engines and AI assistants can understand who you are, where you are and what you offer. We can't guarantee a place in their answers, but we handle everything that depends on the site.",
+    "geo.tag": "Your site is structured to be understood by Google and AI assistants.",
     "geo.q": "A calm, well-made café near Bastille?",
     "geo.a.intro": "Here is what I would recommend:",
     "geo.a.you": "Your business",
     "geo.a.you.desc": "Hours, menu and address read straight from the site.",
-    "geo.mock": "Illustration",
-    "geo.p1.title": "Ranked well on Google",
-    "geo.p1.body": "The site loads fast and each page is clear, so Google understands it.",
-    "geo.p2.title": "Understood by AI",
-    "geo.p2.body": "We add what it takes for ChatGPT and the others to understand what you do.",
+    "geo.mock": "Illustration, not a real result",
+    "geo.p1.title": "A fast, clear site",
+    "geo.p1.body": "The site loads fast and each page is clear, which helps Google understand it.",
+    "geo.p2.title": "Readable by AI",
+    "geo.p2.body": "We add the structured data that helps ChatGPT and others understand what you do.",
     "geo.p3.title": "Readable by everyone",
     "geo.p3.body": "The text is written right into the page. Google and AI tools read it with no trouble.",
-    "geo.p4.title": "In the answer",
-    "geo.p4.body": "Being on page one is no longer enough. The goal is for your name to appear when someone asks.",
+    "geo.p4.title": "No empty promises",
+    "geo.p4.body": "No one can guarantee showing up in ChatGPT. We tell you what depends on the site and what doesn't.",
+    "geo.more": "See what we set up",
 
     "services.kicker": "What we do",
     "services.title": "Everything your website needs.",
@@ -329,7 +369,7 @@ const dict = {
     "services.s4": "Style and images",
     "services.s4desc": "The tone, the images and the layout fit together from the first page to the last.",
     "services.s5": "Google and ChatGPT",
-    "services.s5desc": "Your site is ready to show up on Google and in AI answers.",
+    "services.s5desc": "Your site is structured so Google and AI assistants can understand it.",
     "services.s6": "Help after launch",
     "services.s6desc": "We update and fix things whenever you need it.",
 
@@ -366,7 +406,7 @@ const dict = {
     "film.b2.title": "You tell us about your business. We do the rest.",
     "film.b2.body": "We handle the design, the writing and putting it online.",
     "film.b3.title": "These days people ask ChatGPT where to go.",
-    "film.b3.body": "We build your site so it can show up in those answers too, just like on Google.",
+    "film.b3.body": "We structure your site so these assistants can understand who you are, just like Google.",
     "album.kicker": "Sample images",
     "album.title": "Every business has its own style.",
     "album.i1": "Beauty",
@@ -402,7 +442,7 @@ const dict = {
     "maps.title": "Customers find you easily.",
     "maps.body": "The map sits inside your site. Customers see where you are without leaving the page. Here is an example in Paris.",
     "maps.cta": "Open in Google Maps",
-    "map.activate": "Click to interact with the map",
+    "map.activate": "Show the Google Maps map",
 
     "config.kicker": "Your price",
     "config.title": "Choose, and see the price.",
@@ -447,6 +487,30 @@ const dict = {
     "contact.team.label": "The team",
     "contact.email.label": "Email",
     "footer.rights": "All rights reserved.",
+    "footer.col.nav": "Navigation",
+    "footer.col.expertise": "Expertise",
+    "footer.col.contact": "Contact",
+    "footer.legal": "Legal notice",
+    "footer.privacy": "Privacy",
+    "footer.faq": "FAQ",
+    "svcnav.creation": "Website creation",
+    "svcnav.restaurant": "Restaurants and cafés",
+    "svcnav.hotel": "Hotels",
+    "svcnav.commerce": "Shops and local businesses",
+    "svcnav.seo": "SEO and AI visibility",
+    "pos.text": "Maisé Studio is a web design and development studio based in Paris. We build custom websites for restaurants, cafés, hotels, shops and businesses, from art direction to launch.",
+    "pos.process": "From the first brief to launch: brief, art direction, development, launch, follow-up.",
+    "pos.cta": "See our services",
+    "pos.method": "How we work",
+    "ind.kicker": "Services",
+    "ind.title": "A site for your business.",
+    "ind.restaurant": "A menu that reads well on a phone, hours, bookings.",
+    "ind.hotel": "Photos, rooms, location, a link to your booking.",
+    "ind.commerce": "Catalogue, hours, appointments or an online shop.",
+    "ind.seo": "A site Google and AI assistants can read.",
+    "faq.kicker": "Questions",
+    "faq.title": "Questions we often get.",
+    "faq.more": "All questions",
 
     "contactform.name": "Name",
     "contactform.company": "Company",
@@ -468,10 +532,20 @@ const dict = {
     "contactform.note": "WhatsApp opens with your message already written.",
     "contactform.or": "or",
     "contactform.whatsappAlt": "Prefer WhatsApp? Message us directly",
+    "contactform.err.name": "Please enter your name.",
+    "contactform.err.email": "Please enter a valid email address.",
+    "contactform.optional": "optional",
+    "contactform.privacy": "This information is only used to write your message. Nothing is stored on our servers.",
+    "contactform.sent.title": "WhatsApp has opened.",
+    "contactform.sent.body": "Your message is ready. Just press send.",
+    "contactform.sent.fallback": "Nothing opened? Email us:",
+    "contactform.sent.again": "Edit the message",
+    "contactform.selection": "Your selection",
+    "contactform.selection.note": "It will be added to your message.",
 
     "realwork.kicker": "Our projects",
     "realwork.title": "Sites that are already live.",
-    "realwork.body": "Here are four sites we built. Click one to see the real thing.",
+    "realwork.body": "Here are four sites we built. Click one to see the project in detail and the live site.",
     "realwork.route95": "Restaurant · Kağıthane",
     "realwork.bloom": "Studio · Los Angeles",
     "realwork.le40": "Cocktail bar · Paris",
@@ -531,6 +605,8 @@ const dict = {
     "studio.kicker": "About",
     "studio.title": "Who we are",
     "studio.body": "Maisé Studio is a web agency in Paris. We work with restaurants, hotels, clinics and shops. Our goal is a website that looks like the work you do in person.",
+    "studio.team.title": "Two people, from the first brief to launch.",
+    "studio.team.body": "You speak directly to Mehmet Sametoglu and Ismail Cakir, the Maisé Studio team in Paris.",
 
     "worktease.kicker": "Work",
     "worktease.title": "Sites we've designed, live today.",
@@ -538,10 +614,11 @@ const dict = {
 
     "work.kicker": "Our projects",
     "work.title": "Sites we've designed and shipped.",
-    "work.body": "Click a project to see the real site.",
+    "work.body": "Click a project to see the details and the live site.",
   },
   tr: {
     "nav.work": "Projeler",
+    "nav.services": "Hizmetler",
     "nav.examples": "Demolar",
     "nav.studio": "Hakkımızda",
     "nav.experience": "Deneyim",
@@ -552,7 +629,7 @@ const dict = {
     "nav.cta": "Bize yazın",
 
     "hero.kicker": "Maisé Studio, Paris",
-    "hero.title": "İşletmeniz için bir web sitesi.",
+    "hero.title": "İşletmeniz için size özel bir web sitesi.",
     "hero.title2": "Müşterileriniz kolayca bulsun.",
     "hero.subtitle": "Kafe, otel, klinik, butik: sitenizi biz kuruyoruz, her şeyle biz ilgileniyoruz.",
     "hero.cta1": "Projelerimizi görün",
@@ -567,22 +644,23 @@ const dict = {
     "brand.v3.body": "Hiçbir şey kazandırmayan güzel bir site işe yaramaz. Her sayfa, ziyaretçinin size yazmasına ya da rezervasyon yapmasına yardım eder.",
 
     "geo.kicker": "ChatGPT ve Google",
-    "geo.title": "Google ve ChatGPT sizi bulsun diye yaptıklarımız.",
-    "geo.body": "Biri yakınında iyi bir kafe aradığında bu araçlar net siteleri arar. Sizinkini, kim olduğunuzu, nerede olduğunuzu ve ne sunduğunuzu hemen söyleyecek şekilde yazıyoruz.",
-    "geo.tag": "Sitelerimiz ilk günden Google'a ve bu araçlara hazır olur.",
+    "geo.title": "Google'ın ve yapay zeka asistanlarının okuyabileceği bir site.",
+    "geo.body": "Sitenizi, arama motorları ve yapay zeka asistanları kim olduğunuzu, nerede olduğunuzu ve ne sunduğunuzu anlayabilsin diye yapılandırıyoruz. Cevaplarında yer almanızı garanti edemeyiz, ama siteye bağlı her şeyi biz hallederiz.",
+    "geo.tag": "Siteniz Google ve yapay zeka asistanları tarafından anlaşılacak şekilde yapılandırılır.",
     "geo.q": "Bastille yakınında sakin, özenli bir kafe var mı?",
     "geo.a.intro": "Benim önerim şu:",
     "geo.a.you": "İşletmeniz",
     "geo.a.you.desc": "Saatler, menü ve adres doğrudan siteden okunur.",
-    "geo.mock": "Örnek görsel",
-    "geo.p1.title": "Google'da üst sıralarda",
-    "geo.p1.body": "Site hızlı açılır ve her sayfa net olur, böylece Google onu anlar.",
-    "geo.p2.title": "Yapay zeka anlar",
-    "geo.p2.body": "ChatGPT ve diğerleri ne yaptığınızı anlasın diye gereken her şeyi ekliyoruz.",
+    "geo.mock": "Örnek görsel, gerçek bir sonuç değil",
+    "geo.p1.title": "Hızlı ve net bir site",
+    "geo.p1.body": "Site hızlı açılır ve her sayfa nettir, bu da Google'ın onu anlamasına yardımcı olur.",
+    "geo.p2.title": "Yapay zekaya uygun",
+    "geo.p2.body": "ChatGPT ve diğerlerinin ne yaptığınızı anlamasına yardımcı olan yapılandırılmış verileri ekliyoruz.",
     "geo.p3.title": "Herkes okuyabilir",
     "geo.p3.body": "Metin doğrudan sayfaya yazılır. Google ve yapay zeka araçları onu sorunsuz okur.",
-    "geo.p4.title": "Cevabın içinde",
-    "geo.p4.body": "İlk sayfada olmak artık yetmiyor. Amaç, biri sorduğunda adınızın çıkması.",
+    "geo.p4.title": "Boş vaat yok",
+    "geo.p4.body": "ChatGPT'de çıkmayı kimse garanti edemez. Neyin siteye bağlı olduğunu, neyin olmadığını size söyleriz.",
+    "geo.more": "Neler yaptığımızı görün",
 
     "services.kicker": "Ne yapıyoruz",
     "services.title": "Sitenizin ihtiyacı olan her şey.",
@@ -596,7 +674,7 @@ const dict = {
     "services.s4": "Stil ve görseller",
     "services.s4desc": "Dil, görseller ve yerleşim ilk sayfadan sonuncuya kadar birbirine uyar.",
     "services.s5": "Google ve ChatGPT",
-    "services.s5desc": "Siteniz Google'da ve yapay zeka cevaplarında çıkmaya hazır olur.",
+    "services.s5desc": "Siteniz Google ve yapay zeka asistanlarının anlayacağı şekilde yapılandırılır.",
     "services.s6": "Yayından sonra destek",
     "services.s6desc": "İhtiyacınız olduğunda güncelliyor ve düzeltiyoruz.",
 
@@ -633,7 +711,7 @@ const dict = {
     "film.b2.title": "Siz anlatın, gerisini biz yapalım.",
     "film.b2.body": "Tasarımı, yazıları ve yayına almayı biz hallediyoruz.",
     "film.b3.title": "Artık insanlar nereye gideceğini ChatGPT'ye soruyor.",
-    "film.b3.body": "Siteniz Google'daki gibi bu cevaplarda da çıkabilsin diye onu buna göre kuruyoruz.",
+    "film.b3.body": "Siteniz, Google gibi bu asistanların da kim olduğunuzu anlayabilmesi için yapılandırılır.",
     "album.kicker": "Örnek görseller",
     "album.title": "Her işin kendi tarzı vardır.",
     "album.i1": "Güzellik",
@@ -669,7 +747,7 @@ const dict = {
     "maps.title": "Müşterileriniz sizi kolayca bulur.",
     "maps.body": "Harita sitenizin içinde. Müşterileriniz sayfadan çıkmadan yerinizi görür. Burada Paris'ten bir örnek var.",
     "maps.cta": "Google Maps'te Aç",
-    "map.activate": "Haritayla etkileşim için tıklayın",
+    "map.activate": "Google Haritalar'ı göster",
 
     "config.kicker": "Fiyatınız",
     "config.title": "Seçin, fiyatı görün.",
@@ -714,6 +792,30 @@ const dict = {
     "contact.team.label": "Ekip",
     "contact.email.label": "E-posta",
     "footer.rights": "Tüm hakları saklıdır.",
+    "footer.col.nav": "Gezinti",
+    "footer.col.expertise": "Uzmanlık",
+    "footer.col.contact": "İletişim",
+    "footer.legal": "Yasal bilgiler",
+    "footer.privacy": "Gizlilik",
+    "footer.faq": "Sık sorulan sorular",
+    "svcnav.creation": "Web sitesi tasarımı",
+    "svcnav.restaurant": "Restoran ve kafeler",
+    "svcnav.hotel": "Oteller",
+    "svcnav.commerce": "Butikler ve yerel işletmeler",
+    "svcnav.seo": "SEO ve yapay zeka görünürlüğü",
+    "pos.text": "Maisé Studio, Paris merkezli bir web tasarım ve geliştirme stüdyosudur. Restoranlar, kafeler, oteller, butikler ve işletmeler için, sanat yönetiminden yayına kadar size özel siteler tasarlıyoruz.",
+    "pos.process": "İlk görüşmeden yayına: brif, sanat yönetimi, geliştirme, yayın, takip.",
+    "pos.cta": "Hizmetlerimiz",
+    "pos.method": "Çalışma şeklimiz",
+    "ind.kicker": "Hizmetler",
+    "ind.title": "İşletmenize uygun bir site.",
+    "ind.restaurant": "Telefonda rahat okunan menü, saatler, rezervasyon.",
+    "ind.hotel": "Fotoğraflar, odalar, konum, rezervasyonunuza bağlantı.",
+    "ind.commerce": "Katalog, saatler, randevu veya online mağaza.",
+    "ind.seo": "Google ve yapay zeka asistanlarının okuyabildiği bir site.",
+    "faq.kicker": "Sorular",
+    "faq.title": "Sık sorulan sorular.",
+    "faq.more": "Tüm sorular",
 
     "contactform.name": "Ad",
     "contactform.company": "Şirket",
@@ -735,10 +837,20 @@ const dict = {
     "contactform.note": "WhatsApp, mesajınız hazır yazılmış şekilde açılır.",
     "contactform.or": "veya",
     "contactform.whatsappAlt": "WhatsApp'ı mı tercih edersiniz? Doğrudan yazın",
+    "contactform.err.name": "Lütfen adınızı yazın.",
+    "contactform.err.email": "Lütfen geçerli bir e-posta adresi yazın.",
+    "contactform.optional": "isteğe bağlı",
+    "contactform.privacy": "Bu bilgiler yalnızca mesajınızı hazırlamak için kullanılır. Sunucularımızda hiçbir şey saklanmaz.",
+    "contactform.sent.title": "WhatsApp açıldı.",
+    "contactform.sent.body": "Mesajınız hazır. Göndermeniz yeterli.",
+    "contactform.sent.fallback": "Hiçbir şey açılmadı mı? Bize e-posta yazın:",
+    "contactform.sent.again": "Mesajı düzenle",
+    "contactform.selection": "Seçiminiz",
+    "contactform.selection.note": "Mesajınıza eklenecek.",
 
     "realwork.kicker": "Projelerimiz",
     "realwork.title": "Şu an yayında olan siteler.",
-    "realwork.body": "İşte yaptığımız dört site. Gerçek halini görmek için tıklayın.",
+    "realwork.body": "İşte yaptığımız dört site. Projenin ayrıntılarını ve yayındaki siteyi görmek için tıklayın.",
     "realwork.route95": "Restoran · Kağıthane",
     "realwork.bloom": "Atölye · Los Angeles",
     "realwork.le40": "Kokteyl bar · Paris",
@@ -798,6 +910,8 @@ const dict = {
     "studio.kicker": "Hakkımızda",
     "studio.title": "Biz kimiz?",
     "studio.body": "Maisé Studio, Paris'te bir web ajansı. Restoranlar, oteller, klinikler ve butiklerle çalışıyoruz. Amacımız, sitenizin yerinde yaptığınız işe benzemesi.",
+    "studio.team.title": "İlk görüşmeden yayına, iki muhatap.",
+    "studio.team.body": "Paris'teki Maisé Studio ekibi, Mehmet Sametoglu ve Ismail Cakir ile doğrudan konuşursunuz.",
 
     "worktease.kicker": "Projeler",
     "worktease.title": "Tasarladığımız siteler, bugün yayında.",
@@ -805,7 +919,7 @@ const dict = {
 
     "work.kicker": "Projelerimiz",
     "work.title": "Tasarlayıp yayına aldığımız siteler.",
-    "work.body": "Gerçek siteyi görmek için bir projeye tıklayın.",
+    "work.body": "Ayrıntıları ve yayındaki siteyi görmek için bir projeye tıklayın.",
   },
 } as const;
 
@@ -817,13 +931,33 @@ const LangContext = createContext<{
   t: (key: DictKey) => string;
 } | null>(null);
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLangState] = useState<Lang>("fr");
+const LANG_KEY = "maise-v2-lang";
+const langListeners = new Set<() => void>();
+// Used when localStorage is blocked (private windows): the switch still works for the visit.
+let memoryLang: Lang | null = null;
 
-  useEffect(() => {
-    const stored = window.localStorage.getItem("maise-v2-lang") as Lang | null;
-    if (stored === "fr" || stored === "en" || stored === "tr") setLangState(stored);
-  }, []);
+function subscribeLang(cb: () => void) {
+  langListeners.add(cb);
+  window.addEventListener("storage", cb);
+  return () => {
+    langListeners.delete(cb);
+    window.removeEventListener("storage", cb);
+  };
+}
+
+function readLang(): Lang {
+  if (memoryLang) return memoryLang;
+  try {
+    const stored = window.localStorage.getItem(LANG_KEY);
+    if (stored === "fr" || stored === "en" || stored === "tr") return stored;
+  } catch {}
+  return "fr";
+}
+
+export function LanguageProvider({ children }: { children: React.ReactNode }) {
+  // The server and the first client render use "fr"; React then switches to the
+  // stored language without a hydration mismatch.
+  const lang = useSyncExternalStore(subscribeLang, readLang, () => "fr" as Lang);
 
   // Keeps <html lang> in step with the language shown. CSS uppercase and
   // screen readers depend on it (Turkish capitals need the dotted İ).
@@ -832,8 +966,11 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   }, [lang]);
 
   const setLang = (l: Lang) => {
-    setLangState(l);
-    window.localStorage.setItem("maise-v2-lang", l);
+    memoryLang = l;
+    try {
+      window.localStorage.setItem(LANG_KEY, l);
+    } catch {}
+    langListeners.forEach((cb) => cb());
   };
 
   const t = useMemo(() => {

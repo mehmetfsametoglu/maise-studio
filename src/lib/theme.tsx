@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useSyncExternalStore } from "react";
 
 export type ThemeChoice = "light" | "dark" | "system";
 
@@ -23,15 +23,31 @@ export const THEME_INIT_SCRIPT = `
 })();
 `;
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [choice, setChoiceState] = useState<ThemeChoice>("light");
-  const [resolved, setResolved] = useState<"light" | "dark">("light");
+const THEME_KEY = "maise-v2-theme";
+const themeListeners = new Set<() => void>();
+let memoryTheme: ThemeChoice | null = null;
 
-  useEffect(() => {
-    const stored = window.localStorage.getItem("maise-v2-theme") as ThemeChoice | null;
-    const initial = stored === "light" || stored === "dark" || stored === "system" ? stored : "light";
-    setChoiceState(initial);
-  }, []);
+function subscribeTheme(cb: () => void) {
+  themeListeners.add(cb);
+  window.addEventListener("storage", cb);
+  return () => {
+    themeListeners.delete(cb);
+    window.removeEventListener("storage", cb);
+  };
+}
+
+function readTheme(): ThemeChoice {
+  if (memoryTheme) return memoryTheme;
+  try {
+    const stored = window.localStorage.getItem(THEME_KEY);
+    if (stored === "light" || stored === "dark" || stored === "system") return stored;
+  } catch {}
+  return "light";
+}
+
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const choice = useSyncExternalStore(subscribeTheme, readTheme, () => "light" as ThemeChoice);
+  const [resolved, setResolved] = useState<"light" | "dark">("light");
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-color-scheme: dark)");
@@ -48,8 +64,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, [choice]);
 
   const setChoice = (c: ThemeChoice) => {
-    setChoiceState(c);
-    window.localStorage.setItem("maise-v2-theme", c);
+    memoryTheme = c;
+    try {
+      window.localStorage.setItem(THEME_KEY, c);
+    } catch {}
+    themeListeners.forEach((cb) => cb());
   };
 
   return (

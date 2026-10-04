@@ -11,7 +11,7 @@ const COPY = {
 
 export function SiteCredit({
   lang = "fr",
-  href = "https://maisestudio.com",
+  href = "https://www.maisestudio.com",
   className = "",
 }: {
   lang?: keyof typeof COPY;

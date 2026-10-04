@@ -3,7 +3,7 @@
  * Adds a small "Site conçu par Maisé Studio" line to the footer of a client
  * site. Load it once, anywhere on the page:
  *
- *   <script src="https://maisestudio.com/embed/maise-credit.js" defer></script>
+ *   <script src="https://www.maisestudio.com/embed/maise-credit.js" defer></script>
  *
  * Optional attributes on the script tag:
  *   data-lang="fr|en|tr"   force a language (default: the page's <html lang>)
@@ -15,7 +15,7 @@
   if (document.getElementById("maise-credit")) return;
 
   var script = document.currentScript;
-  var HREF = (script && script.getAttribute("data-href")) || "https://maisestudio.com";
+  var HREF = (script && script.getAttribute("data-href")) || "https://www.maisestudio.com";
   var TEXT = {
     fr: "Site conçu par",
     en: "Website by",

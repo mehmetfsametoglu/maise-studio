@@ -5,10 +5,10 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useReveal } from "@/hooks/use-reveal";
 import { useLang } from "@/lib/i18n";
-import { REAL_PROJECTS } from "@/lib/real-projects";
+import { REAL_PROJECTS } from "@/lib/projects";
 
 export function RealWork() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const { ref, visible } = useReveal<HTMLDivElement>();
 
   return (
@@ -28,12 +28,12 @@ export function RealWork() {
           {REAL_PROJECTS.map((p) => (
             <Link
               key={p.slug}
-              href={`/ornek/${p.slug}`}
+              href={`/realisations/${p.slug}`}
               className="glass-liquid group relative flex aspect-[4/3] flex-col justify-end overflow-hidden rounded-[1.5rem] p-7 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.015]"
             >
               <Image
-                src={p.image}
-                alt={p.name}
+                src={p.shots.desktop.src}
+                alt={p.shots.desktop.alt[lang]}
                 fill
                 sizes="(min-width: 640px) 50vw, 100vw"
                 className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
@@ -56,6 +56,12 @@ export function RealWork() {
             </Link>
           ))}
         </div>
+        <Link
+          href="/realisations"
+          className="mt-10 inline-flex text-sm font-medium text-accent transition-opacity hover:opacity-80"
+        >
+          {t("worktease.cta")}
+        </Link>
       </div>
     </section>
   );

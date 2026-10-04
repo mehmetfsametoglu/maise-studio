@@ -1,6 +1,7 @@
 "use client";
 
-import { Bot, FileCode2, Search, Sparkles } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, Bot, FileCode2, Search, Sparkles } from "lucide-react";
 import { useReveal } from "@/hooks/use-reveal";
 import { useLang, type DictKey } from "@/lib/i18n";
 
@@ -33,6 +34,12 @@ export function AiVisibility() {
             <p className="mt-6 max-w-sm text-sm text-muted-foreground/80 italic">
               {t("geo.tag")}
             </p>
+            <Link
+              href="/services/seo-visibilite-ia"
+              className="mt-7 inline-flex items-center gap-2 text-sm font-medium text-accent transition-[gap] duration-300 hover:gap-3"
+            >
+              {t("geo.more")} <ArrowRight size={15} aria-hidden />
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">

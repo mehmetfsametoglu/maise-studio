@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { ExamplesIntro } from "@/components/examples-intro";
 import { ResponsiveShowcase } from "@/components/responsive-showcase";
 import { BookingDemo } from "@/components/booking-demo";
@@ -9,11 +10,12 @@ import { MapsDemo } from "@/components/maps-demo";
 import { PhotoAlbum } from "@/components/photo-album";
 import { ExamplesCta } from "@/components/examples-cta";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/examples" },
-  title: "Exemples | Maisé Studio",
-  description: "Des démonstrations de ce qu'on peut ajouter à votre site : réservation, paiement, menu, carte.",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Démos : réservation, paiement, menu en ligne | Maisé Studio",
+  description:
+    "Des démonstrations de ce qu'on peut ajouter à votre site : réservation, acompte, menu en ligne, carte. Ce ne sont pas des projets clients.",
+  path: "/examples",
+});
 
 export default function ExamplesPage() {
   return (

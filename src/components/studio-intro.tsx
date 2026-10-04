@@ -16,6 +16,10 @@ export function StudioIntro() {
         <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
           {t("studio.body")}
         </p>
+        <div className="mt-12 max-w-xl border-t border-border pt-8">
+          <h2 className="display text-2xl text-foreground">{t("studio.team.title")}</h2>
+          <p className="mt-3 text-muted-foreground">{t("studio.team.body")}</p>
+        </div>
       </div>
     </section>
   );

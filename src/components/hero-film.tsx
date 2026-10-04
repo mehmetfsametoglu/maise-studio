@@ -481,7 +481,7 @@ export function HeroFilm() {
             <h1 className={riseClass} style={rise(140)}>
               <span className="display block text-balance text-[clamp(2.3rem,min(5.6vw,9.5vh),4.9rem)] text-foreground">
                 {t("hero.title")}
-              </span>
+              </span>{" "}
               <span className="display mt-1.5 block pb-1 text-[clamp(1.5rem,min(3.2vw,5.6vh),2.7rem)] leading-[1.1] text-accent italic">
                 {t("hero.title2")}
               </span>
@@ -494,7 +494,7 @@ export function HeroFilm() {
             </p>
             <div className={`mt-9 flex flex-wrap items-center gap-3 ${riseClass}`} style={rise(460)}>
               <Link
-                href="/work"
+                href="/realisations"
                 className="rounded-full bg-accent px-8 py-4 text-sm font-semibold whitespace-nowrap text-accent-foreground transition-transform duration-200 hover:scale-[1.03] active:scale-[0.98]"
               >
                 {t("hero.cta1")}
@@ -600,7 +600,7 @@ export function HeroFilm() {
               {t("hero.cta2")}
             </Link>
             <Link
-              href="/work"
+              href="/realisations"
               className="rounded-full border border-foreground/25 bg-foreground/10 px-8 py-4 text-sm font-semibold whitespace-nowrap text-foreground backdrop-blur-md transition-colors duration-200 hover:bg-foreground/20 active:scale-[0.98]"
             >
               {t("hero.cta1")}
