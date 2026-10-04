@@ -147,7 +147,7 @@ export function Configurator() {
   const priceLabel = isTRY
     ? `${total.toLocaleString("tr-TR")}TL`
     : `${total.toLocaleString("fr-FR")}EUR`;
-  const message = `${t("wa.greeting")} — ${t(b.nameKey)} / ${t(tr.nameKey)} / ${[includedLang, ...langs]
+  const message = `${t("wa.greeting")}, ${t(b.nameKey)} / ${t(tr.nameKey)} / ${[includedLang, ...langs]
     .map((l) => l.toUpperCase())
     .join("+")} -> ${priceLabel}`;
 
@@ -378,7 +378,7 @@ export function Configurator() {
                       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                       className="glass-liquid absolute top-4 right-4 z-10 rounded-full px-3 py-1.5 text-[10px] font-medium tracking-widest text-accent uppercase"
                     >
-                      Motion · 3D
+                      {t("config.badge")}
                     </motion.span>
                   )}
                 </AnimatePresence>

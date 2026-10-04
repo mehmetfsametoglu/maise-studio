@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useLang } from "@/lib/i18n";
-import { useScrubCapable } from "@/hooks/use-scrub-capable";
 
 const FRAMES = [
   { src: "/img/beaute-sillas.png", size: "portrait", n: "01", industryKey: "album.i1" },
@@ -17,32 +16,59 @@ const FRAMES = [
 ] as const;
 
 const SIZE_CLASS: Record<string, string> = {
-  portrait: "h-[62vh] w-[38vw] md:h-[70vh] md:w-[28vw]",
-  "landscape-lg": "h-[46vh] w-[62vw] md:h-[56vh] md:w-[46vw]",
-  "landscape-sm": "h-[38vh] w-[50vw] md:h-[42vh] md:w-[34vw]",
-  square: "h-[46vh] w-[46vh] md:h-[52vh] md:w-[52vh]",
+  portrait: "h-[62vh] w-[62vw] max-w-[320px] md:h-[60vh] md:w-[26vw] md:max-w-none",
+  "landscape-lg": "h-[46vh] w-[78vw] max-w-[520px] md:h-[52vh] md:w-[42vw] md:max-w-none",
+  "landscape-sm": "h-[38vh] w-[70vw] max-w-[440px] md:h-[42vh] md:w-[34vw] md:max-w-none",
+  square: "h-[46vh] w-[70vw] max-w-[380px] md:h-[50vh] md:w-[46vh] md:max-w-none",
 };
 
+// A plain horizontally scrollable strip: swipe on touch, arrows or
+// shift-wheel on desktop. Nothing is pinned or driven by the page scroll, so
+// it can never hold the page in place.
 export function PhotoAlbum() {
-  const capable = useScrubCapable();
-  // Phones and tablets get a plain swipeable strip: no pinned section, no
-  // scroll hijacking, nothing that can hold the page in place.
-  return capable ? <PinnedAlbum /> : <SwipeAlbum />;
-}
-
-function SwipeAlbum() {
   const { t } = useLang();
+  const stripRef = useRef<HTMLDivElement>(null);
+
+  const scrollByPage = (dir: 1 | -1) => {
+    const el = stripRef.current;
+    if (el) el.scrollBy({ left: dir * el.clientWidth * 0.7, behavior: "smooth" });
+  };
+
   return (
     <section className="world-noir relative bg-background py-20 md:py-28">
-      <div className="px-6 md:px-10">
-        <p className="mb-4 text-[11px] tracking-[0.42em] text-accent uppercase">
-          {t("album.kicker")}
-        </p>
-        <h2 className="display max-w-xl text-[clamp(1.8rem,4.4vw,3rem)] text-foreground">
-          {t("album.title")}
-        </h2>
+      <div className="flex items-end justify-between gap-6 px-6 md:px-10">
+        <div>
+          <p className="mb-4 text-[11px] tracking-[0.42em] text-accent uppercase">
+            {t("album.kicker")}
+          </p>
+          <h2 className="display max-w-xl text-[clamp(1.8rem,4.4vw,3rem)] text-foreground">
+            {t("album.title")}
+          </h2>
+        </div>
+        <div className="hidden gap-2 md:flex">
+          <button
+            type="button"
+            onClick={() => scrollByPage(-1)}
+            aria-label="Previous"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-border text-foreground transition-colors hover:bg-foreground/10 active:scale-95"
+          >
+            <ChevronLeft size={18} />
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollByPage(1)}
+            aria-label="Next"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-border text-foreground transition-colors hover:bg-foreground/10 active:scale-95"
+          >
+            <ChevronRight size={18} />
+          </button>
+        </div>
       </div>
-      <div className="no-scrollbar mt-10 flex snap-x snap-mandatory items-center gap-5 overflow-x-auto px-6 pb-2 md:gap-8 md:px-10">
+
+      <div
+        ref={stripRef}
+        className="no-scrollbar mt-10 flex snap-x snap-mandatory items-center gap-5 overflow-x-auto px-6 pb-2 md:gap-8 md:px-10"
+      >
         {FRAMES.map((f) => (
           <figure
             key={f.src}
@@ -56,81 +82,6 @@ function SwipeAlbum() {
             </figcaption>
           </figure>
         ))}
-      </div>
-    </section>
-  );
-}
-
-function PinnedAlbum() {
-  const { t } = useLang();
-  const ref = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end end"],
-  });
-
-  const [range, setRange] = useState({ start: 0, travel: 0 });
-
-  useEffect(() => {
-    const el = trackRef.current;
-    if (!el) return;
-
-    const measure = () => {
-      const start = window.innerWidth * 0.02;
-      const distance = el.scrollWidth - window.innerWidth + start;
-      setRange({ start, travel: distance > 0 ? distance : 0 });
-    };
-
-    measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(el);
-    window.addEventListener("resize", measure);
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("resize", measure);
-    };
-  }, []);
-
-  const x = useTransform(scrollYProgress, [0, 1], [range.start, -range.travel]);
-
-  return (
-    <section ref={ref} className="world-noir relative bg-background" style={{ height: "240vh" }}>
-      <div className="sticky top-0 flex h-[100svh] w-full flex-col overflow-hidden">
-        <div className="px-6 pt-28 md:px-10 md:pt-32">
-          <p className="mb-4 text-[11px] tracking-[0.42em] text-accent uppercase">
-            {t("album.kicker")}
-          </p>
-          <h2 className="display max-w-xl text-[clamp(1.8rem,4.4vw,3rem)] text-foreground">
-            {t("album.title")}
-          </h2>
-        </div>
-
-        <div className="relative mt-10 flex-1">
-          <motion.div
-            ref={trackRef}
-            style={{ x }}
-            className="absolute inset-y-0 left-0 flex items-center gap-8 pl-6 md:gap-12 md:pl-10"
-          >
-            {FRAMES.map((f) => (
-              <figure key={f.src} className={`relative shrink-0 overflow-hidden rounded-2xl ${SIZE_CLASS[f.size]}`}>
-                <Image
-                  src={f.src}
-                  alt=""
-                  fill
-                  sizes="60vw"
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
-                <figcaption className="glass-liquid absolute bottom-4 left-4 rounded-full px-4 py-2">
-                  <span className="text-[10px] tracking-[0.2em] text-accent">{f.n}</span>
-                  <span className="ml-2 text-xs text-foreground">{t(f.industryKey)}</span>
-                </figcaption>
-              </figure>
-            ))}
-            <div className="w-[8vw] shrink-0" />
-          </motion.div>
-        </div>
       </div>
     </section>
   );

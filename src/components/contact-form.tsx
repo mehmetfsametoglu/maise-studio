@@ -41,7 +41,7 @@ export function ContactForm() {
     .filter(Boolean)
     .join("\n");
 
-  const waMessage = `${t("wa.greeting")} — ${name}\n${email}\n${summary}`;
+  const waMessage = `${t("wa.greeting")}, ${name}\n${email}\n${summary}`;
 
   return (
     <form

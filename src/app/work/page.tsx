@@ -3,8 +3,8 @@ import { WorkIndex } from "@/components/work-index";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/work" },
-  title: "Réalisations — Maisé Studio",
-  description: "Les sites que Maisé Studio a conçus et mis en ligne.",
+  title: "Nos projets | Maisé Studio",
+  description: "Les sites que nous avons faits et mis en ligne.",
 };
 
 export default function WorkPage() {

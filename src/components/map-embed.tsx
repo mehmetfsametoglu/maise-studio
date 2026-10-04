@@ -15,7 +15,7 @@ export function MapEmbed({ className = "" }: { className?: string }) {
   return (
     <div className={`relative ${className}`}>
       <iframe
-        title="Maisé Studio — Paris"
+        title="Maisé Studio, Paris"
         src="https://maps.google.com/maps?q=Paris%2C%20France&t=&z=12&ie=UTF8&iwloc=&output=embed"
         width="100%"
         height="100%"

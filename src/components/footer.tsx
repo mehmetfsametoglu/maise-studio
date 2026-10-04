@@ -69,8 +69,9 @@ export function Footer() {
               rel="noopener noreferrer"
               className="text-foreground/80 transition-colors hover:text-accent"
             >
-              WhatsApp — {t("contact.hours.value")}
+              WhatsApp
             </a>
+            <p className="text-xs text-muted-foreground">{t("contact.hours.value")}</p>
             <a
               href="mailto:studiomaise@gmail.com"
               className="text-foreground/80 transition-colors hover:text-accent"
@@ -82,7 +83,7 @@ export function Footer() {
 
         <div className="flex flex-col items-start justify-between gap-4 pt-8 sm:flex-row sm:items-center">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Maisé Studio — {t("contact.location.value")}. {t("footer.rights")}
+            © {new Date().getFullYear()} Maisé Studio, {t("contact.location.value")}. {t("footer.rights")}
           </p>
           {/* Instagram / LinkedIn will go here once the real URLs are confirmed. */}
         </div>

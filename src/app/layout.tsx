@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
-import { SmoothScrollProvider } from "@/components/smooth-scroll-provider";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { LanguageProvider } from "@/lib/i18n";
@@ -21,9 +20,9 @@ const playfair = Playfair_Display({
 });
 
 const SITE_URL = "https://maisestudio.com";
-const TITLE = "Maisé Studio — Digital craftsmanship for ambitious brands";
+const TITLE = "Maisé Studio | Sites web pour cafés, hôtels et boutiques, à Paris";
 const DESCRIPTION =
-  "Maisé Studio designs and builds premium, bespoke websites — from café menus to luxury hospitality. Paris.";
+  "On crée votre site web et on s'occupe de tout. Pour les cafés, restaurants, hôtels, cliniques et boutiques. Paris.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -77,11 +76,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <ThemeProvider>
           <LanguageProvider>
-            <SmoothScrollProvider>
-              <Nav />
-              <main className="flex-1">{children}</main>
-              <Footer />
-            </SmoothScrollProvider>
+            <Nav />
+            <main className="flex-1">{children}</main>
+            <Footer />
           </LanguageProvider>
         </ThemeProvider>
       </body>
