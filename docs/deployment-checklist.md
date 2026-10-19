@@ -66,3 +66,14 @@ Le site utilise **Vercel Web Analytics** (composant `<Analytics />` dans `src/ap
 | `email_click` | liens `mailto:` |
 
 Trafic venant de ChatGPT : il peut apparaître comme source de référence ou avec `utm_source=chatgpt.com` quand la plateforme l'ajoute. Cela dépend de leurs réglages et ne garantit rien.
+
+## E. Mesurer la fluidité du film sur un vrai téléphone
+
+Ouvrez `https://www.maisestudio.com/?perf` sur le téléphone, passez l'écran d'accueil, faites défiler le film comme un visiteur, puis prenez une capture d'écran. Un petit encadré vert en bas à gauche affiche :
+
+- `slow frames (over 34 ms)` : combien d'images ont mis plus de 34 ms à s'afficher (en dessous de 30 images par seconde). Idéal : moins de 2 % du total.
+- `stale images` : combien de fois le film a dû afficher une image voisine parce que la bonne n'était pas encore prête. Si ce chiffre est élevé, le problème est le téléchargement (connexion lente), pas le dessin.
+- `downloaded` : combien des 289 images sont arrivées, et `decoded` : combien sont prêtes à l'écran.
+- `set` : `mobile` (téléphone vertical), `sm` (petite tablette) ou `hd` (grand écran).
+
+L'encadré n'existe que si `?perf` est dans l'adresse. Sans cela, rien n'est ajouté à la page.

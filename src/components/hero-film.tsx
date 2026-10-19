@@ -29,7 +29,24 @@ import { useLang, type DictKey } from "@/lib/i18n";
 const FRAME_COUNT = 289;
 const POSTER = "/film-sm/f000.webp";
 const SEEN_KEY = "maise-film-seen";
-const frameUrl = (set: "hd" | "sm", i: number) => `/film-${set}/f${String(i).padStart(3, "0")}.webp`;
+type FrameSet = "hd" | "sm" | "mobile";
+const frameUrl = (set: FrameSet, i: number) => `/film-${set}/f${String(i).padStart(3, "0")}.webp`;
+// Source size of each set. "mobile" is the centre strip of the HD frames,
+// cut for a portrait phone, so a phone decodes a small, sharp image instead of
+// a wide one that would be cropped and enlarged.
+const FRAME_SIZE: Record<FrameSet, { w: number; h: number }> = {
+  hd: { w: 1920, h: 1080 },
+  sm: { w: 960, h: 540 },
+  mobile: { w: 576, h: 1080 },
+};
+// How many bytes of decoded frames may be kept at once. The window of frames
+// around the current position is sized from this, so large screens keep fewer
+// frames than phones do.
+// Measured on a stand-in page: 8 parallel decodes and a window of about 30 frames
+// ahead kept a phone-sized canvas smooth where 6 and 20 did not.
+const MEMORY_BUDGET = 480 * 1024 * 1024;
+const MAX_DECODES = 8;
+const MAX_WINDOW: Record<FrameSet, number> = { hd: 90, sm: 90, mobile: 60 };
 
 const LOADER_MIN_MS = 1100;
 const LOADER_MAX_MS = 5000;
@@ -159,12 +176,13 @@ export function HeroFilm() {
     const section = sectionRef.current;
     const stage = stageRef.current;
     const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d");
+    const ctx = canvas?.getContext("2d", { alpha: false });
     if (!section || !stage || !canvas || !ctx) return;
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const wide = window.matchMedia("(min-width: 768px)");
-    const set: "hd" | "sm" = window.matchMedia("(min-width: 900px)").matches ? "hd" : "sm";
+    const portraitPhone = window.matchMedia("(max-width: 767px) and (orientation: portrait)").matches;
+    const set: FrameSet = portraitPhone ? "mobile" : window.matchMedia("(min-width: 900px)").matches ? "hd" : "sm";
     // Wheel notches need a longer glide than a finger or a trackpad does.
     const fine = window.matchMedia("(pointer: fine)").matches;
     const catchUp = fine ? 7 : 16;
@@ -183,6 +201,11 @@ export function HeroFilm() {
     const blobs: (Blob | null)[] = new Array(FRAME_COUNT).fill(null);
     const bitmaps: (ImageBitmap | null)[] = new Array(FRAME_COUNT).fill(null);
     const pending = new Set<number>();
+    // How many decoded frames to keep around the current position, from a
+    // memory budget. Frames are decoded at their own size: asking the browser
+    // to resize while decoding measured about five times slower.
+    const src = FRAME_SIZE[set];
+    const windowFrames = Math.min(MAX_WINDOW[set], Math.max(24, Math.floor(MEMORY_BUDGET / (src.w * src.h * 4))));
     let loaded = 0;
 
     // Coarse frames first, so a fast jump always finds a nearby frame once it
@@ -220,9 +243,24 @@ export function HeroFilm() {
     };
     pump();
 
+    // Diagnostic readout for real devices: open the home page with ?perf at the
+    // end of the address. It shows how many frames were slow and how many
+    // frames were not ready (a stale image shown), which tells a slow download
+    // from slow drawing. Nothing is added to the page without it.
+    const perf = new URLSearchParams(window.location.search).has("perf");
+    let perfEl: HTMLDivElement | null = null;
+    const pf = { frames: 0, slow: 0, stale: 0, worst: 0, last: 0, shownAt: 0 };
+    if (perf) {
+      perfEl = document.createElement("div");
+      perfEl.setAttribute("aria-hidden", "true");
+      perfEl.style.cssText =
+        "position:fixed;left:8px;bottom:8px;z-index:9999;padding:6px 8px;border-radius:6px;background:rgba(0,0,0,.78);color:#9fe3a0;font:11px/1.45 ui-monospace,monospace;pointer-events:none;white-space:pre";
+      document.body.appendChild(perfEl);
+    }
+
     let dirty = true;
     const request = (k: number) => {
-      if (bitmaps[k] || pending.has(k) || !blobs[k]) return;
+      if (bitmaps[k] || pending.has(k) || !blobs[k] || pending.size >= MAX_DECODES) return;
       pending.add(k);
       createImageBitmap(blobs[k] as Blob)
         .then((bm) => {
@@ -240,14 +278,16 @@ export function HeroFilm() {
     // Keep decoded bitmaps only around the current frame.
     let lastCenter = -1;
     const keepWindow = (center: number, dir: number) => {
-      const ahead = dir >= 0 ? 40 : 14;
-      const behind = dir >= 0 ? 14 : 40;
+      const ahead = Math.round(windowFrames * (dir >= 0 ? 0.55 : 0.2));
+      const behind = Math.round(windowFrames * (dir >= 0 ? 0.2 : 0.55));
       for (let k = center; k <= Math.min(FRAME_COUNT - 1, center + ahead); k++) request(k);
       for (let k = center - 1; k >= Math.max(0, center - behind); k--) request(k);
       if (center !== lastCenter) {
+        const keepBack = Math.round(windowFrames * 0.45);
+        const keepFwd = Math.round(windowFrames * 0.65);
         for (let k = 0; k < FRAME_COUNT; k++) {
           const bm = bitmaps[k];
-          if (bm && (k < center - 70 || k > center + 90)) {
+          if (bm && (k < center - keepBack || k > center + keepFwd)) {
             bm.close();
             bitmaps[k] = null;
           }
@@ -272,12 +312,15 @@ export function HeroFilm() {
     const measure = () => {
       top = section.getBoundingClientRect().top + window.scrollY;
       stageH = stage.clientHeight || window.innerHeight;
-      const dpr = Math.min(window.devicePixelRatio || 1, set === "hd" ? 1.5 : 2);
+      // The phone frames are 576 px wide, so a canvas about that size is already
+      // as sharp as the source and draws 30% fewer pixels than 1.5x does.
+      const dpr = Math.min(window.devicePixelRatio || 1, set === "mobile" ? 1.25 : 1.5);
       const w = Math.round(stage.clientWidth * dpr);
       const h = Math.round(stageH * dpr);
       if (canvas.width !== w || canvas.height !== h) {
         canvas.width = w;
         canvas.height = h;
+        dirty = true;
         // Frames are within a few percent of the canvas size, so the cheap
         // filter looks the same as the costly one.
         ctx.imageSmoothingEnabled = true;
@@ -295,11 +338,16 @@ export function HeroFilm() {
     };
 
     // Draws the film at a fractional frame: the two nearest frames, blended.
-    const draw = (frame: number) => {
+    const draw = (frame: number, flying: boolean) => {
       const i0 = Math.min(Math.floor(frame), FRAME_COUNT - 1);
-      const frac = frame - i0;
+      const frac = flying ? 0 : frame - i0;
       const a = nearestBitmap(i0);
-      if (!a) return;
+      if (!a) {
+        pf.stale++;
+        return;
+      }
+      if (a.idx !== i0) pf.stale++;
+      // While the film is moving fast the blend is invisible, so it is skipped.
       const b = frac > 0.04 && i0 + 1 < FRAME_COUNT ? nearestBitmap(i0 + 1) : null;
       const key = `${a.idx}:${b && b.idx !== a.idx ? b.idx : -1}:${Math.round(frac * 12)}`;
       if (key === lastKey && !dirty) return;
@@ -374,7 +422,7 @@ export function HeroFilm() {
       const film = filmAt(u);
       const frame = film * (FRAME_COUNT - 1);
       keepWindow(Math.round(frame), target >= shown ? 1 : -1);
-      draw(frame);
+      draw(frame, Math.abs(target - shown) > 6);
       dirty = false;
 
       if (!released) {
@@ -398,6 +446,26 @@ export function HeroFilm() {
       place(tagRef.current, span(u, END.tag), 0, LINE_MOVE);
       place(ctaRef.current, span(u, END.cta), 0, LINE_MOVE);
 
+      if (perfEl) {
+        if (pf.last) {
+          const d = now - pf.last;
+          pf.frames++;
+          if (d > 34) pf.slow++;
+          if (d > pf.worst) pf.worst = d;
+        }
+        pf.last = now;
+        if (now - pf.shownAt > 500) {
+          pf.shownAt = now;
+          const decoded = bitmaps.reduce((n, b) => n + (b ? 1 : 0), 0);
+          perfEl.textContent =
+            `set ${set}  canvas ${canvas.width}x${canvas.height}
+` +
+            `slow frames (over 34 ms) ${pf.slow}/${pf.frames}, worst ${Math.round(pf.worst)} ms
+` +
+            `stale images ${pf.stale}  downloaded ${loaded}/${FRAME_COUNT}  decoded ${decoded}`;
+        }
+      }
+
       raf = requestAnimationFrame(tick);
     };
 
@@ -413,6 +481,7 @@ export function HeroFilm() {
     return () => {
       cancelled = true;
       cancelAnimationFrame(raf);
+      perfEl?.remove();
       window.clearTimeout(settle);
       window.removeEventListener("resize", measure);
       bitmaps.forEach((bm) => bm?.close());
@@ -571,7 +640,7 @@ export function HeroFilm() {
             holds while the visitor takes it in. */}
         <div
           ref={dimRef}
-          className="pointer-events-none absolute inset-0 z-20 bg-black/55 backdrop-blur-[3px]"
+          className="pointer-events-none absolute inset-0 z-20 bg-black/60"
           style={{ opacity: 0 }}
         />
         <div className="pointer-events-none absolute inset-0 z-30 flex flex-col items-center justify-center px-6 text-center">
