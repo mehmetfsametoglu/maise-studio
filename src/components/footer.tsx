@@ -29,8 +29,10 @@ export function Footer() {
   ];
 
   return (
-    <footer className="world-navy relative bg-background px-6 py-16 text-foreground md:px-10 md:py-20">
-      <div className="mx-auto max-w-6xl">
+    <footer className="bg-background px-3 pt-6 pb-[calc(0.75rem+var(--bar-h,0px)+env(safe-area-inset-bottom))] md:px-6 md:pb-6">
+      <div className="world-ink relative mx-auto max-w-[1380px] overflow-hidden rounded-[28px] bg-background px-6 py-16 text-foreground md:px-10 md:py-20">
+        <span aria-hidden className="absolute inset-x-6 top-0 h-px bg-brass/70 md:inset-x-10" />
+        <div className="mx-auto max-w-[1300px]">
         <div className="border-b border-border pb-14 text-center md:pb-16">
           <h2 className="display mx-auto max-w-2xl text-[clamp(1.8rem,4.6vw,3.2rem)] text-foreground">
             {t("footer.ctaTitle")}
@@ -143,6 +145,7 @@ export function Footer() {
               </Link>
             </li>
           </ul>
+        </div>
         </div>
       </div>
     </footer>

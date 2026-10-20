@@ -13,7 +13,7 @@ export function PaymentDemo() {
   const [card, setCard] = useState("");
 
   return (
-    <section className="world-burgundy relative bg-background px-6 py-28 md:px-10 md:py-36">
+    <section className="world-sand relative bg-background px-6 py-28 md:px-10 md:py-36">
       <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 lg:grid-cols-2">
         <div ref={ref} className={`reveal ${visible ? "reveal-in" : ""}`}>
           <p className="mb-4 text-[11px] tracking-[0.42em] text-accent uppercase">

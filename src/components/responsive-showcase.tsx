@@ -9,7 +9,7 @@ export function ResponsiveShowcase() {
   const { ref, visible } = useReveal<HTMLDivElement>();
 
   return (
-    <section className="world-navy relative overflow-hidden bg-background px-6 py-28 md:px-10 md:py-40">
+    <section className="world-ink relative overflow-hidden bg-background px-6 py-28 md:px-10 md:py-40">
       <div className="mx-auto max-w-6xl">
         <div ref={ref} className={`reveal ${visible ? "reveal-in" : ""} max-w-xl`}>
           <p className="mb-5 text-[11px] tracking-[0.42em] text-accent uppercase">

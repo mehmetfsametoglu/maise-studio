@@ -14,7 +14,7 @@ export function HomePositioning() {
 
   return (
     <section className="bg-background px-6 py-24 md:px-10 md:py-32">
-      <div ref={ref} className={`reveal ${visible ? "reveal-in" : ""} mx-auto max-w-4xl`}>
+      <div ref={ref} className={`reveal ${visible ? "reveal-in" : ""} mx-auto max-w-[1300px] [&>*]:max-w-4xl`}>
         <p className="display text-balance text-[clamp(1.5rem,3.4vw,2.5rem)] leading-[1.2] font-medium text-foreground">
           {t("pos.text")}
         </p>

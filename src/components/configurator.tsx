@@ -72,6 +72,17 @@ export function Configurator() {
   const [inSection, setInSection] = useState(false);
   const [priceInView, setPriceInView] = useState(false);
 
+  // The bottom contact bar steps aside while this compact price bar is showing.
+  const priceBarShown = inSection && !priceInView;
+  useEffect(() => {
+    const root = document.documentElement;
+    if (priceBarShown) root.dataset.priceBar = "";
+    else delete root.dataset.priceBar;
+    return () => {
+      delete root.dataset.priceBar;
+    };
+  }, [priceBarShown]);
+
   const b = BUSINESS.find((x) => x.key === biz)!;
   const tr = TIERS.find((x) => x.key === tier)!;
   // Turkish visitors see a Turkey-market TRY price (see the TIERS/LANG_PRICE_TRY
@@ -148,8 +159,8 @@ export function Configurator() {
   }).toString()}#formulaire`;
 
   return (
-    <section id="configurateur" ref={sectionRef} className="world-burgundy relative bg-background px-6 py-28 md:px-10 md:py-40">
-      <div className="mx-auto max-w-6xl">
+    <section id="configurateur" ref={sectionRef} className="world-sand relative bg-background px-6 py-28 md:px-10 md:py-40">
+      <div className="mx-auto max-w-[1300px]">
         <p className="mb-5 text-[11px] tracking-[0.42em] text-accent uppercase">
           {t("config.kicker")}
         </p>
@@ -381,7 +392,7 @@ export function Configurator() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -6 }}
                       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                      className="glass-liquid absolute top-4 right-4 z-10 rounded-full px-3 py-1.5 text-[10px] font-medium tracking-widest text-accent uppercase"
+                      className="absolute top-4 right-4 z-10 rounded-full bg-black/55 px-3 py-1.5 text-[10px] font-medium tracking-widest text-white uppercase backdrop-blur-md"
                     >
                       {t("config.badge")}
                     </motion.span>

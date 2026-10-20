@@ -108,7 +108,7 @@ export default async function ServicePage({ params }: Props) {
       )}
 
       {projects.length > 0 && (
-        <ContentSection id="realisations" title={s.projectsTitle ?? UI.work} world="world-navy">
+        <ContentSection id="realisations" title={s.projectsTitle ?? UI.work} world="world-ink">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {projects.map((p) => (
               <ProjectLinkCard key={p.slug} project={p} />

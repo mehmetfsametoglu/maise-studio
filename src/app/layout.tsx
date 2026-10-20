@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
+import { ContactLayers } from "@/components/contact-layers";
 import { LanguageProvider } from "@/lib/i18n";
 import { ThemeProvider, THEME_INIT_SCRIPT } from "@/lib/theme";
 import { SITE } from "@/lib/site";
@@ -53,6 +54,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <Nav />
             <main className="flex-1">{children}</main>
             <Footer />
+            {/* The callback button and sheet exist only when the server can send the request. */}
+            <ContactLayers callbackEnabled={Boolean(process.env.RESEND_API_KEY)} />
           </LanguageProvider>
         </ThemeProvider>
         {/* Cookie-free visit counts, active once Web Analytics is enabled for the project in Vercel. */}

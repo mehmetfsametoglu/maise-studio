@@ -22,7 +22,7 @@ export function HomeHow() {
 
   return (
     <section className="bg-background px-6 py-24 md:px-10 md:py-32">
-      <div ref={ref} className={`reveal ${visible ? "reveal-in" : ""} mx-auto max-w-6xl`}>
+      <div ref={ref} className={`reveal ${visible ? "reveal-in" : ""} mx-auto max-w-[1300px]`}>
         <p className="mb-5 text-[11px] tracking-[0.42em] text-accent uppercase">{t("how.kicker")}</p>
         <h2 className="display max-w-3xl text-balance text-[clamp(1.9rem,4.4vw,3.2rem)] text-foreground">
           {t("how.title")}

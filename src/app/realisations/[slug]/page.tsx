@@ -167,7 +167,7 @@ export default async function CaseStudyPage({ params }: Props) {
         )}
       </ContentSection>
 
-      <ContentSection title={UI.others} world="world-navy">
+      <ContentSection title={UI.others} world="world-ink">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {others.map((o) => (
             <ProjectLinkCard key={o.slug} project={o} />

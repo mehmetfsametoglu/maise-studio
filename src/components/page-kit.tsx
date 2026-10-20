@@ -223,7 +223,13 @@ export function ProjectLinkCard({ project, priority = false }: { project: Projec
   return (
     <Link
       href={`/realisations/${project.slug}`}
-      className="group block overflow-hidden rounded-[1.5rem] border border-border bg-card transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1"
+      onPointerMove={(e) => {
+        if (e.pointerType !== "mouse") return;
+        const r = e.currentTarget.getBoundingClientRect();
+        e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
+        e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
+      }}
+      className="spot group relative block overflow-hidden rounded-[20px] border border-border bg-card shadow-[var(--shadow-1)] transition-transform duration-[400ms] ease-[var(--ease-maise)] hover:-translate-y-1"
     >
       <div className="relative aspect-[16/10] overflow-hidden">
         <Image

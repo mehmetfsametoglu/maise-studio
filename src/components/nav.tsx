@@ -26,9 +26,14 @@ const THEMES: { key: ThemeChoice; icon: typeof Sun }[] = [
 // :root value for whichever theme is active). It uses its own fixed pair
 // of palettes instead — one per theme — so it stays legible over any
 // section, in both light and dark mode.
-const NAV_PALETTE = {
-  light: { text: "#241C10", textMuted: "rgba(36,28,16,0.62)", accent: "#C9A24E", accentFg: "#241C10", glassBg: "rgba(255,251,244,0.6)", menuBg: "rgba(250,246,238,0.97)", border: "rgba(36,28,16,0.1)" },
-  dark: { text: "#F4EEE1", textMuted: "rgba(244,238,225,0.68)", accent: "#D9B36C", accentFg: "#1a1408", glassBg: "rgba(20,16,10,0.55)", menuBg: "rgba(16,13,9,0.97)", border: "rgba(255,255,255,0.1)" },
+const NAV = {
+  text: "#F1ECE2",
+  textMuted: "rgba(241,236,226,0.72)",
+  accent: "#E0697A",
+  accentFg: "#0C0A08",
+  glassBg: "rgba(16,29,43,0.7)",
+  menuBg: "rgba(12,20,31,0.97)",
+  border: "rgba(241,236,226,0.12)",
 };
 
 export function Nav() {
@@ -50,11 +55,11 @@ export function Nav() {
   const setOpen = (v: boolean | ((prev: boolean) => boolean)) =>
     setOpenFor((cur) => ((typeof v === "function" ? v(cur === pathname) : v) ? pathname : null));
   const { lang, setLang, t } = useLang();
-  const { choice, resolved, setChoice } = useTheme();
+  const { choice, setChoice } = useTheme();
   // On the homepage, unscrolled-over-the-hero always needs light text
   // (the hero photo is always dark, in both themes). Once scrolled — or
   // on any other page — the nav follows the active theme.
-  const c = isHome && !scrolledRaw ? NAV_PALETTE.dark : NAV_PALETTE[resolved];
+  const c = NAV;
 
   const LINKS = [
     { href: "/realisations", label: t("nav.work") },
@@ -85,9 +90,12 @@ export function Nav() {
     const prevBody = document.body.style.overflow;
     root.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
+    // Lets the bottom contact bar step aside while the menu is open.
+    root.dataset.menuOpen = "";
     return () => {
       root.style.overflow = prevRoot;
       document.body.style.overflow = prevBody;
+      delete root.dataset.menuOpen;
     };
   }, [open]);
 
@@ -115,11 +123,11 @@ export function Nav() {
   );
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-6 md:pt-5">
+    <header className="fixed inset-x-0 z-50 px-4 pt-4 md:px-6 md:pt-5" style={{ top: "var(--announce-offset, 0px)" }}>
       <nav
         aria-label="Navigation principale"
         className={`mx-auto flex h-14 max-w-6xl items-center justify-between rounded-full px-5 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] md:px-6 ${
-          scrolled ? "border shadow-[0_16px_40px_-16px_rgba(0,0,0,0.35)] backdrop-blur-2xl" : "border border-transparent bg-transparent"
+          scrolled ? "border shadow-[0_16px_40px_-16px_rgba(0,0,0,0.35)] backdrop-blur-[16px]" : "border border-transparent bg-transparent"
         }`}
         style={scrolled ? { background: c.glassBg, borderColor: c.border } : undefined}
       >

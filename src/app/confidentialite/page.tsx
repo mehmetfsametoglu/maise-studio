@@ -25,17 +25,17 @@ const BLOCKS: { title: L; text: L }[] = [
   {
     title: L("Ce qui est enregistré sur votre appareil", "What is saved on your device", "Cihazınızda kaydedilenler"),
     text: L(
-      "Votre choix de langue et de thème (clair ou sombre) est gardé dans le stockage local de votre navigateur, pour que le site s'affiche comme vous l'avez laissé. Une indication permet aussi de ne montrer l'écran d'accueil animé qu'une fois par visite. Rien de cela ne quitte votre appareil.",
-      "Your choice of language and theme (light or dark) is kept in your browser's local storage, so the site appears as you left it. A marker also lets the animated opening screen show only once per visit. None of this leaves your device.",
-      "Dil ve tema (açık veya koyu) tercihiniz, sitenin bıraktığınız gibi görünmesi için tarayıcınızın yerel depolamasında tutulur. Ayrıca bir işaret, animasyonlu açılış ekranının ziyaret başına yalnızca bir kez gösterilmesini sağlar. Bunların hiçbiri cihazınızdan çıkmaz.",
+      "Votre choix de langue et de thème (clair ou sombre) est gardé dans le stockage local de votre navigateur, pour que le site s'affiche comme vous l'avez laissé. Rien de cela ne quitte votre appareil.",
+      "Your choice of language and theme (light or dark) is kept in your browser's local storage, so the site appears as you left it. None of this leaves your device.",
+      "Dil ve tema (açık veya koyu) tercihiniz, sitenin bıraktığınız gibi görünmesi için tarayıcınızın yerel depolamasında tutulur. Bunların hiçbiri cihazınızdan çıkmaz.",
     ),
   },
   {
     title: L("Le formulaire de contact et WhatsApp", "The contact form and WhatsApp", "İletişim formu ve WhatsApp"),
     text: L(
-      "Le formulaire ne conserve rien sur nos serveurs. Il prépare un message que vous envoyez vous-même sur WhatsApp. Ce message est alors soumis aux conditions de WhatsApp. Si vous nous écrivez par e-mail, nous utilisons votre adresse uniquement pour vous répondre.",
-      "The form keeps nothing on our servers. It prepares a message that you send yourself on WhatsApp. That message is then subject to WhatsApp's terms. If you write to us by email, we use your address only to reply to you.",
-      "Form sunucularımızda hiçbir şey saklamaz. WhatsApp'ta kendinizin göndereceği bir mesaj hazırlar. Bu mesaj daha sonra WhatsApp'ın koşullarına tabidir. Bize e-posta ile yazarsanız adresinizi yalnızca size yanıt vermek için kullanırız.",
+      "Le formulaire ne conserve rien sur nos serveurs. Il prépare un message que vous envoyez vous-même sur WhatsApp. Ce message est alors soumis aux conditions de WhatsApp. Si vous nous écrivez par e-mail, nous utilisons votre adresse uniquement pour vous répondre. Quand la demande de rappel est proposée, le nom, le numéro, l'activité et le moment choisis sont envoyés par e-mail à l'équipe (via le service d'envoi Resend), uniquement pour vous rappeler. Le site ne les conserve pas.",
+      "The form keeps nothing on our servers. It prepares a message that you send yourself on WhatsApp. That message is then subject to WhatsApp's terms. If you write to us by email, we use your address only to reply to you. When the callback request is offered, the name, number, business and time you choose are emailed to the team (through the Resend sending service), only to call you back. The site does not keep them.",
+      "Form sunucularımızda hiçbir şey saklamaz. WhatsApp'ta kendinizin göndereceği bir mesaj hazırlar. Bu mesaj daha sonra WhatsApp'ın koşullarına tabidir. Bize e-posta ile yazarsanız adresinizi yalnızca size yanıt vermek için kullanırız. Geri arama talebi sunulduğunda, seçtiğiniz ad, numara, işletme ve saat yalnızca sizi aramak için e-posta ile (Resend gönderim hizmeti üzerinden) ekibe iletilir. Site bunları saklamaz.",
     ),
   },
   {

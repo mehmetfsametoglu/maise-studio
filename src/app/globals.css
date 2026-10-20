@@ -1,126 +1,127 @@
 @import "tailwindcss";
 
 /*
- * Maisé Studio V2 — final design system.
- * Base world (ivory) is the dominant canvas and is the one that actually
- * flips between light and dark theme. The accent worlds (navy, burgundy,
- * emerald) are deliberate dark moments — rich and moody in both themes,
- * just slightly deeper again in dark mode — not pastel variants of
- * themselves. .world-noir is the cinematic scroll-video moment and stays
- * constant across themes.
+ * Maisé Studio design tokens.
+ *
+ * Light is the default, dark follows [data-theme="dark"] (set by the theme
+ * script from the visitor's choice or the system setting). Colour has roles:
+ *   --accent  actions: buttons, links, eyebrows, the one highlighted word
+ *   --proof   numbers, success, "live" badges
+ *   --brass   1px hairlines only, never text, a button or a fill
+ *   --ink     the navy sections and the footer
+ * The old gold values are gone. Sections pick a "world" (ink, sand, sage) that
+ * re-points the same variables, so components never hardcode a colour.
  */
 
 :root {
   --radius: 0.75rem;
+  --radius-card: 20px;
+  --radius-field: 12px;
 
-  /* base / ivory world — light (default, the flagship experience) */
   --background: #f3eee4;
+  --bg-2: #e8dfcf;
   --foreground: #241c18;
   --muted: #e8dfcf;
   --muted-foreground: #665c53;
-  --surface: #efe7d9;
+  --surface: #e8dfcf;
   --card: #f9f5ec;
   --border: rgba(36, 28, 24, 0.12);
-  --accent: #241c18;
-  --accent-foreground: #f3eee4;
+
+  --accent: #8e2a3a;
+  --accent-hover: #6f1f2d;
+  --accent-foreground: #ffffff;
   --primary: #241c18;
   --primary-foreground: #f3eee4;
+
+  --ink: #101d2b;
+  --ink-2: #1b3047;
+  --proof: #1e6b55;
+  --blush: #e9b8be;
+  --sage: #bfd3c7;
+  --brass: #b89455;
+  --danger: #b3261e;
+
+  --shadow-1: 0 1px 2px rgba(36, 28, 24, 0.06);
+  --shadow-pop: 0 30px 60px -32px rgba(16, 29, 43, 0.45);
 }
 
 :root[data-theme="dark"] {
-  /* base world — dark: espresso, not black */
-  --background: #1d1714;
+  --background: #0c0a08;
+  --bg-2: #101d2b;
   --foreground: #f1ece2;
-  --muted: #211e1a;
-  --muted-foreground: #b8aea1;
-  --surface: #241f1b;
-  --card: #26211c;
-  --border: rgba(241, 236, 226, 0.1);
-  --accent: #d3af61;
-  --accent-foreground: #1d1714;
+  --muted: #1b1713;
+  --muted-foreground: #b8afa3;
+  --surface: #17130f;
+  --card: #17130f;
+  --border: rgba(241, 236, 226, 0.12);
+
+  --accent: #e0697a;
+  --accent-hover: #ec8794;
+  --accent-foreground: #0c0a08;
   --primary: #f1ece2;
-  --primary-foreground: #1d1714;
+  --primary-foreground: #0c0a08;
+
+  --proof: #5fc3a0;
+  --blush: #8e2a3a;
+  --sage: #12382d;
+  --brass: #d3af61;
+  --danger: #ff8a80;
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-pop: 0 30px 60px -32px rgba(0, 0, 0, 0.8);
 }
 
-.world-navy {
+/* Sand: the quiet band between cream sections. Cards on it stay cream. */
+.world-sand {
+  --background: var(--bg-2);
+  --muted: #ddd2be;
+}
+:root[data-theme="dark"] .world-sand {
+  --muted: #17283a;
+}
+
+/* Ink: the navy hero, the one dark section, and the footer. Constant across
+   themes, with the lighter accent so buttons and the italic word stay readable. */
+.world-ink {
   --background: #101d2b;
-  --foreground: #f3eee4;
-  --muted: #172738;
-  --muted-foreground: #b9c2cc;
-  --surface: #172738;
-  --card: #1a2c3f;
-  --border: rgba(243, 238, 228, 0.12);
-  --accent: #ead79b;
-  --accent-foreground: #101d2b;
-  --primary: #f3eee4;
-  --primary-foreground: #101d2b;
-}
-
-:root[data-theme="dark"] .world-navy {
-  --background: #0d1420;
-  --muted: #101b29;
-  --card: #131f2d;
-  --accent: #d3af61;
-  --accent-foreground: #0d1420;
-}
-
-.world-burgundy {
-  --background: #521e25;
-  --foreground: #f3eee4;
-  --muted: #47191f;
-  --muted-foreground: #d9c3c3;
-  --surface: #47191f;
-  --card: #5c2229;
-  --border: rgba(243, 238, 228, 0.12);
-  --accent: #f3eee4;
-  --accent-foreground: #521e25;
-  --primary: #f3eee4;
-  --primary-foreground: #521e25;
-}
-
-:root[data-theme="dark"] .world-burgundy {
-  --background: #35151a;
-  --muted: #2b1114;
-  --card: #40191f;
-  --accent: #d3af61;
-  --accent-foreground: #2b1114;
-}
-
-.world-emerald {
-  --background: #12382d;
-  --foreground: #f3eee4;
-  --muted: #0d3027;
-  --muted-foreground: #c3d3cd;
-  --surface: #0d3027;
-  --card: #164235;
-  --border: rgba(243, 238, 228, 0.12);
-  --accent: #e8dfcf;
-  --accent-foreground: #12382d;
-  --primary: #f3eee4;
-  --primary-foreground: #12382d;
-}
-
-:root[data-theme="dark"] .world-emerald {
-  --background: #0e241d;
-  --muted: #0a1c16;
-  --card: #112e25;
-  --accent: #d3af61;
-  --accent-foreground: #0a1c16;
-}
-
-.world-noir {
-  /* cinematic scroll-video moment — deliberately constant across themes */
-  --background: #0b1219;
   --foreground: #f1ece2;
-  --muted: #111a22;
-  --muted-foreground: #b8aea1;
-  --surface: #111a22;
-  --card: #141e27;
-  --border: rgba(241, 236, 226, 0.1);
-  --accent: #d3af61;
-  --accent-foreground: #0b1219;
+  --muted: #1b3047;
+  --muted-foreground: #b8afa3;
+  --surface: #1b3047;
+  --card: #1b3047;
+  --border: rgba(241, 236, 226, 0.14);
+  --accent: #ea7f8d;
+  --accent-hover: #f29aa5;
+  --accent-foreground: #0c0a08;
   --primary: #f1ece2;
-  --primary-foreground: #0b1219;
+  --primary-foreground: #101d2b;
+  --proof: #5fc3a0;
+  --brass: #d3af61;
+}
+
+/* Sage: one calm green band. */
+.world-sage {
+  --background: #bfd3c7;
+  --foreground: #241c18;
+  --muted: #b0c7b9;
+  --muted-foreground: #3d4a43;
+  --surface: #b0c7b9;
+  --card: #f9f5ec;
+  --border: rgba(36, 28, 24, 0.16);
+  --accent: #8e2a3a;
+  --accent-foreground: #ffffff;
+  --proof: #145040;
+}
+:root[data-theme="dark"] .world-sage {
+  --background: #12382d;
+  --foreground: #f1ece2;
+  --muted: #0e2c23;
+  --muted-foreground: #bfd3c7;
+  --surface: #0e2c23;
+  --card: #0e2c23;
+  --border: rgba(241, 236, 226, 0.14);
+  --accent: #f08c9a;
+  --accent-foreground: #0c0a08;
 }
 
 @theme inline {
@@ -132,12 +133,21 @@
   --color-card: var(--card);
   --color-border: var(--border);
   --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
   --color-accent-foreground: var(--accent-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-proof: var(--proof);
+  --color-brass: var(--brass);
+  --color-sage: var(--sage);
+  --color-blush: var(--blush);
+  --color-danger: var(--danger);
   --font-display: var(--font-playfair);
   --font-sans: var(--font-inter);
   --ease-apple: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-maise: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 html {
@@ -175,8 +185,8 @@ body {
 
 @utility reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 900ms var(--ease-apple), transform 900ms var(--ease-apple);
+  transform: translateY(12px);
+  transition: opacity 600ms var(--ease-maise), transform 600ms var(--ease-maise);
   will-change: transform, opacity;
 }
 
@@ -230,75 +240,6 @@ body {
     0 24px 60px -24px oklch(0 0 0 / 0.5),
     inset 0 1px 0 color-mix(in oklab, var(--foreground) 24%, transparent),
     inset 0 -1px 0 color-mix(in oklab, var(--background) 35%, transparent);
-}
-
-/*
- * Rendered liquid glass for the cards that float over the opening film.
- * Layers, back to front: a strong blur + saturation boost of whatever is
- * behind, a faint tinted body, a bright top edge and a dim bottom edge
- * (inset shadows), a gradient hairline that is brightest at the top-left
- * corner like a light catching a bevel, and a soft specular bloom.
- */
-@utility glass-film {
-  position: relative;
-  isolation: isolate;
-  background:
-    linear-gradient(
-      155deg,
-      rgb(255 255 255 / 0.17) 0%,
-      rgb(255 255 255 / 0.05) 38%,
-      rgb(255 255 255 / 0.03) 62%,
-      rgb(233 201 122 / 0.09) 100%
-    ),
-    rgb(14 11 8 / 0.38);
-  backdrop-filter: blur(30px) saturate(190%);
-  -webkit-backdrop-filter: blur(30px) saturate(190%);
-  border-radius: 1.75rem;
-
-  /* A big blur over a canvas that changes every frame is the costliest thing on
-     a phone's GPU. A smaller radius reads the same on a small card. */
-  @media (max-width: 767px) {
-    backdrop-filter: blur(14px) saturate(150%);
-    -webkit-backdrop-filter: blur(14px) saturate(150%);
-  }
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.5),
-    inset 0 -1px 0 rgb(255 255 255 / 0.1),
-    inset 0 0 36px rgb(255 255 255 / 0.05),
-    0 1px 2px rgb(0 0 0 / 0.25),
-    0 28px 70px -22px rgb(0 0 0 / 0.65);
-
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(
-      150deg,
-      rgb(255 255 255 / 0.75),
-      rgb(255 255 255 / 0.12) 30%,
-      rgb(255 255 255 / 0.05) 60%,
-      rgb(233 201 122 / 0.45)
-    );
-    -webkit-mask:
-      linear-gradient(#000 0 0) content-box,
-      linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    border-radius: inherit;
-    background: radial-gradient(70% 55% at 20% -5%, rgb(255 255 255 / 0.22), transparent 70%);
-    pointer-events: none;
-  }
 }
 
 /*
@@ -371,4 +312,134 @@ body {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
   }
+}
+
+/* Hero glows: two huge radial gradients that drift very slowly. Only a
+   transform changes, so they cost nothing to repaint. */
+.glow {
+  position: absolute;
+  width: 70vmax;
+  height: 70vmax;
+  border-radius: 9999px;
+  will-change: transform;
+}
+.glow-a {
+  top: -28vmax;
+  left: -22vmax;
+  background: radial-gradient(closest-side, rgba(142, 42, 58, 0.38), transparent);
+  animation: glow-drift-a 14s ease-in-out infinite alternate;
+}
+.glow-b {
+  right: -26vmax;
+  bottom: -30vmax;
+  background: radial-gradient(closest-side, rgba(30, 107, 85, 0.32), transparent);
+  animation: glow-drift-b 17s ease-in-out infinite alternate;
+}
+@keyframes glow-drift-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(6vmax, 4vmax, 0) scale(1.1); }
+}
+@keyframes glow-drift-b {
+  from { transform: translate3d(0, 0, 0) scale(1.05); }
+  to { transform: translate3d(-5vmax, -4vmax, 0) scale(0.96); }
+}
+
+/* Entrance: things rise into place. Nothing starts hidden, so the text is
+   there with animations off (reduced motion removes the move below). */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-rise {
+  animation: rise-in 600ms var(--ease-maise) both;
+  animation-delay: var(--d, 0ms);
+}
+
+/* A very light film grain over the whole page. Static, so it costs one layer. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow-a,
+  .glow-b {
+    animation: none;
+  }
+  .animate-rise {
+    animation: none;
+  }
+}
+
+/* Soft light that follows the mouse over project cards. Mouse pointers only,
+   and off with reduced motion. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .spot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 400ms var(--ease-maise);
+    background: radial-gradient(
+      260px circle at var(--mx, 50%) var(--my, 50%),
+      color-mix(in oklab, var(--accent) 16%, transparent),
+      transparent 65%
+    );
+  }
+  .spot:hover::after {
+    opacity: 1;
+  }
+}
+
+/* Contact layers (components/contact-layers.tsx) */
+:root {
+  --announce-offset: 0px;
+  --bar-h: 0px;
+}
+@media (max-width: 767px) {
+  :root {
+    --bar-h: 64px;
+  }
+}
+header {
+  transition: top 0.2s linear;
+}
+.mbar {
+  transition:
+    transform 0.3s var(--ease-maise),
+    opacity 0.3s var(--ease-maise),
+    visibility 0.3s;
+}
+html[data-menu-open] .mbar,
+html[data-price-bar] .mbar {
+  transform: translateY(110%);
+  opacity: 0;
+  visibility: hidden;
+}
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+@media (prefers-reduced-motion: no-preference) {
+  dialog.sheet[open] {
+    animation: sheet-in 0.3s var(--ease-maise);
+  }
+}
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+/* Keyboard focus is always visible, in the accent of the surface it sits on. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }

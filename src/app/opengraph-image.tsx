@@ -17,11 +17,11 @@ export default function OpenGraphImage() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "0 96px",
-          background: "#1d1714",
+          background: "#101d2b",
           color: "#f4eee1",
         }}
       >
-        <div style={{ fontSize: 28, letterSpacing: 10, color: "#d3af61", textTransform: "uppercase" }}>
+        <div style={{ fontSize: 28, letterSpacing: 10, color: "#e0697a", textTransform: "uppercase" }}>
           Paris
         </div>
         <div style={{ fontSize: 132, marginTop: 24, fontStyle: "italic", fontFamily: "Georgia, serif" }}>
@@ -30,7 +30,7 @@ export default function OpenGraphImage() {
         <div style={{ fontSize: 40, marginTop: 28, color: "rgba(244,238,225,0.72)" }}>
           Sites web sur mesure, pensés pour votre métier.
         </div>
-        <div style={{ width: 120, height: 4, marginTop: 48, background: "#d3af61" }} />
+        <div style={{ width: 120, height: 1, marginTop: 48, background: "#d3af61" }} />
       </div>
     ),
     size,

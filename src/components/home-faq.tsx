@@ -12,7 +12,7 @@ export function HomeFaq() {
 
   return (
     <section className="bg-background px-6 py-24 md:px-10 md:py-32">
-      <div className="mx-auto max-w-4xl">
+      <div className="mx-auto max-w-[1300px] [&>*]:max-w-4xl">
         <p className="mb-5 text-[11px] tracking-[0.42em] text-accent uppercase">{t("faq.kicker")}</p>
         <h2 className="display text-[clamp(1.9rem,4.4vw,3.2rem)] text-foreground">{t("faq.title")}</h2>
         <div className="mt-10 divide-y divide-border border-y border-border">

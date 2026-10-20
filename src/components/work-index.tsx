@@ -12,7 +12,7 @@ export function WorkIndex() {
   const { ref, visible } = useReveal<HTMLDivElement>();
 
   return (
-    <div className="world-emerald bg-background">
+    <div className="world-sage bg-background">
       <section className="px-6 pt-36 pb-16 md:px-10 md:pt-44">
         <div ref={ref} className={`reveal ${visible ? "reveal-in" : ""} mx-auto max-w-4xl`}>
           <p className="mb-5 text-[11px] tracking-[0.42em] text-accent uppercase">

@@ -27,16 +27,16 @@ export default async function Image({ params }: { params: Promise<{ slug: string
 
   return new ImageResponse(
     (
-      <div style={{ width: "100%", height: "100%", display: "flex", background: "#1d1714", color: "#f4eee1" }}>
+      <div style={{ width: "100%", height: "100%", display: "flex", background: "#101d2b", color: "#f4eee1" }}>
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 72px", width: 700 }}>
-          <div style={{ fontSize: 24, letterSpacing: 8, color: "#d3af61", textTransform: "uppercase" }}>
+          <div style={{ fontSize: 24, letterSpacing: 8, color: "#e0697a", textTransform: "uppercase" }}>
             Réalisation
           </div>
           <div style={{ fontSize: name.length > 14 ? 76 : 100, marginTop: 24, fontStyle: "italic", fontFamily: "Georgia, serif", lineHeight: 1.05 }}>
             {name}
           </div>
           <div style={{ fontSize: 34, marginTop: 24, color: "rgba(244,238,225,0.75)" }}>{place}</div>
-          <div style={{ marginTop: 56, fontSize: 28, color: "#d3af61" }}>Maisé Studio, Paris</div>
+          <div style={{ marginTop: 56, fontSize: 28, color: "#e0697a" }}>Maisé Studio, Paris</div>
         </div>
         {photo && (
           // eslint-disable-next-line @next/next/no-img-element

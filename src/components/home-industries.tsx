@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { useReveal } from "@/hooks/use-reveal";
 import { useLang, type DictKey } from "@/lib/i18n";
 
@@ -18,7 +18,7 @@ export function HomeIndustries() {
 
   return (
     <section className="bg-background px-6 py-24 md:px-10 md:py-32">
-      <div ref={ref} className={`reveal ${visible ? "reveal-in" : ""} mx-auto max-w-6xl`}>
+      <div ref={ref} className={`reveal ${visible ? "reveal-in" : ""} mx-auto max-w-[1300px]`}>
         <p className="mb-5 text-[11px] tracking-[0.42em] text-accent uppercase">{t("ind.kicker")}</p>
         <h2 className="display max-w-2xl text-[clamp(1.9rem,4.4vw,3.2rem)] text-foreground">{t("ind.title")}</h2>
         <ul className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -41,6 +41,12 @@ export function HomeIndustries() {
             </li>
           ))}
         </ul>
+        <Link
+          href="/services"
+          className="mt-10 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-accent transition-[gap] duration-[400ms] hover:gap-3"
+        >
+          {t("ind.more")} <ArrowRight size={15} aria-hidden />
+        </Link>
       </div>
     </section>
   );

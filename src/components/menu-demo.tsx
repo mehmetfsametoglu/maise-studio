@@ -21,7 +21,7 @@ export function MenuDemo() {
   ];
 
   return (
-    <section className="world-emerald relative bg-background px-6 py-28 md:px-10 md:py-40">
+    <section className="world-sage relative bg-background px-6 py-28 md:px-10 md:py-40">
       <div className="mx-auto max-w-5xl">
         <div ref={ref} className={`reveal ${visible ? "reveal-in" : ""} max-w-2xl`}>
           <p className="mb-5 text-[11px] tracking-[0.42em] text-accent uppercase">

@@ -17,10 +17,10 @@ export function AiVisibility() {
   const { ref, visible } = useReveal<HTMLDivElement>();
 
   return (
-    <section className="world-emerald relative bg-background px-6 py-28 md:px-10 md:py-40">
+    <section className="world-sage relative bg-background px-6 py-28 md:px-10 md:py-40">
       <div
         ref={ref}
-        className={`reveal ${visible ? "reveal-in" : ""} mx-auto max-w-6xl`}
+        className={`reveal ${visible ? "reveal-in" : ""} mx-auto max-w-[1300px]`}
       >
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
           <div>

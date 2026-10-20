@@ -35,7 +35,7 @@ export function PhotoAlbum() {
   };
 
   return (
-    <section className="world-noir relative bg-background py-20 md:py-28">
+    <section className="world-ink relative bg-background py-20 md:py-28">
       <div className="flex items-end justify-between gap-6 px-6 md:px-10">
         <div>
           <p className="mb-4 text-[11px] tracking-[0.42em] text-accent uppercase">
