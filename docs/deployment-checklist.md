@@ -36,7 +36,7 @@ La canonique doit commencer par `https://www.maisestudio.com`. `/work` doit rép
 5. **Mentions légales** : compléter `src/app/mentions-legales/page.tsx` (forme juridique, numéro d'immatriculation, adresse), vérifier l'hébergeur indiqué, puis retirer `noindex` dans les deux pages légales (`confidentialite` aussi).
 6. **Relire `docs/content-to-verify.md`** : réponses de la FAQ et phrases qui décrivent votre fonctionnement.
 7. **Profils externes** : voir `docs/visibility-roadmap.md`.
-8. **Essai sur de vrais téléphones** (iPhone Safari, Android Chrome) : film d'ouverture, formulaire, configurateur. Le code a été testé en simulation de petits écrans, pas sur appareils réels.
+8. **Essai sur de vrais téléphones** (iPhone Safari, Android Chrome) : barre du bas, fenêtre de rappel, formulaire, configurateur. Le code a été testé en simulation de petits écrans, pas sur appareils réels.
 9. **Captures des projets** : elles sont prises sur les sites en ligne (`public/work/shots/`). Si un client change son site, refaire la capture.
 
 ## C. Pages volontairement hors du sitemap ou en `noindex`
@@ -67,13 +67,19 @@ Le site utilise **Vercel Web Analytics** (composant `<Analytics />` dans `src/ap
 
 Trafic venant de ChatGPT : il peut apparaître comme source de référence ou avec `utm_source=chatgpt.com` quand la plateforme l'ajoute. Cela dépend de leurs réglages et ne garantit rien.
 
-## E. Mesurer la fluidité du film sur un vrai téléphone
+## E. Demande de rappel (« On vous rappelle »)
 
-Ouvrez `https://www.maisestudio.com/?perf` sur le téléphone, passez l'écran d'accueil, faites défiler le film comme un visiteur, puis prenez une capture d'écran. Un petit encadré vert en bas à gauche affiche :
+Le bouton « Rappel » (barre du bas sur téléphone) et la fenêtre qui s'ouvre sont **cachés tant que la clé d'envoi n'existe pas**. Pour les activer :
 
-- `slow frames (over 34 ms)` : combien d'images ont mis plus de 34 ms à s'afficher (en dessous de 30 images par seconde). Idéal : moins de 2 % du total.
-- `stale images` : combien de fois le film a dû afficher une image voisine parce que la bonne n'était pas encore prête. Si ce chiffre est élevé, le problème est le téléchargement (connexion lente), pas le dessin.
-- `downloaded` : combien des 289 images sont arrivées, et `decoded` : combien sont prêtes à l'écran.
-- `set` : `mobile` (téléphone vertical), `sm` (petite tablette) ou `hd` (grand écran).
+1. Créer un compte sur resend.com, vérifier le domaine d'envoi (ou garder l'expéditeur de test `onboarding@resend.dev` au début), et créer une clé API.
+2. Dans Vercel (Settings, Environment Variables, Production) : `RESEND_API_KEY` (obligatoire). Facultatif : `CALLBACK_TO_EMAIL` (par défaut `studiomaise@gmail.com`) et `CALLBACK_FROM_EMAIL`.
+3. **Redéployer** : la page est préparée au moment du build, le bouton n'apparaît qu'après un nouveau déploiement.
+4. **Faire un vrai essai** : envoyer une demande depuis le site en ligne et vérifier que l'e-mail arrive. Le code a été testé en local contre un faux serveur d'envoi (mêmes champs, mêmes réponses), pas contre Resend lui-même.
 
-L'encadré n'existe que si `?perf` est dans l'adresse. Sans cela, rien n'est ajouté à la page.
+Protections en place : champ piège invisible, limite de 5 demandes par heure et par adresse IP (en mémoire, repart à zéro quand le serveur redémarre), case de consentement obligatoire, rien n'est conservé sur le site, le numéro n'est jamais écrit dans les journaux. La page `/confidentialite` décrit ce traitement.
+
+## F. Couleurs et sections de l'accueil
+
+Palette : fond crème, bordeaux pour les actions, vert pour les chiffres et les validations, bleu nuit pour le hero, « Pourquoi Maisé » et le pied de page, laiton uniquement en filet très fin. Tous les couples de couleurs texte/fond ont été vérifiés (WCAG AA, aucun échec) ; le script de contrôle n'est pas dans le dépôt, refaire ce contrôle si une couleur change dans `src/app/globals.css`.
+
+Le film d'ouverture a été retiré à la demande (hero bleu nuit à la place). Il reste dans l'historique git : voir le commit `e1adf49` (`src/components/hero-film.tsx`, `public/film-*`).

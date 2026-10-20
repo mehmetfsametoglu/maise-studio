@@ -25,10 +25,10 @@ Source unique pour les faits (`site.ts`), les prix (`pricing.ts`), les projets, 
 | Page de service | 77 | 100 | 100 | 100 |
 | Étude de cas | 71 | 100 | 100 | 100 |
 | Contact | 79 | 100 (après correction du bouton vert) | 100 | 100 |
-| Accueil, simulation « 4G lente + processeur 4x plus lent » | 51 | 100 | 100 | 100 |
-| Accueil, sans simulation (conditions réelles de cette machine) | 96 (LCP 2,2 s) | n/a | n/a | n/a |
+| Accueil (ancienne version avec film), simulation « 4G lente + processeur 4x plus lent » | 51 | 100 | 100 | 100 |
+| Accueil (ancienne version avec film), sans simulation | 96 (LCP 2,2 s) | n/a | n/a | n/a |
 
-Lecture : la simulation par défaut de Lighthouse est très sévère. L'accueil y perd des points parce que le film charge 289 images (11,7 Mo) et que l'écran d'attente attend les 24 premières. Sur une vraie connexion rapide, la page est prête en 2,2 s. Sur une connexion lente, le film se complète progressivement et l'écran d'attente se ferme au plus tard après 5 s. Ce sont les chiffres d'un ordinateur, pas d'un téléphone réel : à refaire sur PageSpeed Insights après la mise en ligne.
+Lecture : ces chiffres datent de la version avec le film d'ouverture (289 images, 11,7 Mo), retiré depuis. L'accueil est maintenant plus léger, mais **il n'a pas été remesuré** : à refaire (Lighthouse mobile et PageSpeed Insights) après la mise en ligne. Ce sont des chiffres d'ordinateur, pas d'un téléphone réel.
 
 Améliorations faites pendant la mesure : menu mobile chargé à la demande (blocage du thread principal divisé par deux), logo du pied de page lisible (il était sombre sur fond sombre), contrastes du configurateur et du bouton WhatsApp. L'option expérimentale `inlineCss` a été testée puis retirée : aucun gain mesurable.
 

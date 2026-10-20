@@ -47,3 +47,12 @@ La page de confidentialité affirme que Vercel Web Analytics n'utilise pas de co
 - Hébergeur « Vercel Inc. » dans les mentions légales : à confirmer selon votre hébergement réel.
 - « Deux interlocuteurs » sur `/studio` : repris de la liste de l'équipe de la page contact.
 - Prix en livres turques : repris tels quels du configurateur. Voir `src/lib/pricing.ts`.
+
+## Accueil (hero, bandeau de chiffres, « Pourquoi Maisé », formules, barres de contact)
+
+Textes dans `src/lib/i18n.tsx` (clés `hero.*`, `proof.*`, `why.*`, `formulas.*`, `announce.*`, `bar.*`, `cb.*`).
+
+- **Bandeau de chiffres** : « à partir de 399 € » (vient de `src/lib/pricing.ts`), « répondre en moins de 3 h » (vient de `SITE.responseTime`), « 4 projets réels en ligne » (compté sur `PROJECTS`), « 1 langue incluse dans le prix ». Si l'un de ces faits change, il change au même endroit que le reste du site. Aucun chiffre de clients, d'avis ou d'années d'expérience n'est affiché : il n'y en a pas de source.
+- **« Pourquoi Maisé »** : cinq phrases qui reprennent ce que le site promet déjà (design sur mesure, pensé pour le téléphone, lisible par Google et les IA, le site vous appartient, le prix avant le travail). Vérifiez surtout « Le site est à vous » (voir la ligne Propriété de la FAQ).
+- **Horaires** : « Tous les jours, 9h-19h » vient de la page Contact. Il est aussi affiché dans la fenêtre de rappel.
+- **Manquent volontairement** : photos et courtes biographies des fondateurs, et un tableau de délais (réponse WhatsApp, premier visuel, mise en ligne). Rien n'a été inventé : envoyez les vraies valeurs et elles seront ajoutées.
