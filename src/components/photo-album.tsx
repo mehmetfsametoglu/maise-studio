@@ -38,7 +38,7 @@ export function PhotoAlbum() {
     <section className="world-ink relative bg-background py-20 md:py-28">
       <div className="flex items-end justify-between gap-6 px-6 md:px-10">
         <div>
-          <p className="mb-4 text-[11px] tracking-[0.42em] text-accent uppercase">
+          <p className="mb-4 text-xs tracking-[0.42em] text-accent uppercase">
             {t("album.kicker")}
           </p>
           <h2 className="display max-w-xl text-[clamp(1.8rem,4.4vw,3rem)] text-foreground">
@@ -77,7 +77,7 @@ export function PhotoAlbum() {
             <Image src={f.src} alt="" fill sizes="60vw" className="object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
             <figcaption className="glass-liquid absolute bottom-4 left-4 rounded-full px-4 py-2">
-              <span className="text-[10px] tracking-[0.2em] text-accent">{f.n}</span>
+              <span className="text-xs tracking-[0.2em] text-accent">{f.n}</span>
               <span className="ml-2 text-xs text-foreground">{t(f.industryKey)}</span>
             </figcaption>
           </figure>

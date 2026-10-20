@@ -28,13 +28,13 @@ function CountUp({ to, prefix = "", suffix = "" }: { to: number; prefix?: string
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     let raf = 0;
     let started = false;
-    // The count starts from zero only while the number is off screen.
-    num.textContent = format(0);
     const io = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting || started) return;
         started = true;
         io.disconnect();
+        // The text holds the real value until this moment.
+        num.textContent = format(0);
         const t0 = performance.now();
         const tick = (now: number) => {
           const p = Math.min((now - t0) / 1100, 1);

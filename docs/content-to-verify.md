@@ -32,7 +32,7 @@ Maison Vesper (hôtel) et Lumea Skin Clinic (clinique) sont des sites que vous a
 
 ## Adresses des sites clients et d'exemple
 
-Les adresses d'hébergement des six sites sont dans `src/lib/outbound.ts`, un fichier lu seulement par le serveur. Les pages ne les contiennent pas : les boutons et les aperçus passent par `/go/<nom>`. Pour ajouter un projet ou changer une adresse (par exemple le jour où un client a son propre nom de domaine), modifiez ce fichier. Le badge « Edit with Lovable » est masqué dans les réglages Lovable des six projets (Settings, Publishing, Hide Lovable badge). Un nouveau projet Lovable aura le badge tant que ce réglage n'est pas activé.
+Les adresses d'hébergement des six sites sont dans `src/lib/outbound.ts`, un fichier lu seulement par le serveur. Les pages ne les contiennent pas : les boutons et les aperçus passent par `/go/<nom>`. **Exception : Le 40**, qui a son propre nom de domaine (`le40bar.fr`, adresse canonique du site), est lié directement : la valeur `liveUrl` dans `src/lib/projects.ts` fait pointer les boutons, l'icône ↗ des cartes et l'aperçu vers cette adresse. Pour tout autre projet qui obtient son domaine, ajoutez `liveUrl` de la même façon (et mettez à jour `outbound.ts`). Tant qu'un projet reste sur une adresse `*.lovable.app`, il passe par `/go/<nom>` : c'est un choix volontaire pour ne pas afficher l'adresse d'hébergement. Si vous préférez un lien direct ou une mention « Démo » sur ces trois cartes, dites-le. Le badge « Edit with Lovable » est masqué dans les réglages Lovable des six projets (Settings, Publishing, Hide Lovable badge). Un nouveau projet Lovable aura le badge tant que ce réglage n'est pas activé.
 
 ## Traductions
 
@@ -56,3 +56,7 @@ Textes dans `src/lib/i18n.tsx` (clés `hero.*`, `proof.*`, `why.*`, `formulas.*`
 - **« Pourquoi Maisé »** : cinq phrases qui reprennent ce que le site promet déjà (design sur mesure, pensé pour le téléphone, lisible par Google et les IA, le site vous appartient, le prix avant le travail). Vérifiez surtout « Le site est à vous » (voir la ligne Propriété de la FAQ).
 - **Horaires** : « Tous les jours, 9h-19h » vient de la page Contact. Il est aussi affiché dans la fenêtre de rappel.
 - **Manquent volontairement** : photos et courtes biographies des fondateurs, et un tableau de délais (réponse WhatsApp, premier visuel, mise en ligne). Rien n'a été inventé : envoyez les vraies valeurs et elles seront ajoutées.
+
+## Vitrine des projets : ce qui attend vos fichiers
+
+Le brief `maise-projects-showcase-spec.md` prévoit aussi une galerie de photos avec visionneuse, une grande photo en tête de chaque étude de cas et des nuanciers de couleurs. Ils ne sont **pas faits** : le dépôt ne contient que les captures d'écran (`public/work/shots/`) et trois anciennes images de couverture, aucune photo fournie par les clients. Pour chaque projet, il faut `public/work/<nom>/01-hero.jpg` à `08-....jpg` (noms : `le-40`, `route-95`, `voler-coffee`, `bloom-mosaic`), l'autorisation écrite du client pour les publier et, si des personnes sont reconnaissables, leur accord. Pour le lien « Site réalisé par Maisé Studio » sur les sites clients, l'accord de chaque client est aussi nécessaire.

@@ -106,7 +106,7 @@ export function Nav() {
   const ThemeIcon = THEMES.find((x) => x.key === choice)?.icon ?? Sun;
 
   const langSwitch = (
-    <div className="flex items-center gap-0.5 rounded-full p-0.5 text-[10px] font-medium tracking-wide uppercase" style={{ background: "rgba(128,128,128,0.16)" }}>
+    <div className="flex items-center gap-0.5 rounded-full p-0.5 text-xs font-medium tracking-wide uppercase" style={{ background: "rgba(128,128,128,0.16)" }}>
       {LANGS.map((l) => (
         <button
           key={l}
@@ -125,13 +125,13 @@ export function Nav() {
   return (
     <header className="fixed inset-x-0 z-50 px-4 pt-4 md:px-6 md:pt-5" style={{ top: "var(--announce-offset, 0px)" }}>
       <nav
-        aria-label="Navigation principale"
+        aria-label={t("nav.label")}
         className={`mx-auto flex h-14 max-w-6xl items-center justify-between rounded-full px-5 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] md:px-6 ${
           scrolled ? "border shadow-[0_16px_40px_-16px_rgba(0,0,0,0.35)] backdrop-blur-[16px]" : "border border-transparent bg-transparent"
         }`}
         style={scrolled ? { background: c.glassBg, borderColor: c.border } : undefined}
       >
-        <Link href="/" className="shrink-0">
+        <Link href="/" className="inline-flex min-h-11 shrink-0 items-center">
           <LogoMark size="text-lg" tone={c.text} />
         </Link>
 
@@ -154,7 +154,7 @@ export function Nav() {
             {langSwitch}
             <button
               onClick={cycleTheme}
-              aria-label="Toggle theme"
+              aria-label={t("nav.theme")}
               className="flex h-7 w-7 items-center justify-center rounded-full transition-colors"
               style={{ background: "rgba(128,128,128,0.16)", color: c.textMuted }}
             >
@@ -170,12 +170,12 @@ export function Nav() {
           </Link>
           <button
             type="button"
-            aria-label={open ? "Close menu" : "Open menu"}
+            aria-label={t(open ? "nav.menuClose" : "nav.menuOpen")}
             onClick={() => {
               setMenuUsed(true);
               setOpen((v) => !v);
             }}
-            className="flex h-9 w-9 items-center justify-center rounded-full transition-colors md:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-full transition-colors md:hidden"
             style={{ color: c.text }}
           >
             {open ? <X size={20} /> : <Menu size={20} />}
@@ -196,7 +196,7 @@ export function Nav() {
             {langSwitch}
             <button
               onClick={cycleTheme}
-              aria-label="Toggle theme"
+              aria-label={t("nav.theme")}
               className="flex h-7 w-7 items-center justify-center rounded-full"
               style={{ background: "rgba(128,128,128,0.16)", color: c.textMuted }}
             >

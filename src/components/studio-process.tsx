@@ -18,7 +18,7 @@ export function StudioProcess() {
     <section className="relative border-t border-border bg-background px-6 py-28 md:px-10 md:py-40">
       <div className="mx-auto max-w-6xl">
         <div ref={ref} className={`reveal ${visible ? "reveal-in" : ""} max-w-2xl`}>
-          <p className="mb-5 text-[11px] tracking-[0.42em] text-accent uppercase">
+          <p className="mb-5 text-xs tracking-[0.42em] text-accent uppercase">
             {t("process.kicker")}
           </p>
           <h2 className="display text-[clamp(1.9rem,4.4vw,3.2rem)] text-foreground">

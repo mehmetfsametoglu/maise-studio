@@ -23,7 +23,7 @@ export function HomeHow() {
   return (
     <section className="bg-background px-6 py-24 md:px-10 md:py-32">
       <div ref={ref} className={`reveal ${visible ? "reveal-in" : ""} mx-auto max-w-[1300px]`}>
-        <p className="mb-5 text-[11px] tracking-[0.42em] text-accent uppercase">{t("how.kicker")}</p>
+        <p className="mb-5 text-xs tracking-[0.42em] text-accent uppercase">{t("how.kicker")}</p>
         <h2 className="display max-w-3xl text-balance text-[clamp(1.9rem,4.4vw,3.2rem)] text-foreground">
           {t("how.title")}
         </h2>
@@ -62,7 +62,7 @@ export function HomeHow() {
             </ol>
             <Link
               href="/contact"
-              className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-accent transition-[gap] duration-300 hover:gap-3"
+              className="mt-8 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-accent transition-[gap] duration-300 hover:gap-3"
             >
               {t("how.cta")} <ArrowRight size={15} aria-hidden />
             </Link>

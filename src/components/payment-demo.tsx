@@ -16,7 +16,7 @@ export function PaymentDemo() {
     <section className="world-sand relative bg-background px-6 py-28 md:px-10 md:py-36">
       <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 lg:grid-cols-2">
         <div ref={ref} className={`reveal ${visible ? "reveal-in" : ""}`}>
-          <p className="mb-4 text-[11px] tracking-[0.42em] text-accent uppercase">
+          <p className="mb-4 text-xs tracking-[0.42em] text-accent uppercase">
             {t("payment.kicker")}
           </p>
           <h2 className="display text-[clamp(1.9rem,4.4vw,3.2rem)] text-foreground">
@@ -53,7 +53,7 @@ export function PaymentDemo() {
                 >
                   {t("payment.continue")}
                 </button>
-                <p className="mt-4 text-center text-[11px] text-muted-foreground">
+                <p className="mt-4 text-center text-xs text-muted-foreground">
                   {t("payment.demoNote")}
                 </p>
               </motion.div>
@@ -77,7 +77,7 @@ export function PaymentDemo() {
                 <button className="mb-4 flex w-full items-center justify-center gap-2 rounded-xl bg-foreground py-3.5 text-sm font-semibold text-background transition-opacity hover:opacity-90">
                   <span>{t("payment.applePay")}</span>
                 </button>
-                <div className="mb-4 flex items-center gap-3 text-[11px] text-muted-foreground uppercase">
+                <div className="mb-4 flex items-center gap-3 text-xs text-muted-foreground uppercase">
                   <span className="h-px flex-1 bg-border" />
                   {t("payment.or")}
                   <span className="h-px flex-1 bg-border" />

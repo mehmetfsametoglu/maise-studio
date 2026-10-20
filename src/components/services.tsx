@@ -30,7 +30,7 @@ export function Services() {
           className={`reveal ${visible ? "reveal-in" : ""} grid grid-cols-1 gap-14 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)]`}
         >
           <div>
-            <p className="mb-5 text-[11px] tracking-[0.42em] text-accent uppercase">
+            <p className="mb-5 text-xs tracking-[0.42em] text-accent uppercase">
               {t("services.kicker")}
             </p>
             <h2 className="display text-[clamp(1.9rem,4.4vw,3.2rem)] text-foreground">

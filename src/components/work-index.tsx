@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import { useReveal } from "@/hooks/use-reveal";
 import { useLang } from "@/lib/i18n";
 import { REAL_PROJECTS } from "@/lib/projects";
+import { ProjectLinkCard } from "@/components/page-kit";
 
+// Same card as on the home page: photo, label, sector and city, name, one
+// sentence; the title opens the case page, the arrow opens the client's site.
 export function WorkIndex() {
   const { t } = useLang();
   const { ref, visible } = useReveal<HTMLDivElement>();
@@ -14,8 +14,8 @@ export function WorkIndex() {
   return (
     <div className="world-sage bg-background">
       <section className="px-6 pt-36 pb-16 md:px-10 md:pt-44">
-        <div ref={ref} className={`reveal ${visible ? "reveal-in" : ""} mx-auto max-w-4xl`}>
-          <p className="mb-5 text-[11px] tracking-[0.42em] text-accent uppercase">
+        <div ref={ref} className={`reveal ${visible ? "reveal-in" : ""} mx-auto max-w-[1300px] [&>*]:max-w-4xl`}>
+          <p className="mb-5 text-xs tracking-[0.42em] text-accent uppercase">
             {t("work.kicker")}
           </p>
           <h1 className="display text-[clamp(2.2rem,5.6vw,4rem)] text-foreground">
@@ -28,58 +28,12 @@ export function WorkIndex() {
       </section>
 
       <section className="px-6 pb-28 md:px-10 md:pb-40">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="mx-auto grid max-w-[1300px] grid-cols-1 gap-6 md:grid-cols-2">
           {REAL_PROJECTS.map((p, i) => (
-            <ProjectCard key={p.slug} n={String(i + 1).padStart(2, "0")} project={p} />
+            <ProjectLinkCard key={p.slug} project={p} priority={i < 2} />
           ))}
         </div>
       </section>
     </div>
-  );
-}
-
-function ProjectCard({
-  n,
-  project,
-}: {
-  n: string;
-  project: (typeof REAL_PROJECTS)[number];
-}) {
-  const { t, lang } = useLang();
-  const { ref, visible } = useReveal<HTMLAnchorElement>();
-
-  return (
-    <Link
-      ref={ref}
-      href={`/realisations/${project.slug}`}
-      className={`reveal ${visible ? "reveal-in" : ""} glass-liquid group relative flex aspect-[4/3] flex-col justify-between overflow-hidden rounded-[1.75rem] p-8 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.015]`}
-    >
-      <Image
-        src={project.shots.desktop.src}
-        alt={project.shots.desktop.alt[lang]}
-        fill
-        sizes="(min-width: 768px) 50vw, 100vw"
-        className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/10" />
-
-      <div className="relative z-10 flex items-start justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <span className="font-display text-sm text-white/70">{n}</span>
-          <span className="rounded-full bg-white/15 px-3 py-1 text-[10px] font-medium tracking-widest text-white uppercase backdrop-blur-md">
-            {t("badge.realProject")}
-          </span>
-        </div>
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-md transition-colors group-hover:bg-accent group-hover:text-accent-foreground">
-          <ArrowUpRight size={16} />
-        </span>
-      </div>
-      <div className="relative z-10">
-        <p className="text-[11px] tracking-[0.3em] text-white/60 uppercase">
-          {t(project.sectorKey)}
-        </p>
-        <h3 className="display mt-1 text-2xl text-white md:text-3xl">{project.name}</h3>
-      </div>
-    </Link>
   );
 }

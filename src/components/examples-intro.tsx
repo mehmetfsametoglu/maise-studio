@@ -7,7 +7,7 @@ export function ExamplesIntro() {
   return (
     <section className="px-6 pt-36 pb-20 md:px-10 md:pt-44 md:pb-28">
       <div className="mx-auto max-w-3xl">
-        <p className="mb-5 text-[11px] tracking-[0.42em] text-accent uppercase">
+        <p className="mb-5 text-xs tracking-[0.42em] text-accent uppercase">
           {t("examples.kicker")}
         </p>
         <h1 className="display text-[clamp(2.2rem,5.6vw,4rem)] text-foreground">

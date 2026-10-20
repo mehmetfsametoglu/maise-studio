@@ -22,11 +22,11 @@ export function HomePositioning() {
         <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm font-medium">
           <Link
             href="/services"
-            className="inline-flex items-center gap-2 text-accent transition-[gap] duration-300 hover:gap-3"
+            className="inline-flex min-h-11 items-center gap-2 text-accent transition-[gap] duration-300 hover:gap-3"
           >
             {t("pos.cta")} <ArrowRight size={15} aria-hidden />
           </Link>
-          <Link href="/studio" className="text-foreground/80 transition-colors hover:text-accent">
+          <Link href="/studio" className="inline-flex min-h-11 items-center text-foreground/80 transition-colors hover:text-accent">
             {t("pos.method")}
           </Link>
         </div>

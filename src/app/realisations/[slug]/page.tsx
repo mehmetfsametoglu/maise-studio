@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowDown } from "lucide-react";
-import { PROJECTS, getProject } from "@/lib/projects";
+import { ArrowUpRight } from "lucide-react";
+import { PROJECTS, getProject, liveHref } from "@/lib/projects";
 import { getService } from "@/lib/services";
 import { L, UI } from "@/lib/l10n";
 import { ORG_ID, JsonLd, breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
@@ -110,11 +110,23 @@ export default async function CaseStudyPage({ params }: Props) {
       >
         <div className="mt-8 flex flex-wrap gap-3">
           <a
-            href="#apercu"
-            className="inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3.5 text-sm font-semibold whitespace-nowrap text-accent-foreground transition-transform duration-200 hover:scale-[1.03] active:scale-[0.98]"
+            href={liveHref(p)}
+            target="_blank"
+            rel={p.liveUrl ? "noopener noreferrer" : "noopener noreferrer nofollow"}
+            className="inline-flex min-h-[52px] items-center gap-2 rounded-full bg-accent px-7 text-sm font-semibold whitespace-nowrap text-accent-foreground transition-[background-color,transform] duration-[400ms] hover:bg-accent-hover active:scale-[0.98]"
           >
-            <T l={UI.viewLive} /> <ArrowDown size={16} aria-hidden />
+            <T l={UI.viewLive} /> <ArrowUpRight size={16} aria-hidden />
+            <span className="sr-only">
+              {" : "}
+              {p.name} (<T l={UI.newTab} />)
+            </span>
           </a>
+          <Link
+            href="/contact"
+            className="inline-flex min-h-[52px] items-center rounded-full border border-foreground/25 px-7 text-sm font-semibold whitespace-nowrap text-foreground transition-colors hover:bg-muted"
+          >
+            <T l={UI.talk} />
+          </Link>
         </div>
       </PageHero>
 

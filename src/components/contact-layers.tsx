@@ -70,7 +70,7 @@ function AnnounceBar() {
 function MobileBar({ callback }: { callback: boolean }) {
   const { t } = useLang();
   const item =
-    "flex min-h-11 flex-1 flex-col items-center justify-center gap-1 text-[11px] font-medium text-foreground/85 transition-colors active:text-accent";
+    "flex min-h-11 flex-1 flex-col items-center justify-center gap-1 text-xs font-medium text-foreground/85 transition-colors active:text-accent";
   return (
     <nav
       aria-label={t("bar.label")}

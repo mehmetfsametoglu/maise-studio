@@ -24,7 +24,7 @@ export function AiVisibility() {
       >
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
           <div>
-            <p className="mb-5 text-[11px] tracking-[0.42em] text-accent uppercase">
+            <p className="mb-5 text-xs tracking-[0.42em] text-accent uppercase">
               {t("geo.kicker")}
             </p>
             <h2 className="display text-[clamp(1.9rem,4.4vw,3.2rem)] text-foreground">
@@ -36,7 +36,7 @@ export function AiVisibility() {
             </p>
             <Link
               href="/services/seo-visibilite-ia"
-              className="mt-7 inline-flex items-center gap-2 text-sm font-medium text-accent transition-[gap] duration-300 hover:gap-3"
+              className="mt-7 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-accent transition-[gap] duration-300 hover:gap-3"
             >
               {t("geo.more")} <ArrowRight size={15} aria-hidden />
             </Link>

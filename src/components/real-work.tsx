@@ -14,7 +14,7 @@ export function RealWork() {
   return (
     <section id="projets" className="world-sand bg-background px-6 py-[clamp(50px,2rem+4.5vw,100px)] md:px-10">
       <div ref={ref} className={`reveal ${visible ? "reveal-in" : ""} mx-auto max-w-[1300px]`}>
-        <p className="mb-5 flex items-center gap-4 text-[11px] font-medium tracking-[0.18em] text-accent uppercase">
+        <p className="mb-5 flex items-center gap-4 text-xs font-medium tracking-[0.18em] text-accent uppercase">
           {t("realwork.kicker")}
           <span aria-hidden className="h-px w-8 bg-brass" />
         </p>

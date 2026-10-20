@@ -29,7 +29,7 @@ export function HomeHero() {
       <div className="mx-auto grid max-w-[1380px] items-center gap-14 px-6 pt-32 pb-20 md:px-10 md:pt-40 md:pb-28 lg:min-h-[92svh] lg:grid-cols-[minmax(0,1.08fr)_minmax(0,1fr)] lg:gap-16">
         <div>
           <p
-            className="animate-rise inline-flex items-center gap-3 rounded-full border border-border px-4 py-1.5 text-[11px] font-medium tracking-[0.18em] text-accent uppercase"
+            className="animate-rise inline-flex items-center gap-3 rounded-full border border-border px-4 py-1.5 text-xs font-medium tracking-[0.18em] text-accent uppercase"
             style={{ ["--d" as string]: "0ms" }}
           >
             {t("hero.kicker")}

@@ -125,6 +125,12 @@
 }
 
 @theme inline {
+  /* Reading rhythm: 1.6 to 1.7 for running text. */
+  --text-xs--line-height: 1.6;
+  --text-sm--line-height: 1.65;
+  --text-base--line-height: 1.7;
+  --text-lg--line-height: 1.65;
+  --text-xl--line-height: 1.55;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
@@ -164,6 +170,7 @@ body {
   background-color: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-sans);
+  line-height: 1.65;
   transition: background-color 400ms var(--ease-apple), color 400ms var(--ease-apple);
 }
 
@@ -442,4 +449,10 @@ html:has(dialog[open]) {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
+}
+
+/* Anchors and focus never end up under the fixed nav or the bottom bar. */
+html {
+  scroll-padding-top: 6rem;
+  scroll-padding-bottom: calc(var(--bar-h, 0px) + 1.5rem);
 }

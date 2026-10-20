@@ -11,7 +11,7 @@ export default function NotFound() {
   return (
     <section className="flex min-h-[80svh] items-center px-6 pt-32 pb-20 md:px-10">
       <div className="mx-auto w-full max-w-3xl">
-        <p className="mb-5 text-[11px] tracking-[0.42em] text-accent uppercase">
+        <p className="mb-5 text-xs tracking-[0.42em] text-accent uppercase">
           <T l={UI.nf404} />
         </p>
         <h1 className="display text-[clamp(2.4rem,6vw,4.4rem)] text-foreground">

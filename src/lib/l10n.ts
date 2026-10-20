@@ -42,6 +42,8 @@ export const UI = {
     "Her gün 3 saat içinde yanıt veriyoruz.",
   ),
   talk: L("Parler de votre projet", "Talk about your project", "Projenizi konuşalım"),
+  newTab: L("nouvel onglet", "new tab", "yeni sekme"),
+  realLabel: L("Projet réel", "Real project", "Gerçek proje"),
   seeWork: L("Voir nos réalisations", "See our work", "Projelerimizi görün"),
   viewLive: L("Voir le site en ligne", "Visit the live site", "Yayındaki siteyi görün"),
   shotsNote: L(

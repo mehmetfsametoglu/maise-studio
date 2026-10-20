@@ -33,7 +33,7 @@ export function BookingDemo() {
     <section className="world-ink relative bg-background px-6 py-28 md:px-10 md:py-36">
       <div className="mx-auto max-w-5xl">
         <div ref={ref} className={`reveal ${visible ? "reveal-in" : ""} mb-14 max-w-xl`}>
-          <p className="mb-4 text-[11px] tracking-[0.42em] text-accent uppercase">
+          <p className="mb-4 text-xs tracking-[0.42em] text-accent uppercase">
             {t("booking.kicker")}
           </p>
           <h2 className="display text-[clamp(1.9rem,4.4vw,3.2rem)] text-foreground">
@@ -103,7 +103,7 @@ export function BookingDemo() {
                           : "border-border text-foreground/80 hover:border-accent/50"
                       }`}
                     >
-                      <span className="text-[10px] uppercase opacity-70">{t("booking.month")}</span>
+                      <span className="text-xs uppercase opacity-70">{t("booking.month")}</span>
                       <span className="font-display">{d}</span>
                     </button>
                   ))}

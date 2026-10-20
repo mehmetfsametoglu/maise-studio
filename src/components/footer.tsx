@@ -14,7 +14,7 @@ const EXPERTISE: { slug: string; key: DictKey }[] = [
   { slug: "seo-visibilite-ia", key: "svcnav.seo" },
 ];
 
-const linkClass = "text-sm text-foreground/80 transition-colors hover:text-accent";
+const linkClass = "inline-flex min-h-11 items-center text-sm text-foreground/80 transition-colors hover:text-accent";
 
 export function Footer() {
   const { t } = useLang();
@@ -61,7 +61,7 @@ export function Footer() {
                 href={i.url}
                 target="_blank"
                 rel="noopener noreferrer me"
-                className="rounded-full border border-border px-4 py-2 text-foreground transition-colors hover:border-accent/50 hover:text-accent"
+                className="inline-flex min-h-11 items-center rounded-full border border-border px-4 py-2 text-foreground transition-colors hover:border-accent/50 hover:text-accent"
               >
                 @{i.handle}
               </a>
@@ -78,7 +78,7 @@ export function Footer() {
 
           <nav aria-label={t("footer.col.nav")}>
             <p className="mb-4 text-xs tracking-widest text-muted-foreground uppercase">{t("footer.col.nav")}</p>
-            <ul className="flex flex-col gap-3">
+            <ul className="flex flex-col">
               {NAVIGATION.map((l) => (
                 <li key={l.href}>
                   <Link href={l.href} className={linkClass}>
@@ -93,7 +93,7 @@ export function Footer() {
             <p className="mb-4 text-xs tracking-widest text-muted-foreground uppercase">
               {t("footer.col.expertise")}
             </p>
-            <ul className="flex flex-col gap-3">
+            <ul className="flex flex-col">
               {EXPERTISE.map((e) => (
                 <li key={e.slug}>
                   <Link href={`/services/${e.slug}`} className={linkClass}>
@@ -106,7 +106,7 @@ export function Footer() {
 
           <div className="col-span-2 md:col-span-1">
             <p className="mb-4 text-xs tracking-widest text-muted-foreground uppercase">{t("footer.col.contact")}</p>
-            <ul className="flex flex-col gap-3">
+            <ul className="flex flex-col">
               <li>
                 <a href={whatsappHref()} target="_blank" rel="noopener noreferrer nofollow" className={linkClass}>
                   WhatsApp
@@ -124,7 +124,7 @@ export function Footer() {
                   </a>
                 </li>
               ))}
-              <li className="text-xs text-muted-foreground">{t("contact.hours.value")}</li>
+              <li className="py-2 text-xs text-muted-foreground">{t("contact.hours.value")}</li>
             </ul>
           </div>
         </div>
@@ -135,12 +135,12 @@ export function Footer() {
           </p>
           <ul className="flex gap-6 text-xs text-muted-foreground">
             <li>
-              <Link href="/mentions-legales" className="transition-colors hover:text-accent">
+              <Link href="/mentions-legales" className="inline-flex min-h-11 items-center transition-colors hover:text-accent">
                 {t("footer.legal")}
               </Link>
             </li>
             <li>
-              <Link href="/confidentialite" className="transition-colors hover:text-accent">
+              <Link href="/confidentialite" className="inline-flex min-h-11 items-center transition-colors hover:text-accent">
                 {t("footer.privacy")}
               </Link>
             </li>

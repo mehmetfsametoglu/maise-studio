@@ -11,6 +11,8 @@ import { L } from "@/lib/l10n";
 export type Project = {
   slug: string;
   name: string;
+  /** Own domain of the client, linked directly. Without it, links go through /go/<slug>. */
+  liveUrl?: string;
   /** Page heading. The French one matches the SEO title. */
   h1: L;
   /** Editorial photo, used for the social card. */
@@ -51,6 +53,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "le-40",
     name: "Le 40",
+    liveUrl: "https://le40bar.fr",
     h1: L("Le 40, site web d'un bar à Paris", "Le 40, a bar's website in Paris", "Le 40, Paris'te bir barın web sitesi"),
     image: "/work/lequarante.jpg",
     shots: {
@@ -283,3 +286,8 @@ export const getProject = (slug: string) => PROJECTS.find((p) => p.slug === slug
 
 // Kept for the cards on the home page, which already iterate this list.
 export const REAL_PROJECTS = PROJECTS;
+
+/** Where "see the live site" goes: the client's own domain when it has one, else our /go redirect. */
+export function liveHref(p: { slug: string; liveUrl?: string }) {
+  return p.liveUrl ?? `/go/${p.slug}`;
+}

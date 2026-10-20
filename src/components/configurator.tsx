@@ -161,7 +161,7 @@ export function Configurator() {
   return (
     <section id="configurateur" ref={sectionRef} className="world-sand relative bg-background px-6 py-28 md:px-10 md:py-40">
       <div className="mx-auto max-w-[1300px]">
-        <p className="mb-5 text-[11px] tracking-[0.42em] text-accent uppercase">
+        <p className="mb-5 text-xs tracking-[0.42em] text-accent uppercase">
           {t("config.kicker")}
         </p>
         <h2 className="display max-w-2xl text-[clamp(2rem,5vw,3.6rem)] text-foreground">
@@ -221,7 +221,7 @@ export function Configurator() {
                         </span>
                         {isTRY ? (
                           <span className="flex items-baseline gap-1.5">
-                            <span className="text-[11px] text-muted-foreground line-through">
+                            <span className="text-xs text-muted-foreground line-through">
                               {item.tryAnchor.toLocaleString("tr-TR")}₺
                             </span>
                             <span className="font-display text-sm font-semibold text-accent">
@@ -252,7 +252,7 @@ export function Configurator() {
                   <p className="mt-1 max-w-[15rem] text-xs text-muted-foreground/80">
                     {t("config.multilingual.hint")}
                   </p>
-                  <p className="mt-1 text-[11px] text-muted-foreground/90">
+                  <p className="mt-1 text-xs text-muted-foreground/90">
                     {t("config.includedLang")}: {t(LANGS.find((l) => l.key === includedLang)!.nameKey)}
                   </p>
                 </div>
@@ -262,7 +262,7 @@ export function Configurator() {
                   aria-checked={multilingual}
                   aria-label={t("config.multilingual")}
                   onClick={toggleMultilingual}
-                  className={`relative h-7 w-12 shrink-0 rounded-full transition-colors duration-300 ${
+                  className={`relative h-7 w-12 shrink-0 rounded-full transition-colors duration-300 before:absolute before:-inset-2 before:content-[''] ${
                     multilingual ? "bg-accent" : "bg-foreground/15"
                   }`}
                 >
@@ -318,7 +318,7 @@ export function Configurator() {
                     {t("config.price")}
                   </p>
                   {isTRY && (
-                    <span className="rounded-full bg-accent/15 px-2 py-0.5 text-[10px] font-medium tracking-wide text-accent uppercase">
+                    <span className="rounded-full bg-accent/15 px-2 py-0.5 text-xs font-medium tracking-wide text-accent uppercase">
                       {t("config.try.badge")}
                     </span>
                   )}
@@ -354,7 +354,7 @@ export function Configurator() {
               href={whatsappHref(message)}
               target="_blank"
               rel="noopener noreferrer nofollow"
-              className="-mt-4 text-sm text-muted-foreground underline-offset-4 transition-colors hover:text-accent hover:underline"
+              className="-mt-4 inline-flex min-h-11 items-center text-sm text-muted-foreground underline-offset-4 transition-colors hover:text-accent hover:underline"
             >
               {t("contactform.whatsappAlt")}
             </a>
@@ -392,7 +392,7 @@ export function Configurator() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -6 }}
                       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                      className="absolute top-4 right-4 z-10 rounded-full bg-black/55 px-3 py-1.5 text-[10px] font-medium tracking-widest text-white uppercase backdrop-blur-md"
+                      className="absolute top-4 right-4 z-10 rounded-full bg-black/55 px-3 py-1.5 text-xs font-medium tracking-widest text-white uppercase backdrop-blur-md"
                     >
                       {t("config.badge")}
                     </motion.span>
@@ -418,7 +418,7 @@ export function Configurator() {
             className="glass-liquid fixed inset-x-4 bottom-4 z-40 flex items-center justify-between gap-3 rounded-full py-2 pr-2 pl-5 lg:hidden"
           >
             <div className="min-w-0">
-              <p className="truncate text-[10px] tracking-widest text-muted-foreground uppercase">
+              <p className="truncate text-xs tracking-widest text-muted-foreground uppercase">
                 {t(tr.nameKey)}
               </p>
               <p className="display text-xl leading-tight text-accent">
@@ -427,7 +427,7 @@ export function Configurator() {
             </div>
             <Link
               href={contactHref}
-              className="shrink-0 rounded-full bg-accent px-5 py-3 text-[11px] font-semibold tracking-widest whitespace-nowrap text-accent-foreground uppercase active:scale-[0.97]"
+              className="shrink-0 rounded-full bg-accent px-5 py-3 text-xs font-semibold tracking-widest whitespace-nowrap text-accent-foreground uppercase active:scale-[0.97]"
             >
               {t("config.cta")}
             </Link>

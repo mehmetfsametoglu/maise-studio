@@ -7,7 +7,7 @@ import { ArrowRight, ArrowUpRight, ChevronRight, Plus } from "lucide-react";
 import { useLang, type DictKey } from "@/lib/i18n";
 import { UI, type L } from "@/lib/l10n";
 import type { Faq } from "@/lib/faq";
-import type { Project } from "@/lib/projects";
+import { liveHref, type Project } from "@/lib/projects";
 import type { Concept } from "@/lib/concepts";
 import type { Item } from "@/lib/services";
 import { PACKAGES, EXTRA_LANGUAGE, formatEur, type TierKey } from "@/lib/pricing";
@@ -38,7 +38,7 @@ export function Crumbs({ items }: { items: { name: Text; href?: string }[] }) {
           <li key={i} className="flex items-center gap-1.5">
             {i > 0 && <ChevronRight size={12} aria-hidden />}
             {c.href ? (
-              <Link href={c.href} className="transition-colors hover:text-accent">
+              <Link href={c.href} className="inline-flex min-h-11 items-center transition-colors hover:text-accent">
                 {r(c.name)}
               </Link>
             ) : (
@@ -71,7 +71,7 @@ export function PageHero({
     <section className="px-6 pt-36 pb-14 md:px-10 md:pt-44 md:pb-20">
       <div className="mx-auto max-w-4xl">
         {crumbs && <Crumbs items={crumbs} />}
-        {kicker && <p className="mb-5 text-[11px] tracking-[0.42em] text-accent uppercase">{r(kicker)}</p>}
+        {kicker && <p className="mb-5 text-xs tracking-[0.42em] text-accent uppercase">{r(kicker)}</p>}
         <h1 className="display text-balance text-[clamp(2.2rem,5.6vw,4rem)] text-foreground">{r(title)}</h1>
         {lead && <p className="mt-7 max-w-2xl text-lg leading-relaxed text-muted-foreground">{r(lead)}</p>}
         {children}
@@ -220,16 +220,19 @@ export function PriceBlock() {
 
 export function ProjectLinkCard({ project, priority = false }: { project: Project; priority?: boolean }) {
   const r = useText();
+  const live = liveHref(project);
+  const direct = live.startsWith("http");
   return (
-    <Link
-      href={`/realisations/${project.slug}`}
+    // One card, two real links: the title opens the case page (its ::after covers
+    // the whole card), the small arrow opens the client's site in a new tab.
+    <article
       onPointerMove={(e) => {
         if (e.pointerType !== "mouse") return;
-        const r = e.currentTarget.getBoundingClientRect();
-        e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
-        e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
+        const box = e.currentTarget.getBoundingClientRect();
+        e.currentTarget.style.setProperty("--mx", `${e.clientX - box.left}px`);
+        e.currentTarget.style.setProperty("--my", `${e.clientY - box.top}px`);
       }}
-      className="spot group relative block overflow-hidden rounded-[20px] border border-border bg-card shadow-[var(--shadow-1)] transition-transform duration-[400ms] ease-[var(--ease-maise)] hover:-translate-y-1"
+      className="spot group relative overflow-hidden rounded-[20px] border border-border bg-card shadow-[var(--shadow-1)] transition-transform duration-[400ms] ease-[var(--ease-maise)] has-[.card-link:focus-visible]:outline-2 has-[.card-link:focus-visible]:outline-offset-4 has-[.card-link:focus-visible]:outline-accent hover:-translate-y-1"
     >
       <div className="relative aspect-[16/10] overflow-hidden">
         <Image
@@ -237,25 +240,41 @@ export function ProjectLinkCard({ project, priority = false }: { project: Projec
           alt={r(project.shots.desktop.alt)}
           fill
           priority={priority}
-          sizes="(min-width: 768px) 45vw, 100vw"
-          className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
+          sizes="(min-width: 1200px) 560px, (min-width: 768px) 45vw, 92vw"
+          className="object-cover transition-transform duration-500 ease-[var(--ease-maise)] group-hover:scale-[1.03]"
         />
+        <span className="absolute top-4 left-4 rounded-full bg-black/60 px-3 py-1 text-xs font-medium tracking-widest text-white uppercase backdrop-blur-md">
+          {r(UI.realLabel)}
+        </span>
       </div>
       <div className="flex items-start justify-between gap-4 p-6">
-        <div>
-          <p className="text-[11px] tracking-[0.25em] text-muted-foreground uppercase">
+        <div className="min-w-0">
+          <p className="text-xs tracking-[0.2em] text-muted-foreground uppercase">
             {r(project.sector)} · {project.city}
           </p>
-          <h3 className="display mt-2 text-2xl text-foreground">{project.name}</h3>
+          <h3 className="display mt-2 text-2xl text-foreground">
+            <Link
+              href={`/realisations/${project.slug}`}
+              className="card-link underline decoration-transparent decoration-1 underline-offset-[6px] transition-[text-decoration-color] duration-300 group-hover:decoration-accent focus-visible:outline-none after:absolute after:inset-0 after:content-['']"
+            >
+              {project.name}
+            </Link>
+          </h3>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{r(project.summary)}</p>
         </div>
-        <ArrowUpRight
-          size={18}
-          aria-hidden
-          className="mt-1 shrink-0 text-muted-foreground transition-colors group-hover:text-accent"
-        />
+        <a
+          href={live}
+          target="_blank"
+          rel={direct ? "noopener noreferrer" : "noopener noreferrer nofollow"}
+          className="relative z-10 -mt-2 -mr-2 grid size-11 shrink-0 place-items-center rounded-full text-muted-foreground transition-colors hover:text-accent"
+        >
+          <ArrowUpRight size={18} aria-hidden />
+          <span className="sr-only">
+            {r(UI.viewLive)} : {project.name} ({r(UI.newTab)})
+          </span>
+        </a>
       </div>
-    </Link>
+    </article>
   );
 }
 
@@ -326,13 +345,13 @@ export function ConceptCard({ concept }: { concept: Concept }) {
           sizes="(min-width: 768px) 45vw, 100vw"
           className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
         />
-        <span className="absolute top-4 left-4 rounded-full bg-black/60 px-3 py-1 text-[10px] font-medium tracking-widest text-white uppercase backdrop-blur-md">
+        <span className="absolute top-4 left-4 rounded-full bg-black/60 px-3 py-1 text-xs font-medium tracking-widest text-white uppercase backdrop-blur-md">
           {r(UI.conceptLabel)}
         </span>
       </div>
       <div className="flex items-start justify-between gap-4 p-6">
         <div>
-          <p className="text-[11px] tracking-[0.25em] text-muted-foreground uppercase">
+          <p className="text-xs tracking-[0.25em] text-muted-foreground uppercase">
             {r(concept.sector)} · {concept.city}
           </p>
           <h3 className="display mt-2 text-2xl text-foreground">{concept.name}</h3>
@@ -354,9 +373,11 @@ export function LivePreview({
   concept,
   real = false,
 }: {
-  concept: { slug: string; name: string; shots: Project["shots"] };
+  concept: { slug: string; name: string; liveUrl?: string; shots: Project["shots"] };
   real?: boolean;
 }) {
+  const live = liveHref(concept);
+  const direct = live.startsWith("http");
   const r = useText();
   const [loaded, setLoaded] = useState(false);
   const [device, setDevice] = useState<"desktop" | "phone">("desktop");
@@ -380,10 +401,10 @@ export function LivePreview({
           ))}
         </div>
         <a
-          href={`/go/${concept.slug}`}
+          href={live}
           target="_blank"
-          rel="noopener noreferrer nofollow"
-          className="inline-flex items-center gap-1.5 text-sm text-accent underline-offset-4 hover:underline"
+          rel={direct ? "noopener noreferrer" : "noopener noreferrer nofollow"}
+          className="inline-flex min-h-11 items-center gap-1.5 text-sm text-accent underline-offset-4 hover:underline"
         >
           {r(UI.previewOpen)} <ArrowUpRight size={14} aria-hidden />
         </a>
@@ -396,8 +417,8 @@ export function LivePreview({
       >
         {loaded ? (
           <iframe
-            src={`/go/${concept.slug}`}
-            title={concept.name}
+            src={live}
+            title={`${r(UI.previewTitle)} : ${concept.name}`}
             loading="lazy"
             className="absolute inset-0 h-full w-full border-0"
           />

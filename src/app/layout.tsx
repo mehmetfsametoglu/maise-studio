@@ -5,6 +5,7 @@ import "./globals.css";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { ContactLayers } from "@/components/contact-layers";
+import { SkipLink } from "@/components/skip-link";
 import { LanguageProvider } from "@/lib/i18n";
 import { ThemeProvider, THEME_INIT_SCRIPT } from "@/lib/theme";
 import { SITE } from "@/lib/site";
@@ -51,8 +52,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <ThemeProvider>
           <LanguageProvider>
+            <SkipLink />
             <Nav />
-            <main className="flex-1">{children}</main>
+            <main id="contenu" tabIndex={-1} className="flex-1 outline-none">{children}</main>
             <Footer />
             {/* The callback button and sheet exist only when the server can send the request. */}
             <ContactLayers callbackEnabled={Boolean(process.env.RESEND_API_KEY)} />
